@@ -1,5 +1,18 @@
 const state = {
-  logs: []
+  logs: [{
+    err: {
+      message: '错误日志',
+      stack: 'stack stack stack'
+    },
+    url: 'http',
+    info: 'info'
+  }, {
+    err: {
+      message: '错误日志'
+    },
+    url: 'http',
+    info: 'info'
+  }]
 }
 
 const mutations = {
