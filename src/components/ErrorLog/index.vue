@@ -24,7 +24,8 @@
             <div>
               <span class="message-title" style="padding-right: 10px;">Info: </span>
               <el-tag type="warning">
-                {{ row.vm.$vnode.tag }} error in {{ row.info }}
+                <!--{{ row.vm.$vnode.tag }} error in {{ row.info }}-->
+                {{ row.info }}
               </el-tag>
             </div>
             <br>
@@ -39,6 +40,12 @@
         <el-table-column label="Stack">
           <template slot-scope="scope">
             {{ scope.row.err.stack }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Stack">
+          <!--插槽 父组件通过 v-slot:[name] 的方式指定到对应的插槽中-->
+          <template v-slot="{row}">
+            {{ row.err.stack }}
           </template>
         </el-table-column>
       </el-table>
@@ -69,10 +76,10 @@ export default {
 </script>
 
 <style scoped>
-.message-title {
-  font-size: 16px;
-  color: #333;
-  font-weight: bold;
-  padding-right: 8px;
-}
+    .message-title {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+        padding-right: 8px;
+    }
 </style>
