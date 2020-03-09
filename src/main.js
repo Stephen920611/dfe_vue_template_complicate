@@ -19,6 +19,10 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts //引入echarts，将其绑定到vue原型上 使用时this.$echarts
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
