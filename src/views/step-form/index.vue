@@ -9,9 +9,11 @@
         <el-steps :active="active" finish-status="success" align-center>
             <el-step  v-for="(item,index) in steps" :key="index" :title="item.title" @click.native="changeStep(index)" ></el-step>
         </el-steps>
-        <step-pane1 v-if="active===0" v-on:submitForm="submitForm" ></step-pane1>
-        <step-pane2 v-if="active===1" v-on:next="next" v-on:back="back" ></step-pane2>
-        <step-pane3 v-if="active===2" v-on:next="next" v-on:back="back" ></step-pane3>
+        <!--每个界面都有单独的上一步、下一步按钮，分别执行不同的操作-->
+        <!--<step-pane1 v-show="active===0" v-on:submitForm="submitForm"  ref="stepPane1" ></step-pane1>-->
+        <step-pane1 v-show="active===0" v-on:submitForm="submitForm"  ref="stepPane1" ></step-pane1>
+        <step-pane2 v-show="active===1" v-on:next="next" v-on:back="back" :formData="formData" ></step-pane2>
+        <step-pane3 v-show="active===2" v-on:next="next" v-on:back="back" ></step-pane3>
         <!--三个子界面共用上一步、下一步按钮-->
         <!--<div class="step-form-btns">
             <el-button style="margin-top: 12px;" @click="back" :disabled="active===0 ? true : false">上一步</el-button>
@@ -31,8 +33,6 @@
         components: {stepPane1, stepPane2, stepPane3},
         data() {
             return {
-                activeName: 'CN',
-                createdTimes: 0,
                 active: 0,//当前激活步骤
                 steps:[
                     {
@@ -44,7 +44,8 @@
                     {
                         title:'步骤3'
                     },
-                ]
+                ],
+                formData:null,
             }
         },
         mounted: function () {},
@@ -65,18 +66,27 @@
                     this.$message.success('成功!')
                 }
             },
+
             //上一步
             back() {
                 if (this.active-- < 0) this.active = 0;
             },
+
             /**
              * 表单数据的提交（第一步）
              * @param values {object} 表单的值
              */
             submitForm(values) {
+//                可以把表单的数据存在store，方便取用，不用页面传参
 //                console.log('表单的值',values);
+                this.formData = values;
+//                console.log('this.formData',this.formData);
                 this.$message.success('创建成功！');
-                this.next();
+                if(this.active === 0){
+                    //下一步
+                    this.next();
+                }
+
             }
         }
     }

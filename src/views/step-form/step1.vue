@@ -109,6 +109,7 @@
                 this.$refs[formName].validate((valid) => {
                     //判断是否校验成功valid true/false
                     if (valid) {
+//                        可以把表单的数据存在store，方便取用，不用页面传参
                         self.$emit('submitForm',self.ruleForm)
                     } else {
                         console.log('error submit!!');
@@ -133,7 +134,9 @@
     .step1-container {
         .step-form-btns {
             text-align: center;
-            margin-left: 0;
+            &>>>.el-form-item__content{
+                margin-left: 0 !important;
+            }
         }
         .el-form {
             width: 560px;

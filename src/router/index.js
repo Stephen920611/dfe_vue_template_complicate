@@ -157,7 +157,7 @@ export const constantRoutes = [
                 meta: {
                     title: '分步表单',
                     icon: 'user',
-                    noCache: true,///如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
+                    // noCache: true,///如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
                     // breadcrumb: false // 如果设置为false，则不会在breadcrumb面包屑中显示
                 },
             },
@@ -173,6 +173,7 @@ export const constantRoutes = [
                 component: () => import('@/views/step-form/step2'),
                 name: 'Step2',//设定路由的名字
                 hidden: true,
+                noCache: true,///如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
                 // breadcrumb:false,
             },
             {
