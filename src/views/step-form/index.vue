@@ -8,16 +8,15 @@
     <div class="app-container step-form">
         <el-steps :active="active" finish-status="success" align-center>
             <el-step  v-for="(item,index) in steps" :key="index" :title="item.title" @click.native="changeStep(index)" ></el-step>
-            <!--<el-step title="步骤 2"></el-step>-->
-            <!--<el-step title="步骤 3"></el-step>-->
         </el-steps>
         <step-pane1 v-if="active===0" v-on:submitForm="submitForm" ></step-pane1>
-        <step-pane2 v-if="active===1"></step-pane2>
-        <step-pane3 v-if="active===2"></step-pane3>
-        <div class="step-form-btns">
+        <step-pane2 v-if="active===1" v-on:next="next" v-on:back="back" ></step-pane2>
+        <step-pane3 v-if="active===2" v-on:next="next" v-on:back="back" ></step-pane3>
+        <!--三个子界面共用上一步、下一步按钮-->
+        <!--<div class="step-form-btns">
             <el-button style="margin-top: 12px;" @click="back" :disabled="active===0 ? true : false">上一步</el-button>
             <el-button style="margin-top: 12px;" @click="next">{{active === 2 ? '完成' : '下一步'}}</el-button>
-        </div>
+        </div>-->
 
     </div>
 </template>
@@ -71,12 +70,13 @@
                 if (this.active-- < 0) this.active = 0;
             },
             /**
-             * 表单数据的提交
+             * 表单数据的提交（第一步）
              * @param values {object} 表单的值
              */
             submitForm(values) {
 //                console.log('表单的值',values);
-                this.$message.success('创建成功！')
+                this.$message.success('创建成功！');
+                this.next();
             }
         }
     }

@@ -7,23 +7,36 @@
 <template>
   <div class="app-container">
       step2内容
+      <div class="step-form-btns">
+          <el-button style="margin-top: 12px;" @click="back" >上一步</el-button>
+          <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+      </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Step2',
-//  components: { tabPane },
   data() {
     return {
       createdTimes: 0
     }
   },
   methods: {
+      //上一步
+      back(){
+          this.$emit('back')
+      },
+      //下一步
+      next(){
+          this.$emit('next')
+      }
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss" type="text/scss">
+    .step-form-btns {
+        text-align: center;
+    }
 </style>
