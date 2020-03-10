@@ -29,6 +29,7 @@ export default {
     }
   },
   mounted() {
+      //该钩子函数执行时所有的DOM挂载和渲染都已完成，进行echarts实例化
     this.$nextTick(() => {
       this.initChart()
     })

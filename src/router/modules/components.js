@@ -8,7 +8,8 @@ const componentsRouter = {
   redirect: 'noRedirect',
   name: 'ComponentDemo',
   meta: {
-    title: 'Components',
+    // title: 'Components',
+    title: '组件库',
     icon: 'component'
   },
   children: [
@@ -16,7 +17,9 @@ const componentsRouter = {
       path: 'tinymce',
       component: () => import('@/views/components-demo/tinymce'),
       name: 'TinymceDemo',
-      meta: { title: 'Tinymce' }
+      meta: {
+          title: 'Tinymce'
+      }
     },
     {
       path: 'markdown',
