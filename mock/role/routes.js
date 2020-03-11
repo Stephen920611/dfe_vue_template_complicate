@@ -510,6 +510,19 @@ export const asyncRoutes = [
     ]
   },
 
+    {
+        path: '/i18n',
+        component: 'layout/Layout',
+        children: [
+            {
+                path: 'index',
+                component: 'views/i18n-demo/index',
+                name: 'I18n',
+                meta: { title: 'i18n', icon: 'international' }
+            }
+        ]
+    },
+
   {
     path: 'external-link',
     component: 'layout/Layout',
