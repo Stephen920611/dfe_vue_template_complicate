@@ -24,8 +24,7 @@
             <div>
               <span class="message-title" style="padding-right: 10px;">Info: </span>
               <el-tag type="warning">
-                <!--{{ row.vm.$vnode.tag }} error in {{ row.info }}-->
-                {{ row.info }}
+                {{ row.vm.$vnode.tag }} error in {{ row.info }}
               </el-tag>
             </div>
             <br>
