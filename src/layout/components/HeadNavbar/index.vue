@@ -3,9 +3,9 @@
         <logo v-if="showLogo"/>
 
         <!-- <div class="avatar-wrapper">
-             <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-             <i class="el-icon-caret-bottom"/>
-         </div>-->
+                 <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+                 <i class="el-icon-caret-bottom"/>
+             </div>-->
         <div class="header-menu" :style="toggleMenuVisible ? null : 'overflow:hidden'">
             <el-menu
                     :default-active="activeMenu"
@@ -20,26 +20,25 @@
                         :key="route.path"
                         :item="route"
                         :base-path="route.path"
-
                 />
             </el-menu>
         </div>
-        <div  class="header-menu-visible" @click ="toggleMenu()">
-            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"  ></i>
+        <div class="header-menu-visible" @click="toggleMenu()">
+            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
         </div>
         <div class="right-menu">
             <template v-if="device!=='mobile'">
-                <search id="header-search" class="right-menu-item" />
+                <search id="header-search" class="right-menu-item"/>
 
-                <error-log class="errLog-container right-menu-item hover-effect" />
+                <error-log class="errLog-container right-menu-item hover-effect"/>
 
-                <screenfull id="screenfull" class="right-menu-item hover-effect" />
+                <screenfull id="screenfull" class="right-menu-item hover-effect"/>
 
                 <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
-                    <size-select id="size-select" class="right-menu-item hover-effect" />
+                    <size-select id="size-select" class="right-menu-item hover-effect"/>
                 </el-tooltip>
 
-                <lang-select class="right-menu-item hover-effect" />
+                <lang-select class="right-menu-item hover-effect"/>
 
             </template>
             <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -96,7 +95,7 @@
         data() {
             return {
                 list: null,
-                listLoading: true,
+                listLoading: true
             }
         },
         computed: {
@@ -105,7 +104,7 @@
                 'sidebar',
                 'device',
                 'avatar',
-                'toggleMenuVisible',
+                'toggleMenuVisible'
             ]),
             activeMenu() {
                 const route = this.$route
@@ -125,16 +124,16 @@
                 return variables
             }
             /* isCollapse() {
-                        return !this.sidebar.opened
-                    }*/
+                                return !this.sidebar.opened
+                            }*/
         },
         methods: {
 
-            toggleMenu(){
-                const { dispatch } = this.$store;
+            toggleMenu() {
+                const {dispatch} = this.$store
                 dispatch({
-                    type:'app/toggleMenu',
-                    toggleMenuVisible:!this.toggleMenuVisible
+                    type: 'app/toggleMenu',
+                    toggleMenuVisible: !this.toggleMenuVisible
                 })
             },
             toggleSideBar() {
@@ -167,16 +166,16 @@
             margin-left: $sideBarWidth;
             position: relative;
         }
-        .header-menu-visible{
+        .header-menu-visible {
             height: 60px;
             width: 40px;
             line-height: 60px;
             padding-top: 4px;
             text-align: center;
-            background-color:#304156;
+            background-color: #304156;
             color: #fff;
-            & > i{
-              font-size: 20px;
+            & > i {
+                font-size: 20px;
             }
         }
         .head-nav-bar {
@@ -220,7 +219,7 @@
         }
         .header-menu {
             /*width: 100%;*/
-            flex:1;
+            flex: 1;
             height: 60px;
         }
         .el-scrollbar {
@@ -477,7 +476,7 @@
                 }
             }
         }
-        & >>> .svg-icon {
+        & > > > .svg-icon {
             margin-right: 0 !important;
         }
 
