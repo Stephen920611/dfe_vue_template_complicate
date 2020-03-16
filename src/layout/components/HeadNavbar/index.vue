@@ -28,7 +28,21 @@
             <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"  ></i>
         </div>
         <div class="right-menu">
-            <el-dropdown class="avatar-container" trigger="click">
+            <template v-if="device!=='mobile'">
+                <search id="header-search" class="right-menu-item" />
+
+                <error-log class="errLog-container right-menu-item hover-effect" />
+
+                <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
+                <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
+                    <size-select id="size-select" class="right-menu-item hover-effect" />
+                </el-tooltip>
+
+                <lang-select class="right-menu-item hover-effect" />
+
+            </template>
+            <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
                 <div class="avatar-wrapper">
                     <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
                     <i class="el-icon-caret-bottom"/>
@@ -59,9 +73,26 @@
     import Logo from './Logo'
     import SidebarItem from './SidebarItem'
     import variables from '@/styles/variables.scss'
+    import Breadcrumb from '@/components/Breadcrumb'
+    import Hamburger from '@/components/Hamburger'
+    import ErrorLog from '@/components/ErrorLog'
+    import Screenfull from '@/components/Screenfull'
+    import SizeSelect from '@/components/SizeSelect'
+    import LangSelect from '@/components/LangSelect'
+    import Search from '@/components/HeaderSearch'
 
     export default {
-        components: {SidebarItem, Logo},
+        components: {
+            SidebarItem,
+            Logo,
+            Breadcrumb,
+            Hamburger,
+            ErrorLog,
+            Screenfull,
+            SizeSelect,
+            LangSelect,
+            Search
+        },
         data() {
             return {
                 list: null,
@@ -72,6 +103,7 @@
             ...mapGetters([
                 'permission_routes',
                 'sidebar',
+                'device',
                 'avatar',
                 'toggleMenuVisible',
             ]),
@@ -188,7 +220,8 @@
 
         }
         .header-menu {
-            width: 100%;
+            /*width: 100%;*/
+            flex:1;
             height: 60px;
         }
         .el-scrollbar {
@@ -418,7 +451,7 @@
         padding-left: 20px;
         float: right;
         /*height: 100%;*/
-        /*line-height: 60px;*/
+        line-height: 60px;
         height: 60px;
         background-color: #304156;
         color: #fff;
@@ -444,6 +477,9 @@
                     background: rgba(0, 0, 0, .025)
                 }
             }
+        }
+        & >>> .svg-icon {
+            margin-right: 0 !important;
         }
 
         .avatar-container {
