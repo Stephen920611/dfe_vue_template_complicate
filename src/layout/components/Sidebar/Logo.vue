@@ -1,5 +1,3 @@
-<!--slideBar logo 页面-->
-
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
@@ -26,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'vue公共模板',
+      title: 'vue极简版',
       logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }

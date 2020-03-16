@@ -8,7 +8,10 @@ const state = {
   },
   device: 'desktop',
   language: getLanguage(),
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || 'medium',
+  sidebarData: null, // 侧边栏的数据
+  hasSidebar: false, // 是否有sidebar，根据顶部导航是否有子元素来判断
+  sidebarParents: null// 点击的顶部标题的数据
 }
 
 const mutations = {
@@ -36,6 +39,11 @@ const mutations = {
   SET_SIZE: (state, size) => {
     state.size = size
     Cookies.set('size', size)
+  },
+  UPDATE_SIDEBAR: (state, { sidebarData, hasSidebar, sidebarParents }) => {
+    state.sidebarData = sidebarData
+    state.hasSidebar = hasSidebar
+    state.sidebarParents = sidebarParents ? sidebarParents.path : ''
   }
 }
 
@@ -54,6 +62,10 @@ const actions = {
   },
   setSize({ commit }, size) {
     commit('SET_SIZE', size)
+  },
+  updateSidebar({ commit }, { type, sidebarData, hasSidebar, sidebarParents }) {
+    console.log('1233', sidebarData, hasSidebar,)
+    commit('UPDATE_SIDEBAR', { sidebarData, hasSidebar, sidebarParents })
   }
 }
 

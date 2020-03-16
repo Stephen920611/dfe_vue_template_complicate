@@ -14,12 +14,20 @@
 <script>
 import { generateTitle } from '@/utils/i18n'
 import pathToRegexp from 'path-to-regexp'
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
       levelList: null
     }
+  },
+  computed: {
+    ...mapGetters([
+      'permission_routes',
+      'sidebar',
+      'avatar'
+    ])
   },
   watch: {
     $route(route) {
@@ -45,6 +53,18 @@ export default {
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+      // 根据路由显示侧边栏
+      const { dispatch } = this.$store
+      this.permission_routes.map((val, idx) => {
+        if (val.hasOwnProperty('name') && this.levelList.length > 1 && val.name === this.levelList[1].name) {
+          dispatch({
+            type: 'app/updateSidebar', // 调用action
+            sidebarData: val.children, // 侧边栏的数据
+            hasSidebar: true, // 是否显示侧边栏
+            sidebarParents: val// 点击的顶部标题的数据
+          })
+        }
+      })
     },
     isDashboard(route) {
       const name = route && route.name

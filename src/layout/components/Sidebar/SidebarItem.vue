@@ -58,6 +58,7 @@ export default {
     return {}
   },
   methods: {
+    generateTitle,
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
@@ -68,7 +69,6 @@ export default {
           return true
         }
       })
-
       // When there is only one child router, the child router is displayed by default
       if (showingChildren.length === 1) {
         return true
@@ -89,10 +89,10 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
-    },
-
-    generateTitle
+      //      多添加顶部标题的根节点路由，要不然404
+      return path.resolve(this.$store.getters.sidebarParents, this.basePath, routePath)
+      //        return path.resolve(this.basePath, routePath)
+    }
   }
 }
 </script>
