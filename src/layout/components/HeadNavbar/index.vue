@@ -1,111 +1,128 @@
 <template>
-  <div :class="{'has-logo':showLogo}" class="head-nav-bar">
-    <logo v-if="showLogo" />
-    <div class="header-menu">
-      <el-menu
-        :default-active="activeMenu"
-        background-color="#304156"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-        mode="horizontal"
-        class="el-menu-demo"
-      >
-        <sidebar-item
-          v-for="route in permission_routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
-      </el-menu>
-    </div>
-    <!--<el-scrollbar wrap-class="scrollbar-wrapper">
+    <div :class="{'has-logo':showLogo}" class="head-nav-bar">
+        <logo v-if="showLogo"/>
 
-        </el-scrollbar>-->
-    <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+        <!-- <div class="avatar-wrapper">
+             <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+             <i class="el-icon-caret-bottom"/>
+         </div>-->
+        <div class="header-menu" :style="toggleMenuVisible ? null : 'overflow:hidden'">
+            <el-menu
+                    :default-active="activeMenu"
+                    background-color="#304156"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+                    mode="horizontal"
+                    class="el-menu-demo"
+            >
+                <sidebar-item
+                        v-for="route in permission_routes"
+                        :key="route.path"
+                        :item="route"
+                        :base-path="route.path"
+
+                />
+            </el-menu>
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <div  class="header-menu-visible" @click ="toggleMenu()">
+            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"  ></i>
+        </div>
+        <div class="right-menu">
+            <el-dropdown class="avatar-container" trigger="click">
+                <div class="avatar-wrapper">
+                    <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+                    <i class="el-icon-caret-bottom"/>
+                </div>
+                <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                    <router-link to="/">
+                        <el-dropdown-item>
+                            Home
+                        </el-dropdown-item>
+                    </router-link>
+                    <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
+                        <el-dropdown-item>Github</el-dropdown-item>
+                    </a>
+                    <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+                        <el-dropdown-item>Docs</el-dropdown-item>
+                    </a>
+                    <el-dropdown-item divided @click.native="logout">
+                        <span style="display:block;">Log Out</span>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+    import {mapGetters} from 'vuex'
+    import Logo from './Logo'
+    import SidebarItem from './SidebarItem'
+    import variables from '@/styles/variables.scss'
 
-export default {
-  components: { SidebarItem, Logo },
-  data() {
-    return {
-      list: null,
-      listLoading: true
+    export default {
+        components: {SidebarItem, Logo},
+        data() {
+            return {
+                list: null,
+                listLoading: true,
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'permission_routes',
+                'sidebar',
+                'avatar',
+                'toggleMenuVisible',
+            ]),
+            activeMenu() {
+                const route = this.$route
+                const {meta, path} = route
+                //                console.log('route',route);
+                // if set path, the sidebar will highlight the path you set
+                if (meta.activeMenu) {
+                    return meta.activeMenu
+                }
+                return path
+            },
+            showLogo() {
+                //                return this.$store.state.settings.sidebarLogo
+                return true
+            },
+            variables() {
+                return variables
+            }
+            /* isCollapse() {
+                        return !this.sidebar.opened
+                    }*/
+        },
+        methods: {
+
+            toggleMenu(){
+                const { dispatch } = this.$store;
+                dispatch({
+                    type:'app/toggleMenu',
+                    toggleMenuVisible:!this.toggleMenuVisible
+                })
+            },
+            toggleSideBar() {
+                this.$store.dispatch('app/toggleSideBar')
+            },
+            async logout() {
+                await this.$store.dispatch('user/logout')
+                this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+            }
+        }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'permission_routes',
-      'sidebar',
-      'avatar'
-    ]),
-    activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      //                console.log('route',route);
-      // if set path, the sidebar will highlight the path you set
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      return path
-    },
-    showLogo() {
-      //                return this.$store.state.settings.sidebarLogo
-      return true
-    },
-    variables() {
-      return variables
-    }
-    /* isCollapse() {
-                return !this.sidebar.opened
-            }*/
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    }
-  }
-}
 </script>
 <style lang="scss" scoped type="text/scss">
     @import "~@/styles/mixin.scss";
     @import "~@/styles/variables.scss";
-    .el-menu--popup{
+
+    .el-menu--popup {
         padding: 0;
     }
+
     #app {
 
         & > > > .hideSidebar .main-container {
@@ -117,6 +134,18 @@ export default {
             transition: margin-left .28s;
             margin-left: $sideBarWidth;
             position: relative;
+        }
+        .header-menu-visible{
+            height: 60px;
+            width: 40px;
+            line-height: 60px;
+            padding-top: 4px;
+            text-align: center;
+            background-color:#304156;
+            color: #fff;
+            & > i{
+              font-size: 20px;
+            }
         }
         .head-nav-bar {
             position: fixed;
@@ -158,7 +187,7 @@ export default {
             }
 
         }
-        .header-menu{
+        .header-menu {
             width: 100%;
             height: 60px;
         }
@@ -386,9 +415,10 @@ export default {
     }
 
     .right-menu {
+        padding-left: 20px;
         float: right;
         /*height: 100%;*/
-        line-height: 60px;
+        /*line-height: 60px;*/
         height: 60px;
         background-color: #304156;
         color: #fff;

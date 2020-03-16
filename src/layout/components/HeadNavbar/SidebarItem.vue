@@ -97,12 +97,23 @@ export default {
         sidebarParents: parents// 点击的顶部标题的数据
       })
     },
+      toggleMenuItem(){
+          const { dispatch } = this.$store;
+//                this.menuVisible = ! this.menuVisible;
+          dispatch({
+              type:'app/toggleMenu',
+              toggleMenuVisible:false
+          })
+      },
     menuChange(onlyOneChild) {
-      this.updateSidebar(null, false, null)
+          //收起顶部标题
+          this.toggleMenuItem();
+      this.updateSidebar(null, false, null);
     },
     menuHasChild(item) {
-      // 更改侧边栏
-      console.log('sgtddt', item)
+        //收起顶部标题
+        this.toggleMenuItem();
+        // 更改侧边栏
       this.updateSidebar(item.children, true, item)
       // 跳转重定向路由
       this.$router.push({
