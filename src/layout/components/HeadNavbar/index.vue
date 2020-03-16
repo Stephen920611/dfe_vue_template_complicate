@@ -186,7 +186,6 @@
             display: flex;
             flex: 1;
             .sidebar-logo-container {
-                width: 265px;
                 height: 60px;
                 line-height: 60px;
                 background-color: #304156;
