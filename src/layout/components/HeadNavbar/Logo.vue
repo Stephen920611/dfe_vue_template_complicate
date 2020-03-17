@@ -63,7 +63,7 @@ export default {
                 margin: 0;
                 color: #fff;
                 font-weight: 600;
-                max-width: 85%;
+                max-width: 430px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
