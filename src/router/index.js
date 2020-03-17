@@ -150,7 +150,7 @@ export const constantRoutes = [
         component: () => import('@/views/step-form/index'),
         // redirect: '/step-form/index/step1',
         name: 'StepFrom', // 设定路由的名字
-        hidden: true,
+        // hidden: true,
         meta: {
           title: '分步表单',
           icon: 'user'
@@ -208,6 +208,7 @@ export const asyncRoutes = [
         name: 'PagePermission',
         meta: {
           title: 'pagePermission',
+            icon: 'lock',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
@@ -216,7 +217,8 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/directive'),
         name: 'DirectivePermission',
         meta: {
-          title: 'directivePermission'
+          title: 'directivePermission',
+            icon: 'lock',
           // if do not set roles, means: this page does not require permission
         }
       },
@@ -226,6 +228,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
+            icon: 'lock',
           roles: ['admin']
         }
       }
@@ -265,7 +268,10 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/example/create'),
         name: 'CreateArticle',
-        meta: { title: 'createArticle', icon: 'edit' }
+        meta: {
+            title: 'createArticle',
+            icon: 'edit',
+        }
       },
       {
         path: 'edit/:id(\\d+)',
@@ -348,25 +354,25 @@ export const asyncRoutes = [
         path: 'export-excel',
         component: () => import('@/views/excel/export-excel'),
         name: 'ExportExcel',
-        meta: { title: 'exportExcel' }
+        meta: { title: 'exportExcel',icon: 'excel' }
       },
       {
         path: 'export-selected-excel',
         component: () => import('@/views/excel/select-excel'),
         name: 'SelectExcel',
-        meta: { title: 'selectExcel' }
+        meta: { title: 'selectExcel',icon: 'excel' }
       },
       {
         path: 'export-merge-header',
         component: () => import('@/views/excel/merge-header'),
         name: 'MergeHeader',
-        meta: { title: 'mergeHeader' }
+        meta: { title: 'mergeHeader',icon: 'excel' }
       },
       {
         path: 'upload-excel',
         component: () => import('@/views/excel/upload-excel'),
         name: 'UploadExcel',
-        meta: { title: 'uploadExcel' }
+        meta: { title: 'uploadExcel',icon: 'excel' }
       }
     ]
   },
@@ -383,7 +389,7 @@ export const asyncRoutes = [
         path: 'download',
         component: () => import('@/views/zip/index'),
         name: 'ExportZip',
-        meta: { title: 'exportZip' }
+        meta: { title: 'exportZip',icon: 'zip' }
       }
     ]
   },
