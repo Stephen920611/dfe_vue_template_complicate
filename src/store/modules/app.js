@@ -68,7 +68,6 @@ const actions = {
     commit('SET_SIZE', size)
   },
   updateSidebar({ commit }, { type, sidebarData, hasSidebar, sidebarParents }) {
-    console.log('1233', sidebarData, hasSidebar,)
     commit('UPDATE_SIDEBAR', { sidebarData, hasSidebar, sidebarParents })
   },
     //判断顶部导航显示一行还是多行
