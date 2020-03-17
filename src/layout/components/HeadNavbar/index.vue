@@ -176,6 +176,9 @@
             color: #fff;
             & > i {
                 font-size: 20px;
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
         .head-nav-bar {
