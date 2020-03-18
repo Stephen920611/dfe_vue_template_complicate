@@ -224,6 +224,9 @@
             /*width: 100%;*/
             flex: 1;
             height: 60px;
+            .el-menu.el-menu--horizontal{
+                border: none;
+            }
         }
         .el-scrollbar {
             width: 100%;
