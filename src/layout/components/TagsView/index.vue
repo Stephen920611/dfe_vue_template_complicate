@@ -200,7 +200,7 @@ export default {
 .tags-view-container {
     position: fixed;
     z-index: 1000;
-    margin-top: 50px;
+    top: 110px;
   height: 34px;
   width: 100%;
   background: #fff;

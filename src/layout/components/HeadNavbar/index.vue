@@ -186,6 +186,7 @@
             width: 100%;
             z-index: 2000;
             display: flex;
+            top:0;
             flex: 1;
             .sidebar-logo-container {
                 height: 60px;

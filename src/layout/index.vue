@@ -19,13 +19,15 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <head-navbar />
     <sidebar v-if="hasSidebar" class="sidebar-container" style="padding-top: 60px" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container" :style="!hasSidebar ? 'margin-left:0' : null">
-      <div :class="{'fixed-header':fixedHeader}" style="padding-top: 60px">
-        <navbar />
-        <!--顶部菜单栏-->
-        <!--<head-navbar/>-->
-        <tags-view v-if="needTagsView" />
+      <div :class="{hasTagsView:needTagsView}">
+          <div :class="{'fixed-header':fixedHeader}" :style=" hasSidebar ? 'margin-left:210px' : 'margin-left:0'">
+              <navbar />
+              <!--顶部菜单栏-->
+              <!--<head-navbar/>-->
+              <tags-view v-if="needTagsView" />
+          </div>
       </div>
+    <div  class="main-container" :style="!hasSidebar ? 'margin-left:0' : null" >
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
