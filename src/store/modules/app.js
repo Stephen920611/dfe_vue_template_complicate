@@ -9,9 +9,10 @@ const state = {
   device: 'desktop',
   language: getLanguage(),
   size: Cookies.get('size') || 'medium',
-  sidebarData: null, // 侧边栏的数据
-  hasSidebar: false, // 是否有sidebar，根据顶部导航是否有子元素来判断
-  sidebarParents: null, // 点击的顶部标题的数据
+    headVisible:true, //检测是顶部标题true还是侧边栏false
+    sidebarData: null, // 侧边栏的数据
+    hasSidebar: false, // 是否有sidebar，根据顶部导航是否有子元素来判断
+    sidebarParents: null, // 点击的顶部标题的数据
     toggleMenuVisible:false,//默认显示单行菜单
     menuVisibleBtn:null,// 展开隐藏多行菜单按钮的显示与隐藏
     resizeHandlerVisible:true,// 监听屏幕变化的标志

@@ -6,7 +6,7 @@
 
     <hamburger v-show="hasSidebar" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
-    <breadcrumb class="breadcrumb-container" :style="headVisible ? 'padding-left: 15px' : null" />
+    <breadcrumb class="breadcrumb-container" :style="!hasSidebar ? 'padding-left: 15px' : null" />
     <!--<div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
