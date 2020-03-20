@@ -20,7 +20,7 @@
     <head-navbar />
     <sidebar v-if="hasSidebar" class="sidebar-container" style="padding-top: 60px" />
       <div :class="{hasTagsView:needTagsView}">
-          <div :class="{'fixed-header':fixedHeader}" :style=" hasSidebar ? 'margin-left:210px' : 'margin-left:0'">
+          <div :class="{'fixed-header':fixedHeader}" class="navbar-container" :style="!hasSidebar ? 'margin-left:0' : null" >
               <navbar />
               <!--顶部菜单栏-->
               <!--<head-navbar/>-->
