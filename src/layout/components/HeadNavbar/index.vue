@@ -14,6 +14,8 @@
                     active-text-color="#ffd04b"
                     mode="horizontal"
                     class="el-menu-demo"
+                    ref="subMenuList"
+
             >
                 <sidebar-item
                         v-for="route in permission_routes"
@@ -23,9 +25,13 @@
                 />
             </el-menu>
         </div>
-        <div class="header-menu-visible" @click="toggleMenu()">
-            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
+        <div  v-show="menuVisibleBtn" class="header-menu-visible" @click ="toggleMenu()">
+            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"  ></i>
         </div>
+        <!--最初版本-->
+       <!-- <div class="header-menu-visible" @click="toggleMenu()">
+            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
+        </div>-->
         <div class="right-menu">
             <template v-if="device!=='mobile'">
                 <search id="header-search" class="right-menu-item"/>
@@ -104,7 +110,9 @@
                 'sidebar',
                 'device',
                 'avatar',
-                'toggleMenuVisible'
+                'toggleMenuVisible',
+                'menuVisibleBtn',
+                'resizeHandlerVisible'
             ]),
             activeMenu() {
                 const route = this.$route
@@ -127,14 +135,33 @@
                                 return !this.sidebar.opened
                             }*/
         },
+        watch: {
+            resizeHandlerVisible:{
+                handler(val, oldVal) {
+                    this.resizeUpOrDownBtn();
+                },
+            }
+        },
+        mounted:function () {
+            const { dispatch } = this.$store;
+            this.resizeUpOrDownBtn();
+        },
         methods: {
-
+            //是否显示多余菜单
             toggleMenu() {
                 const {dispatch} = this.$store
                 dispatch({
                     type: 'app/toggleMenu',
                     toggleMenuVisible: !this.toggleMenuVisible
                 })
+            },
+            //监听多余按钮的显示
+            resizeUpOrDownBtn(){
+                const { dispatch } = this.$store;
+                dispatch({
+                    type:'app/toggleMenuBtn',
+                    menuVisibleBtn:this.$refs.subMenuList.$el.offsetHeight > 60
+                });
             },
             toggleSideBar() {
                 this.$store.dispatch('app/toggleSideBar')
