@@ -9,6 +9,9 @@
         height: calc(100vh - 144px);
         overflow: auto;
     }
+    .navbar-container{
+        margin-left: $sideBarWidth;
+    }
 
     .sidebar-container {
         transition: width 0.28s;
@@ -150,6 +153,9 @@
         .main-container {
             margin-left: 0px;  //默认54px，收起时会留出 54px 的空白，因此我们设为0
         }
+        .navbar-container {
+            margin-left: 0px;  //默认54px，收起时会留出 54px 的空白，因此我们设为0
+        }
 
         .submenu-title-noDropdown {
             //padding: 0 !important;// 注意！ 侧边栏有。顶部导航的时候没有
@@ -186,6 +192,9 @@
         }
 
         .main-container {
+            margin-left: 54px;  //默认54px，收起时会留出 54px 的空白，因此我们设为0
+        }
+        .navbar-container {
             margin-left: 54px;  //默认54px，收起时会留出 54px 的空白，因此我们设为0
         }
 
@@ -239,6 +248,9 @@
     // mobile responsive
     .mobile {
         .main-container {
+            margin-left: 0px;
+        }
+        .navbar-container {
             margin-left: 0px;
         }
 
