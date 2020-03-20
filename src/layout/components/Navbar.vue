@@ -104,9 +104,9 @@ export default {
 <style lang="scss" scoped>
 .navbar {
     width: 100%;
-    position: fixed;
-    z-index: 1000;
-    top:60px;
+    /*position: fixed;*/
+    /*z-index: 1000;*/
+    /*top:60px;*/
   height: 50px;
   overflow: hidden;
   /*position: relative;*/

@@ -186,8 +186,8 @@ export default {
       }
 
 //      this.top = e.clientY
-        // 点击时，位于视窗的高度，减去顶部导航60、面包屑50
-      this.top = e.clientY - 110
+        // 点击时，位于视窗的高度，减去顶部导航60
+      this.top = e.clientY - 60
       this.visible = true
       this.selectedTag = tag
     },
@@ -200,9 +200,9 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-    position: fixed;
-    z-index: 1000;
-    top: 110px;
+    /*position: fixed;*/
+    /*z-index: 1000;*/
+    /*top: 110px;*/
   height: 34px;
   width: 100%;
   background: #fff;
