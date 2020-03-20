@@ -185,7 +185,9 @@ export default {
         this.left = left
       }
 
-      this.top = e.clientY
+//      this.top = e.clientY
+        // 点击时，位于视窗的高度，减去顶部导航60、面包屑50
+      this.top = e.clientY - 110
       this.visible = true
       this.selectedTag = tag
     },
