@@ -20,6 +20,7 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+import './utils/scrollbar' // 滚动条插件
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts // 引入echarts，将其绑定到vue原型上 使用时this.$echarts
