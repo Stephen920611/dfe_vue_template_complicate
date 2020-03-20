@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'vue极简版',
+      title: 'vue复杂版',
       logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }
