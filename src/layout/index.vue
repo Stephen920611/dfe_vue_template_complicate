@@ -20,7 +20,7 @@
     <head-navbar />
     <sidebar v-if="hasSidebar" class="sidebar-container" style="padding-top: 60px" />
       <div :class="{hasTagsView:needTagsView}">
-          <div :class="{'fixed-header':fixedHeader}" class="navbar-container" :style="!hasSidebar ? 'margin-left:0' : null" >
+          <div :class="{'fixed-header':fixedHeader}" class="navbar-container" :style="!hasSidebar ? 'margin-left:0;width:100%' : null" >
               <navbar />
               <!--顶部菜单栏-->
               <!--<head-navbar/>-->
@@ -57,7 +57,6 @@ export default {
   data() {
     return {
       headVisible: this.$store.state.app.headVisible
-      //                hasSidebar: this.$store.state.app.hasSidebar,
     }
   },
   computed: {
@@ -91,6 +90,18 @@ export default {
 <style lang="scss" scoped type="text/scss">
     @import "~@/styles/mixin.scss";
     @import "~@/styles/variables.scss";
+    #app{
+        .hideSidebar{ //侧边栏收起时
+            & >>>.navbar-container {
+                width: calc(100% - 54px);//侧边栏的状况决定navbar-container的宽度
+            }
+        }
+       .openSidebar{ //侧边栏打开时
+           &>>> .navbar-container {
+               width: calc(100% - 210px); //侧边栏的状况决定navbar-container的宽度
+           }
+       }
+    }
 
     .app-wrapper {
         @include clearfix;

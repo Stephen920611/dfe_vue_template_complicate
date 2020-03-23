@@ -16,6 +16,9 @@
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
+      <div class="close-contextmenu"
+           @click.prevent.stop="openAllMenu"
+       >操作</div>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">{{ $t('tagsView.close') }}</li>
@@ -55,7 +58,7 @@ export default {
       this.moveToCurrentTag()
     },
     visible(value) {
-      if (value) {
+        if (value) {
         document.body.addEventListener('click', this.closeMenu)
       } else {
         document.body.removeEventListener('click', this.closeMenu)
@@ -112,7 +115,7 @@ export default {
       return false
     },
     moveToCurrentTag() {
-      const tags = this.$refs.tag
+        const tags = this.$refs.tag
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
@@ -126,6 +129,7 @@ export default {
         }
       })
     },
+      //选项卡-刷新
     refreshSelectedTag(view) {
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
         const { fullPath } = view
@@ -136,6 +140,7 @@ export default {
         })
       })
     },
+      //关闭该选项卡
     closeSelectedTag(view) {
       this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
@@ -143,12 +148,14 @@ export default {
         }
       })
     },
+      //选项卡-关闭其他
     closeOthersTags() {
-      this.$router.push(this.selectedTag)
-      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-        this.moveToCurrentTag()
+        this.$router.push(this.selectedTag);
+        this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
+          this.moveToCurrentTag()
       })
     },
+      //选项卡-关闭全部
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
@@ -157,6 +164,7 @@ export default {
         this.toLastView(visitedViews, view)
       })
     },
+
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
@@ -172,6 +180,8 @@ export default {
         }
       }
     },
+
+      //右击打开关闭选项
     openMenu(tag, e) {
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
@@ -190,15 +200,43 @@ export default {
       this.top = e.clientY - 60
       this.visible = true
       this.selectedTag = tag
+
     },
+      //关闭选项
     closeMenu() {
       this.visible = false
-    }
+    },
+//      点击右侧全部菜单，打开选项
+      openAllMenu(e) {
+        let self = this;
+          const tags = this.$refs.tag;
+          //记录当前路由
+          for (const tag of this.visitedViews) {
+              if (tag.path === this.$route.path) {
+                  self.selectedTag = tag;
+                  break
+              }
+          }
+          const menuMinWidth = 105
+          const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+          const offsetWidth = this.$el.offsetWidth // container width
+          const maxLeft = offsetWidth - menuMinWidth // left boundary
+          const left = e.clientX - offsetLeft + 15 // 15: margin right
+          if (left > maxLeft) {
+              this.left = maxLeft
+          } else {
+              this.left = left
+          }
+//      this.top = e.clientY
+          // 点击时，位于视窗的高度，减去顶部导航60
+          this.top = 90;
+          this.visible = true;
+      },
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped type="text/scss">
 .tags-view-container {
     /*position: fixed;*/
     /*z-index: 1000;*/
@@ -208,6 +246,8 @@ export default {
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+    display: flex;
+    justify-content: space-between;
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -245,6 +285,17 @@ export default {
       }
     }
   }
+    .close-contextmenu{
+        font-size: 12px;
+        width: 100px;
+        line-height: 34px;
+        text-align: center;
+        /*border-left: 1px solid #d8dce5;*/
+        box-shadow: -1px 0px 2px 0 rgba(0,0,0,0.12)    ;
+        &:hover{
+            cursor: pointer;
+        }
+    }
   .contextmenu {
     margin: 0;
     background: #fff;
@@ -256,7 +307,8 @@ export default {
     font-size: 12px;
     font-weight: 400;
     color: #333;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+    /*box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);*/
+    box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, .3);
     li {
       margin: 0;
       padding: 7px 16px;

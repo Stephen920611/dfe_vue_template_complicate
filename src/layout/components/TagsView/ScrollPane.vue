@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped type="text/scss">
 .scroll-container {
   white-space: nowrap;
   position: relative;
@@ -79,6 +79,8 @@ export default {
     }
     .el-scrollbar__wrap {
       height: 49px;
+        /*margin-right: 0 !important;*/
+        /*overflow-y: hidden;*/
     }
   }
 }
