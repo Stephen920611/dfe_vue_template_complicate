@@ -134,7 +134,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
+  /*{
     path: '/step-form',
     component: Layout,
     redirect: '/step-form/index',
@@ -182,7 +182,7 @@ export const constantRoutes = [
       }
 
     ]
-  }
+  }*/
 ]
 
 /**
@@ -252,7 +252,7 @@ export const asyncRoutes = [
   componentsRouter,
   chartsRouter,
   nestedRouter,
-  tableRouter,
+  // tableRouter,
 
   {
     path: '/example',
@@ -289,7 +289,8 @@ export const asyncRoutes = [
     ]
   },
 
-  {
+//移动到组件中的路由
+/*  {
     path: '/tab',
     component: Layout,
     children: [
@@ -301,7 +302,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
   {
     path: '/error',
     component: Layout,
@@ -326,6 +326,78 @@ export const asyncRoutes = [
       }
     ]
   },
+      {
+      path: '/excel',
+      component: Layout,
+      redirect: '/excel/export-excel',
+      name: 'Excel',
+      meta: {
+        title: 'excel',
+        icon: 'excel'
+      },
+      children: [
+        {
+          path: 'export-excel',
+          component: () => import('@/views/excel/export-excel'),
+          name: 'ExportExcel',
+          meta: { title: 'exportExcel',icon: 'excel' }
+        },
+        {
+          path: 'export-selected-excel',
+          component: () => import('@/views/excel/select-excel'),
+          name: 'SelectExcel',
+          meta: { title: 'selectExcel',icon: 'excel' }
+        },
+        {
+          path: 'export-merge-header',
+          component: () => import('@/views/excel/merge-header'),
+          name: 'MergeHeader',
+          meta: { title: 'mergeHeader',icon: 'excel' }
+        },
+        {
+          path: 'upload-excel',
+          component: () => import('@/views/excel/upload-excel'),
+          name: 'UploadExcel',
+          meta: { title: 'uploadExcel',icon: 'excel' }
+        }
+      ]
+    },
+
+    {
+      path: '/zip',
+      component: Layout,
+      redirect: '/zip/download',
+      alwaysShow: true,
+      name: 'Zip',
+      meta: { title: 'zip', icon: 'zip' },
+      children: [
+        {
+          path: 'download',
+          component: () => import('@/views/zip/index'),
+          name: 'ExportZip',
+          meta: { title: 'exportZip',icon: 'zip' }
+        }
+      ]
+    },
+
+    {
+      path: '/pdf',
+      component: Layout,
+      redirect: '/pdf/index',
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/pdf/index'),
+          name: 'PDF',
+          meta: { title: 'pdf', icon: 'pdf' }
+        }
+      ]
+    },
+    {
+      path: '/pdf/download',
+      component: () => import('@/views/pdf/download'),
+      hidden: true
+    },*/
 
   {
     path: '/error-log',
@@ -338,79 +410,6 @@ export const asyncRoutes = [
         meta: { title: 'errorLog', icon: 'bug' }
       }
     ]
-  },
-
-  {
-    path: '/excel',
-    component: Layout,
-    redirect: '/excel/export-excel',
-    name: 'Excel',
-    meta: {
-      title: 'excel',
-      icon: 'excel'
-    },
-    children: [
-      {
-        path: 'export-excel',
-        component: () => import('@/views/excel/export-excel'),
-        name: 'ExportExcel',
-        meta: { title: 'exportExcel',icon: 'excel' }
-      },
-      {
-        path: 'export-selected-excel',
-        component: () => import('@/views/excel/select-excel'),
-        name: 'SelectExcel',
-        meta: { title: 'selectExcel',icon: 'excel' }
-      },
-      {
-        path: 'export-merge-header',
-        component: () => import('@/views/excel/merge-header'),
-        name: 'MergeHeader',
-        meta: { title: 'mergeHeader',icon: 'excel' }
-      },
-      {
-        path: 'upload-excel',
-        component: () => import('@/views/excel/upload-excel'),
-        name: 'UploadExcel',
-        meta: { title: 'uploadExcel',icon: 'excel' }
-      }
-    ]
-  },
-
-  {
-    path: '/zip',
-    component: Layout,
-    redirect: '/zip/download',
-    alwaysShow: true,
-    name: 'Zip',
-    meta: { title: 'zip', icon: 'zip' },
-    children: [
-      {
-        path: 'download',
-        component: () => import('@/views/zip/index'),
-        name: 'ExportZip',
-        meta: { title: 'exportZip',icon: 'zip' }
-      }
-    ]
-  },
-
-  {
-    path: '/pdf',
-    component: Layout,
-    redirect: '/pdf/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/pdf/index'),
-        name: 'PDF',
-        meta: { title: 'pdf', icon: 'pdf' }
-      }
-    ]
-  },
-  {
-    path: '/pdf/download',
-    component: () => import('@/views/pdf/download'),
-    hidden: true
   },
 
   {

@@ -80,7 +80,6 @@ export default {
     .el-scrollbar__wrap {
       height: 49px;
         /*margin-right: 0 !important;*/
-        /*overflow-y: hidden;*/
     }
   }
 }
