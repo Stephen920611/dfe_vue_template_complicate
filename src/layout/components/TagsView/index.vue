@@ -1,7 +1,8 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-      <router-link
+        <!--原有tags 超出滚动条滚动-->
+     <!-- <router-link
         v-for="tag in visitedViews"
         ref="tag"
         :key="tag.path"
@@ -14,8 +15,36 @@
       >
         {{ generateTitle(tag.title) }}
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
+      </router-link>-->
+
+        <!--超出 显示左右按钮滚动-->
+        <el-tabs  type="card" class="tabs-container">
+                <el-tab-pane
+                        v-for="tag in visitedViews"
+                        :key="tag.path"
+                        :class="isActive(tag)?'active':''"
+                        tag="span"
+                        >
+                    <router-link
+                            slot="label"
+                            ref="tag"
+                            :key="tag.path"
+                            :class="isActive(tag)?'active':''"
+                            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+                            class="tags-view-item"
+                            tag="span"
+                            @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+                            @contextmenu.prevent.native="openMenu(tag,$event)"
+                    >
+                        {{generateTitle(tag.title)}}
+                        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+                    </router-link>
+                </el-tab-pane>
+
+
+        </el-tabs>
     </scroll-pane>
+
       <div class="close-contextmenu"
            @click.prevent.stop="openAllMenu"
        >操作</div>
@@ -320,12 +349,11 @@ export default {
   }
 }
 </style>
-
-<style lang="scss">
+<style lang="scss" scoped type="text/scss" >
 //reset element css of el-icon-close
 .tags-view-wrapper {
   .tags-view-item {
-    .el-icon-close {
+    &>>>.el-icon-close {
       width: 16px;
       height: 16px;
       vertical-align: 2px;
@@ -345,4 +373,71 @@ export default {
     }
   }
 }
+</style>
+
+<!--左右按键滚动样式-->
+<style lang="scss" scoped type="text/scss">
+    .tabs-container{
+        .tags-view-item {
+            &:first-of-type {
+                margin-left: 5px !important;
+            }
+            &:last-of-type {
+                margin-right: 5px !important;
+            }
+        }
+        &>>>.el-tabs__nav-next, &>>>.el-tabs__nav-prev{
+            line-height: 34px !important;
+            font-size: 15px;
+            padding: 0 5px;
+        }
+        /deep/ {
+            .el-tabs__nav{
+                border: none;
+            }
+            .el-tabs__item:last-child{
+                padding-right: 0 !important;
+            }
+            .el-tabs__item{
+                border-bottom: none;
+                border-left: none;
+                padding: 0;
+                height: 30px;
+                line-height: 30px;
+                &:first-child {
+                    margin-left: 10px !important;
+                }
+                &:last-child{
+                    margin-right: 10px !important;
+                }
+            }
+            .el-tabs__nav-wrap{
+                margin-bottom: 0;
+            }
+            .el-tabs__header{
+                border-bottom: none;
+            }
+            .el-tabs__content{
+                display: none;
+            }
+            .el-tabs__item:nth-child(2){
+                padding-left: 0!important;
+            }
+            .el-icon-close{
+                vertical-align: middle !important;
+                &:before{
+                    vertical-align: middle !important;
+                }
+            }
+        }
+
+    }
+    .scroll-container {
+        &>>>.is-vertical{
+            display: none !important;
+        }
+    }
+    .tags-view-container >>> .el-tabs__header{
+        margin: 0 !important;
+    }
 </style>
