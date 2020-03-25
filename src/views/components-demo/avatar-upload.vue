@@ -1,6 +1,6 @@
 <template>
   <div class="components-container">
-    <aside>This is based on
+    <aside>这是基于
       <a class="link-type" href="//github.com/dai-siki/vue-image-crop-upload"> vue-image-crop-upload</a>.
       {{ $t('components.imageUploadTips') }}
     </aside>
@@ -8,7 +8,7 @@
     <pan-thumb :image="image" />
 
     <el-button type="primary" icon="el-icon-upload" style="position: absolute;bottom: 15px;margin-left: 40px;" @click="imagecropperShow=true">
-      Change Avatar
+      更改头像
     </el-button>
 
     <image-cropper
@@ -17,7 +17,7 @@
       :width="300"
       :height="300"
       url="https://httpbin.org/post"
-      lang-type="en"
+      lang-type="zh"
       @close="close"
       @crop-upload-success="cropSuccess"
     />
