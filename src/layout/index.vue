@@ -22,8 +22,6 @@
       <div :class="{hasTagsView:needTagsView}">
           <div :class="{'fixed-header':fixedHeader}" class="navbar-container" :style="!hasSidebar ? 'margin-left:0;width:100%' : null" >
               <navbar />
-              <!--顶部菜单栏-->
-              <!--<head-navbar/>-->
               <tags-view v-if="needTagsView" />
           </div>
       </div>

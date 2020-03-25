@@ -22,7 +22,6 @@
                 <el-tab-pane
                         v-for="tag in visitedViews"
                         :key="tag.path"
-                        :class="isActive(tag)?'active':''"
                         tag="span"
                         >
                     <router-link
@@ -409,6 +408,9 @@ export default {
                 }
                 &:last-child{
                     margin-right: 10px !important;
+                }
+                &>>>.is-active{
+                    color: #fff;
                 }
             }
             .el-tabs__nav-wrap{
