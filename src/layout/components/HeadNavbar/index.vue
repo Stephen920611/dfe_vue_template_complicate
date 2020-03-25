@@ -6,7 +6,7 @@
                  <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
                  <i class="el-icon-caret-bottom"/>
              </div>-->
-        <div class="header-menu" :style="toggleMenuVisible ? null : 'overflow:hidden'">
+        <div class="header-menu" :style="toggleMenuVisible ? null : 'transition: 2s;overflow:hidden'">
             <el-menu
                     :default-active="activeMenu"
                     background-color="#304156"
@@ -15,7 +15,6 @@
                     mode="horizontal"
                     class="el-menu-demo"
                     ref="subMenuList"
-
             >
                 <sidebar-item
                         v-for="route in permission_routes"
@@ -25,13 +24,14 @@
                 />
             </el-menu>
         </div>
-        <div  v-show="menuVisibleBtn" class="header-menu-visible" @click ="toggleMenu()">
-            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"  ></i>
+        <div v-show="menuVisibleBtn" class="header-menu-visible" @click="toggleMenu()">
+            <!--<i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"></i>-->
+            <i class="el-icon-arrow-up" :style="toggleMenuVisible ? 'transform: rotate(0deg); transition: 0.4s': 'transform: rotate(-180deg); transition: 0.4s'"></i>
         </div>
         <!--最初版本-->
-       <!-- <div class="header-menu-visible" @click="toggleMenu()">
-            <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
-        </div>-->
+        <!-- <div class="header-menu-visible" @click="toggleMenu()">
+             <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
+         </div>-->
         <div class="right-menu">
             <template v-if="device!=='mobile'">
                 <search id="header-search" class="right-menu-item"/>
@@ -136,14 +136,14 @@
                             }*/
         },
         watch: {
-            resizeHandlerVisible:{
+            resizeHandlerVisible: {
                 handler(val, oldVal) {
                     this.resizeUpOrDownBtn();
                 },
             }
         },
-        mounted:function () {
-            const { dispatch } = this.$store;
+        mounted: function () {
+            const {dispatch} = this.$store;
             this.resizeUpOrDownBtn();
         },
         methods: {
@@ -156,11 +156,11 @@
                 })
             },
             //监听多余按钮的显示
-            resizeUpOrDownBtn(){
-                const { dispatch } = this.$store;
+            resizeUpOrDownBtn() {
+                const {dispatch} = this.$store;
                 dispatch({
-                    type:'app/toggleMenuBtn',
-                    menuVisibleBtn:this.$refs.subMenuList.$el.offsetHeight > 60
+                    type: 'app/toggleMenuBtn',
+                    menuVisibleBtn: this.$refs.subMenuList.$el.offsetHeight > 60
                 });
             },
             toggleSideBar() {
@@ -198,9 +198,10 @@
             text-align: center;
             background-color: #304156;
             color: #fff;
+            transition: 2s;
             & > i {
                 font-size: 20px;
-                &:hover{
+                &:hover {
                     cursor: pointer;
                 }
             }
@@ -210,7 +211,7 @@
             width: 100%;
             z-index: 2000;
             display: flex;
-            top:0;
+            top: 0;
             flex: 1;
             .sidebar-logo-container {
                 height: 60px;
@@ -252,8 +253,10 @@
             /*width: 100%;*/
             flex: 1;
             height: 60px;
-            .el-menu.el-menu--horizontal{
+            .el-menu.el-menu--horizontal {
                 border: none;
+                transition: 2s;
+
             }
         }
         .el-scrollbar {
