@@ -25,7 +25,7 @@
               <tags-view v-if="needTagsView" />
           </div>
       </div>
-    <div  class="main-container" :style="!hasSidebar ? 'margin-left:0' : null" v-scrollBar>
+    <div  class="main-container" :style="!hasSidebar ? 'margin-left:0' : null" v-scrollBar id="main-container">
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
