@@ -246,12 +246,12 @@ export default {
       const { description, key, name } = this.role
       this.dialogVisible = false
       this.$notify({
-        title: 'Success',
+        title: '保存成功',
         dangerouslyUseHTMLString: true,
         message: `
             <div>Role Key: ${key}</div>
-            <div>Role Name: ${name}</div>
-            <div>Description: ${description}</div>
+            <div>用户名: ${name}</div>
+            <div>描述: ${description}</div>
           `,
         type: 'success'
       })

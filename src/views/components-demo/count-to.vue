@@ -26,10 +26,10 @@
         <input v-model.number="setDuration" type="number" name="durationInput">
       </label>
       <div class="startBtn example-btn" @click="start">
-        Start
+        开始
       </div>
       <div class="pause-resume-btn example-btn" @click="pauseResume">
-        pause/resume
+        暂停/重启
       </div>
       <br>
       <label class="label" for="decimalsInput">decimals:

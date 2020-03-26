@@ -291,6 +291,24 @@ const componentsRouter = {
                 }
             ]
         },
+        {
+            path: '/tree',
+            component: () => import('@/views/router-link/index'),
+            redirect: '/components/tree/index',
+            // name: 'Tree',
+            // meta: {title: '树', icon: 'example'},
+            children: [
+                {
+                    path: 'index',
+                    name: 'Tree',
+                    component: () => import('@/views/tree-demo/index'),
+                    meta: {
+                        title: '树',
+                        icon: 'tree',
+                    }
+                },
+            ]
+        },
 
 
     ]
