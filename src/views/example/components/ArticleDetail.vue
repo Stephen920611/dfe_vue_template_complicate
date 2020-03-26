@@ -10,7 +10,7 @@
           发布
         </el-button>
         <el-button v-loading="loading" type="warning" @click="draftForm">
-            保存为草稿
+            草稿
         </el-button>
       </sticky>
 
