@@ -53,11 +53,11 @@
                     <i class="el-icon-caret-bottom"/>
                 </div>
                 <el-dropdown-menu slot="dropdown" class="user-dropdown">
-                    <!--<router-link to="/profile/index">-->
-                        <el-dropdown-item  @click.native="updateSidebar">
+                    <router-link to="/profile/index" @click.native="updateSidebar">
+                        <el-dropdown-item >
                             个人中心
                         </el-dropdown-item>
-                    <!--</router-link>-->
+                    </router-link>
                     <router-link to="/">
                         <el-dropdown-item>
                             首页
@@ -152,7 +152,7 @@
             this.resizeUpOrDownBtn();
         },
         methods: {
-            //更新侧边栏
+            //更新侧边栏,个人中心时收起侧边栏
             updateSidebar() {
                 const { dispatch } = this.$store
                 dispatch({
@@ -160,9 +160,6 @@
                     sidebarData: null, // 侧边栏的数据
                     hasSidebar: false, // 是否显示侧边栏
                     sidebarParents: null// 点击的顶部标题的数据
-                })
-                this.$router.push({
-                    path:'/profile/index'
                 })
             },
             //是否显示多余菜单
