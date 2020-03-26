@@ -6,7 +6,7 @@
       </div>
     </div>
     <div style="color: #ccc;">
-      This article is from Evan You on <a target="_blank" href="https://medium.com/the-vue-point/plans-for-the-next-iteration-of-vue-js-777ffea6fabf">medium</a>
+      本文来自Evan You<a target="_blank" href="https://medium.com/the-vue-point/plans-for-the-next-iteration-of-vue-js-777ffea6fabf">medium</a>
     </div>
     <div ref="content" class="node-article-content" v-html="article.content" />
   </div>

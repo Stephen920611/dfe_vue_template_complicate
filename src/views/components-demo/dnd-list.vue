@@ -1,6 +1,6 @@
 <template>
   <div class="components-container">
-    <aside>drag-list base on
+    <aside>drag-list 基于
       <a href="https://github.com/SortableJS/Vue.Draggable" target="_blank">Vue.Draggable</a>
     </aside>
     <div class="editor-container">

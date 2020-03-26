@@ -44,7 +44,7 @@
               type="warning"
               @click="cancelEdit(row)"
             >
-              cancel
+              取消
             </el-button>
           </template>
           <span v-else>{{ row.title }}</span>
@@ -60,7 +60,7 @@
             icon="el-icon-circle-check-outline"
             @click="confirmEdit(row)"
           >
-            Ok
+            保存
           </el-button>
           <el-button
             v-else
@@ -69,7 +69,7 @@
             icon="el-icon-edit"
             @click="row.edit=!row.edit"
           >
-            Edit
+              编辑
           </el-button>
         </template>
       </el-table-column>
@@ -121,7 +121,7 @@ export default {
       row.title = row.originalTitle
       row.edit = false
       this.$message({
-        message: 'The title has been restored to the original value',
+        message: '标题已恢复为原始值',
         type: 'warning'
       })
     },
@@ -129,7 +129,8 @@ export default {
       row.edit = false
       row.originalTitle = row.title
       this.$message({
-        message: 'The title has been edited',
+//        message: 'The title has been edited',
+        message: '编辑成功',
         type: 'success'
       })
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <el-button :loading="downloadLoading" style="margin-bottom:20px" type="primary" icon="el-icon-document" @click="handleDownload">Export</el-button>
+    <el-button :loading="downloadLoading" style="margin-bottom:20px" type="primary" icon="el-icon-document" @click="handleDownload">导出</el-button>
 
     <el-table
       ref="multipleTable"

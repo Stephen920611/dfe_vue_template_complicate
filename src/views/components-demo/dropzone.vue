@@ -19,11 +19,13 @@ export default {
   methods: {
     dropzoneS(file) {
       console.log(file)
-      this.$message({ message: 'Upload success', type: 'success' })
+//      this.$message({ message: 'Upload success', type: 'success' })
+      this.$message({ message: '上传成功', type: 'success' })
     },
     dropzoneR(file) {
       console.log(file)
-      this.$message({ message: 'Delete success', type: 'success' })
+//      this.$message({ message: 'Delete success', type: 'success' })
+      this.$message({ message: '删除成功', type: 'success' })
     }
   }
 }

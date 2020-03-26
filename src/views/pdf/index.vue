@@ -3,7 +3,7 @@
     <aside style="margin-top:15px;">{{ $t('pdf.tips') }}</aside>
     <router-link target="_blank" to="/pdf/download">
       <el-button type="primary">
-        Click to download PDF
+        点击下载PDF
       </el-button>
     </router-link>
   </div>

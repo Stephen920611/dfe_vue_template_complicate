@@ -45,31 +45,45 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+      //    window.addEventListener('scroll', this.handleScroll)
+      //添加事件监听，修改后
+      this.$nextTick(() => {
+          document.getElementById('main-container').addEventListener('scroll',this.handleScroll);
+      });
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll)
+      //      window.removeEventListener('scroll', this.handleScroll)
+      //取消事件监听，修改后
+      document.getElementById('main-container').removeEventListener('scroll',this.handleScroll);
     if (this.interval) {
       clearInterval(this.interval)
     }
   },
   methods: {
     handleScroll() {
-      this.visible = window.pageYOffset > this.visibilityHeight
+//      this.visible = window.pageYOffset > this.visibilityHeight
+        //修改后
+      this.visible = document.getElementById('main-container').scrollTop > this.visibilityHeight
     },
     backToTop() {
       if (this.isMoving) return
-      const start = window.pageYOffset
+//      const start = window.pageYOffset
+        //修改后
+      const start = document.getElementById('main-container').scrollTop
       let i = 0
       this.isMoving = true
       this.interval = setInterval(() => {
         const next = Math.floor(this.easeInOutQuad(10 * i, start, -start, 500))
         if (next <= this.backPosition) {
-          window.scrollTo(0, this.backPosition)
+//          window.scrollTo(0, this.backPosition)
+            //修改后的
+            document.getElementById('main-container').scrollTop = 0
           clearInterval(this.interval)
           this.isMoving = false
         } else {
-          window.scrollTo(0, next)
+//          window.scrollTo(0, next)
+            //修改后的
+            document.getElementById('main-container').scrollTop = next
         }
         i++
       }, 16.7)

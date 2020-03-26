@@ -15,8 +15,13 @@ const el_scrollBar = (el) => {
     if (el._ps_ instanceof PerfectScrollbar) {
         el._ps_.update()
     } else {
-        //el上挂一份属性
-        el._ps_ = new PerfectScrollbar(el, {suppressScrollX: true})
+        //el上挂一份属性，https://www.npmjs.com/package/perfect-scrollbar
+        el._ps_ = new PerfectScrollbar(el, {
+            suppressScrollX: true,//设置为true时，无论内容宽度如何，X轴上的滚动条都将不可用
+            wheelSpeed: 0.5,//滚动速度应用于鼠标滚轮事件
+            swipeEasing:true, //如果此选项为true，将简化滑动滚动。
+            wheelPropagation: true, //如果此选项为true，则在滚动到达侧面的末端时，mousewheel事件将传播到父元素。
+        })
     }
 };
 //接着，自定义Vue指令,指令名你自己随便编一个，scrollBar

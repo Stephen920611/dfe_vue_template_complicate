@@ -2,6 +2,7 @@
 
 import Layout from '@/layout'
 import tableRouter from './table'
+import chartsRouter from './charts'
 
 const componentsRouter = {
     path: '/components',
@@ -187,9 +188,10 @@ const componentsRouter = {
 
         },
         tableRouter,
+        chartsRouter,
         {
             path: 'excel',
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             redirect: '/components/excel/export-excel',
             name: 'Excel',
             meta: {
@@ -243,7 +245,7 @@ const componentsRouter = {
         {
             path: '/error',
             // component: Layout,
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             redirect: 'noRedirect',
             name: 'ErrorPages',
             meta: {
@@ -265,6 +267,31 @@ const componentsRouter = {
                 }
             ]
         },
+        {
+            path: '/icon',
+            component: () => import('@/views/router-link/index'),
+            children: [
+                {
+                    path: 'index',
+                    component: () => import('@/views/icons/index'),
+                    name: 'Icons',
+                    meta: { title: 'icons', icon: 'icon', noCache: true }
+                }
+            ]
+        },
+        {
+            path: '/clipboard',
+            component: () => import('@/views/router-link/index'),
+            children: [
+                {
+                    path: 'index',
+                    component: () => import('@/views/clipboard/index'),
+                    name: 'ClipboardDemo',
+                    meta: { title: 'clipboardDemo', icon: 'clipboard' }
+                }
+            ]
+        },
+
 
     ]
 }

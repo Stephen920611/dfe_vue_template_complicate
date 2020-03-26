@@ -22,12 +22,10 @@
       <div :class="{hasTagsView:needTagsView}">
           <div :class="{'fixed-header':fixedHeader}" class="navbar-container" :style="!hasSidebar ? 'margin-left:0;width:100%' : null" >
               <navbar />
-              <!--顶部菜单栏-->
-              <!--<head-navbar/>-->
               <tags-view v-if="needTagsView" />
           </div>
       </div>
-    <div  class="main-container" :style="!hasSidebar ? 'margin-left:0' : null" v-scrollBar>
+    <div  class="main-container" :style="!hasSidebar ? 'margin-left:0' : null" v-scrollBar id="main-container">
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
@@ -79,6 +77,12 @@ export default {
       }
     }
   },
+    watch: {
+      //监听路由变化，路由改变滚动条返回到顶部
+        $route() {
+            document.getElementById('main-container').scrollTop = 0
+        },
+    },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })

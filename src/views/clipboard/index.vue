@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-tabs v-model="activeName">
-      <el-tab-pane label="use clipboard  directly" name="directly">
+      <el-tab-pane label="直接使用剪贴板" name="directly">
         <el-input v-model="inputData" placeholder="Please input" style="width:400px;max-width:100%;" />
         <el-button type="primary" icon="el-icon-document" @click="handleCopy(inputData,$event)">
-          copy
+          复制
         </el-button>
       </el-tab-pane>
-      <el-tab-pane label="use clipboard by v-directive" name="v-directive">
+      <el-tab-pane label="通过快捷键使用剪贴板" name="v-directive">
         <el-input v-model="inputData" placeholder="Please input" style="width:400px;max-width:100%;" />
         <el-button v-clipboard:copy="inputData" v-clipboard:success="clipboardSuccess" type="primary" icon="el-icon-document">
-          copy
+          复制
         </el-button>
       </el-tab-pane>
     </el-tabs>
@@ -38,7 +38,7 @@ export default {
     },
     clipboardSuccess() {
       this.$message({
-        message: 'Copy successfully',
+        message: '复制成功',
         type: 'success',
         duration: 1500
       })
