@@ -4,7 +4,7 @@ import Layout from '@/layout'
 const tableRouter = {
     path: '/table',
     // component: Layout,
-    component: () => import('@/views/table/index'),
+    component: () => import('@/views/router-link/index'),
     redirect: '/table/complex-table',
     name: 'Table',
     meta: {

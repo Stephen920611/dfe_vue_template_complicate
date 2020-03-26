@@ -191,7 +191,7 @@ const componentsRouter = {
         chartsRouter,
         {
             path: 'excel',
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             redirect: '/components/excel/export-excel',
             name: 'Excel',
             meta: {
@@ -245,7 +245,7 @@ const componentsRouter = {
         {
             path: '/error',
             // component: Layout,
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             redirect: 'noRedirect',
             name: 'ErrorPages',
             meta: {
@@ -269,7 +269,7 @@ const componentsRouter = {
         },
         {
             path: '/icon',
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             children: [
                 {
                     path: 'index',
@@ -281,7 +281,7 @@ const componentsRouter = {
         },
         {
             path: '/clipboard',
-            component: () => import('@/views/table/index'),
+            component: () => import('@/views/router-link/index'),
             children: [
                 {
                     path: 'index',

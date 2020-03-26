@@ -4,7 +4,7 @@ import Layout from '@/layout'
 
 const chartsRouter = {
     path: '/charts',
-    component: () => import('@/views/table/index'),
+    component: () => import('@/views/router-link/index'),
     // redirect: 'noRedirect',
     redirect: 'charts/keyboard',
     name: 'Charts',
