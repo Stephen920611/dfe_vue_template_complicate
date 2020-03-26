@@ -1,8 +1,8 @@
 <template>
-    <div id="tags-view-container" class="tags-view-container">
-        <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-            <!--原有tags 超出滚动条滚动-->
-            <!-- <router-link
+  <div id="tags-view-container" class="tags-view-container">
+    <scroll-pane ref="scrollPane" class="tags-view-wrapper">
+      <!--原有tags 超出滚动条滚动-->
+      <!-- <router-link
                      v-for="tag in visitedViews"
                      ref="tag"
                      :key="tag.path"
@@ -17,270 +17,270 @@
                      <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
                    </router-link>-->
 
-            <!--超出 显示左右按钮滚动-->
-            <el-tabs type="card" class="tabs-container">
-                <el-tab-pane
-                        v-for="tag in visitedViews"
-                        :key="tag.path"
-                        tag="span"
-                >
-                    <router-link
-                            slot="label"
-                            ref="tag"
-                            :key="tag.path"
-                            :class="isActive(tag)?'active':''"
-                            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-                            class="tags-view-item"
-                            tag="span"
-                            @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-                            @contextmenu.prevent.native="openMenu(tag,$event)"
-                            @click.native="isShowSlideBar(tag)"
-                    >
-                        {{ generateTitle(tag.title) }}
-                        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"/>
-                    </router-link>
-                </el-tab-pane>
-
-            </el-tabs>
-        </scroll-pane>
-
-        <div
-                class="close-contextmenu"
-                @click.prevent.stop="openAllMenu"
+      <!--超出 显示左右按钮滚动-->
+      <el-tabs type="card" class="tabs-container">
+        <el-tab-pane
+          v-for="tag in visitedViews"
+          :key="tag.path"
+          tag="span"
         >
-            操作
-        </div>
-        <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-            <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li>
-            <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">{{ $t('tagsView.close') }}</li>
-            <li @click="closeOthersTags">{{ $t('tagsView.closeOthers') }}</li>
-            <li @click="closeAllTags(selectedTag)">{{ $t('tagsView.closeAll') }}</li>
-        </ul>
+          <router-link
+            slot="label"
+            ref="tag"
+            :key="tag.path"
+            :class="isActive(tag)?'active':''"
+            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+            class="tags-view-item"
+            tag="span"
+            @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+            @contextmenu.prevent.native="openMenu(tag,$event)"
+            @click.native="isShowSlideBar(tag)"
+          >
+            {{ generateTitle(tag.title) }}
+            <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+          </router-link>
+        </el-tab-pane>
+
+      </el-tabs>
+    </scroll-pane>
+
+    <div
+      class="close-contextmenu"
+      @click.prevent.stop="openAllMenu"
+    >
+      操作
     </div>
+    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+      <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">{{ $t('tagsView.close') }}</li>
+      <li @click="closeOthersTags">{{ $t('tagsView.closeOthers') }}</li>
+      <li @click="closeAllTags(selectedTag)">{{ $t('tagsView.closeAll') }}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
-    import ScrollPane from './ScrollPane'
-    import {generateTitle} from '@/utils/i18n'
-    import path from 'path'
+import ScrollPane from './ScrollPane'
+import { generateTitle } from '@/utils/i18n'
+import path from 'path'
 
-    export default {
-        components: {ScrollPane},
-        data() {
-            return {
-                visible: false,
-                top: 0,
-                left: 0,
-                selectedTag: {},
-                affixTags: []
-            }
-        },
-        computed: {
-            visitedViews() {
-                return this.$store.state.tagsView.visitedViews
-            },
-            routes() {
-                return this.$store.state.permission.routes
-            }
-        },
-        watch: {
-            $route() {
-                this.addTags()
-                this.moveToCurrentTag()
-            },
-            visible(value) {
-                if (value) {
-                    document.body.addEventListener('click', this.closeMenu)
-                } else {
-                    document.body.removeEventListener('click', this.closeMenu)
-                }
-            }
-        },
-        mounted() {
-            this.initTags()
-            this.addTags()
-        },
-        methods: {
-            //国际化标题
-            generateTitle, // generateTitle by vue-i18n
-            //是否显示侧边栏，如果没有子页面的时候，不显示侧边栏
-            isShowSlideBar(tag) {
-                // 有子页面的有redirectedFrom属性，所以通过这个来判断
-                if (!tag.hasOwnProperty('redirectedFrom')) {
-                    const {dispatch} = this.$store
-                    dispatch({
-                        type: 'app/updateSidebar', // 调用action
-                        sidebarData: null, // 侧边栏的数据
-                        hasSidebar: false, // 是否显示侧边栏
-                        sidebarParents: null// 点击的顶部标题的数据
-                    })
-                }
-            },
-            //当前页是否显示
-            isActive(route) {
-                return route.path === this.$route.path
-            },
-            //是否有关闭标签页的功能
-            isAffix(tag) {
-                return tag.meta && tag.meta.affix
-            },
-            filterAffixTags(routes, basePath = '/') {
-                let tags = []
-                routes.forEach(route => {
-                    if (route.meta && route.meta.affix) {
-                        const tagPath = path.resolve(basePath, route.path)
-                        tags.push({
-                            fullPath: tagPath,
-                            path: tagPath,
-                            name: route.name,
-                            meta: {...route.meta}
-                        })
-                    }
-                    if (route.children) {
-                        const tempTags = this.filterAffixTags(route.children, route.path)
-                        if (tempTags.length >= 1) {
-                            tags = [...tags, ...tempTags]
-                        }
-                    }
-                })
-                return tags
-            },
-            // 初始化标签
-            initTags() {
-                const affixTags = this.affixTags = this.filterAffixTags(this.routes)
-                for (const tag of affixTags) {
-                    // Must have tag name
-                    if (tag.name) {
-                        this.$store.dispatch('tagsView/addVisitedView', tag)
-                    }
-                }
-            },
-            addTags() {
-                const {name} = this.$route
-                if (name) {
-                    this.$store.dispatch('tagsView/addView', this.$route)
-                }
-                return false
-            },
-            moveToCurrentTag() {
-                const tags = this.$refs.tag
-                this.$nextTick(() => {
-                    for (const tag of tags) {
-                        if (tag.to.path === this.$route.path) {
-                            this.$refs.scrollPane.moveToTarget(tag)
-                            // when query is different then update
-                            if (tag.to.fullPath !== this.$route.fullPath) {
-                                this.$store.dispatch('tagsView/updateVisitedView', this.$route)
-                            }
-                            break
-                        }
-                    }
-                })
-            },
-            // 选项卡-刷新
-            refreshSelectedTag(view) {
-                this.$store.dispatch('tagsView/delCachedView', view).then(() => {
-                    const {fullPath} = view
-                    this.$nextTick(() => {
-                        this.$router.replace({
-                            path: '/redirect' + fullPath
-                        })
-                    })
-                })
-            },
-            // 关闭该选项卡
-            closeSelectedTag(view) {
-                this.$store.dispatch('tagsView/delView', view).then(({visitedViews}) => {
-                    if (this.isActive(view)) {
-                        this.toLastView(visitedViews, view)
-                    }
-                })
-            },
-            // 选项卡-关闭其他
-            closeOthersTags() {
-                this.$router.push(this.selectedTag)
-                this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-                    this.moveToCurrentTag()
-                })
-            },
-            // 选项卡-关闭全部
-            closeAllTags(view) {
-                this.$store.dispatch('tagsView/delAllViews').then(({visitedViews}) => {
-                    if (this.affixTags.some(tag => tag.path === view.path)) {
-                        return
-                    }
-                    this.toLastView(visitedViews, view)
-                })
-            },
-
-            toLastView(visitedViews, view) {
-                const latestView = visitedViews.slice(-1)[0]
-                if (latestView) {
-                    this.$router.push(latestView.fullPath)
-                } else {
-                    // now the default is to redirect to the home page if there is no tags-view,
-                    // you can adjust it according to your needs.
-                    if (view.name === 'Dashboard') {
-                        // to reload home page
-                        this.$router.replace({path: '/redirect' + view.fullPath})
-                    } else {
-                        this.$router.push('/')
-                    }
-                }
-            },
-
-            // 右击打开关闭选项
-            openMenu(tag, e) {
-                const menuMinWidth = 105
-                const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-                const offsetWidth = this.$el.offsetWidth // container width
-                const maxLeft = offsetWidth - menuMinWidth // left boundary
-                const left = e.clientX - offsetLeft + 15 // 15: margin right
-
-                if (left > maxLeft) {
-                    this.left = maxLeft
-                } else {
-                    this.left = left
-                }
-
-                //      this.top = e.clientY
-                // 点击时，位于视窗的高度，减去顶部导航60
-                this.top = e.clientY - 60
-                this.visible = true
-                this.selectedTag = tag
-            },
-            // 关闭选项
-            closeMenu() {
-                this.visible = false
-            },
-            // 点击右侧全部菜单，打开选项
-            openAllMenu(e) {
-                const self = this
-                const tags = this.$refs.tag
-                // 记录当前路由
-                for (const tag of this.visitedViews) {
-                    if (tag.path === this.$route.path) {
-                        self.selectedTag = tag
-                        break
-                    }
-                }
-                const menuMinWidth = 105
-                const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-                const offsetWidth = this.$el.offsetWidth // container width
-                const maxLeft = offsetWidth - menuMinWidth + 15 // left boundary
-                const left = e.clientX - offsetLeft + 15 // 15: margin right
-                if (left > maxLeft) {
-                    this.left = maxLeft
-                } else {
-                    this.left = left
-                }
-                // this.top = e.clientY
-                // 点击时，位于视窗的高度，减去顶部导航60
-                this.top = 90
-                this.visible = true
-            }
-        }
+export default {
+  components: { ScrollPane },
+  data() {
+    return {
+      visible: false,
+      top: 0,
+      left: 0,
+      selectedTag: {},
+      affixTags: []
     }
+  },
+  computed: {
+    visitedViews() {
+      return this.$store.state.tagsView.visitedViews
+    },
+    routes() {
+      return this.$store.state.permission.routes
+    }
+  },
+  watch: {
+    $route() {
+      this.addTags()
+      this.moveToCurrentTag()
+    },
+    visible(value) {
+      if (value) {
+        document.body.addEventListener('click', this.closeMenu)
+      } else {
+        document.body.removeEventListener('click', this.closeMenu)
+      }
+    }
+  },
+  mounted() {
+    this.initTags()
+    this.addTags()
+  },
+  methods: {
+    // 国际化标题
+    generateTitle, // generateTitle by vue-i18n
+    // 是否显示侧边栏，如果没有子页面的时候，不显示侧边栏
+    isShowSlideBar(tag) {
+      // 有子页面的有redirectedFrom属性，所以通过这个来判断
+      if (!tag.hasOwnProperty('redirectedFrom')) {
+        const { dispatch } = this.$store
+        dispatch({
+          type: 'app/updateSidebar', // 调用action
+          sidebarData: null, // 侧边栏的数据
+          hasSidebar: false, // 是否显示侧边栏
+          sidebarParents: null// 点击的顶部标题的数据
+        })
+      }
+    },
+    // 当前页是否显示
+    isActive(route) {
+      return route.path === this.$route.path
+    },
+    // 是否有关闭标签页的功能
+    isAffix(tag) {
+      return tag.meta && tag.meta.affix
+    },
+    filterAffixTags(routes, basePath = '/') {
+      let tags = []
+      routes.forEach(route => {
+        if (route.meta && route.meta.affix) {
+          const tagPath = path.resolve(basePath, route.path)
+          tags.push({
+            fullPath: tagPath,
+            path: tagPath,
+            name: route.name,
+            meta: { ...route.meta }
+          })
+        }
+        if (route.children) {
+          const tempTags = this.filterAffixTags(route.children, route.path)
+          if (tempTags.length >= 1) {
+            tags = [...tags, ...tempTags]
+          }
+        }
+      })
+      return tags
+    },
+    // 初始化标签
+    initTags() {
+      const affixTags = this.affixTags = this.filterAffixTags(this.routes)
+      for (const tag of affixTags) {
+        // Must have tag name
+        if (tag.name) {
+          this.$store.dispatch('tagsView/addVisitedView', tag)
+        }
+      }
+    },
+    addTags() {
+      const { name } = this.$route
+      if (name) {
+        this.$store.dispatch('tagsView/addView', this.$route)
+      }
+      return false
+    },
+    moveToCurrentTag() {
+      const tags = this.$refs.tag
+      this.$nextTick(() => {
+        for (const tag of tags) {
+          if (tag.to.path === this.$route.path) {
+            this.$refs.scrollPane.moveToTarget(tag)
+            // when query is different then update
+            if (tag.to.fullPath !== this.$route.fullPath) {
+              this.$store.dispatch('tagsView/updateVisitedView', this.$route)
+            }
+            break
+          }
+        }
+      })
+    },
+    // 选项卡-刷新
+    refreshSelectedTag(view) {
+      this.$store.dispatch('tagsView/delCachedView', view).then(() => {
+        const { fullPath } = view
+        this.$nextTick(() => {
+          this.$router.replace({
+            path: '/redirect' + fullPath
+          })
+        })
+      })
+    },
+    // 关闭该选项卡
+    closeSelectedTag(view) {
+      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+        if (this.isActive(view)) {
+          this.toLastView(visitedViews, view)
+        }
+      })
+    },
+    // 选项卡-关闭其他
+    closeOthersTags() {
+      this.$router.push(this.selectedTag)
+      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
+        this.moveToCurrentTag()
+      })
+    },
+    // 选项卡-关闭全部
+    closeAllTags(view) {
+      this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
+        if (this.affixTags.some(tag => tag.path === view.path)) {
+          return
+        }
+        this.toLastView(visitedViews, view)
+      })
+    },
+
+    toLastView(visitedViews, view) {
+      const latestView = visitedViews.slice(-1)[0]
+      if (latestView) {
+        this.$router.push(latestView.fullPath)
+      } else {
+        // now the default is to redirect to the home page if there is no tags-view,
+        // you can adjust it according to your needs.
+        if (view.name === 'Dashboard') {
+          // to reload home page
+          this.$router.replace({ path: '/redirect' + view.fullPath })
+        } else {
+          this.$router.push('/')
+        }
+      }
+    },
+
+    // 右击打开关闭选项
+    openMenu(tag, e) {
+      const menuMinWidth = 105
+      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      const offsetWidth = this.$el.offsetWidth // container width
+      const maxLeft = offsetWidth - menuMinWidth // left boundary
+      const left = e.clientX - offsetLeft + 15 // 15: margin right
+
+      if (left > maxLeft) {
+        this.left = maxLeft
+      } else {
+        this.left = left
+      }
+
+      //      this.top = e.clientY
+      // 点击时，位于视窗的高度，减去顶部导航60
+      this.top = e.clientY - 60
+      this.visible = true
+      this.selectedTag = tag
+    },
+    // 关闭选项
+    closeMenu() {
+      this.visible = false
+    },
+    // 点击右侧全部菜单，打开选项
+    openAllMenu(e) {
+      const self = this
+      const tags = this.$refs.tag
+      // 记录当前路由
+      for (const tag of this.visitedViews) {
+        if (tag.path === this.$route.path) {
+          self.selectedTag = tag
+          break
+        }
+      }
+      const menuMinWidth = 105
+      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      const offsetWidth = this.$el.offsetWidth // container width
+      const maxLeft = offsetWidth - menuMinWidth + 15 // left boundary
+      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      if (left > maxLeft) {
+        this.left = maxLeft
+      } else {
+        this.left = left
+      }
+      // this.top = e.clientY
+      // 点击时，位于视窗的高度，减去顶部导航60
+      this.top = 90
+      this.visible = true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped type="text/scss">

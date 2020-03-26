@@ -52,7 +52,7 @@ export default {
     ])
   },
   created() {
-    this.getUser();
+    this.getUser()
   },
   methods: {
     getUser() {
@@ -62,7 +62,7 @@ export default {
         email: 'admin@test.com',
         avatar: this.avatar
       }
-    },
+    }
   }
 }
 </script>

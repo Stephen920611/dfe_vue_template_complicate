@@ -1,7 +1,7 @@
 <template>
   <div class="components-container">
     <el-button type="primary" @click="dialogTableVisible = true">
-        打开一个拖动对话框
+      打开一个拖动对话框
     </el-button>
     <el-dialog v-el-drag-dialog :visible.sync="dialogTableVisible" title="Shipping address" @dragDialog="handleDrag">
       <el-select ref="select" v-model="value" placeholder="请选择">

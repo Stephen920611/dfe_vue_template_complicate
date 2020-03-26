@@ -69,7 +69,7 @@
             icon="el-icon-edit"
             @click="row.edit=!row.edit"
           >
-              编辑
+            编辑
           </el-button>
         </template>
       </el-table-column>
@@ -129,7 +129,7 @@ export default {
       row.edit = false
       row.originalTitle = row.title
       this.$message({
-//        message: 'The title has been edited',
+        //        message: 'The title has been edited',
         message: '编辑成功',
         type: 'success'
       })
