@@ -3,19 +3,19 @@
         <scroll-pane ref="scrollPane" class="tags-view-wrapper">
             <!--原有tags 超出滚动条滚动-->
             <!-- <router-link
-               v-for="tag in visitedViews"
-               ref="tag"
-               :key="tag.path"
-               :class="isActive(tag)?'active':''"
-               :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-               tag="span"
-               class="tags-view-item"
-               @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-               @contextmenu.prevent.native="openMenu(tag,$event)"
-             >
-               {{ generateTitle(tag.title) }}
-               <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-             </router-link>-->
+                     v-for="tag in visitedViews"
+                     ref="tag"
+                     :key="tag.path"
+                     :class="isActive(tag)?'active':''"
+                     :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+                     tag="span"
+                     class="tags-view-item"
+                     @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+                     @contextmenu.prevent.native="openMenu(tag,$event)"
+                   >
+                     {{ generateTitle(tag.title) }}
+                     <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+                   </router-link>-->
 
             <!--超出 显示左右按钮滚动-->
             <el-tabs type="card" class="tabs-container">
@@ -37,17 +37,17 @@
                             @contextmenu.prevent.native="openMenu(tag,$event)"
                             @click.native="isShowSlideBar(tag)"
                     >
-                        {{generateTitle(tag.title)}}
+                        {{ generateTitle(tag.title) }}
                         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"/>
                     </router-link>
                 </el-tab-pane>
 
-
             </el-tabs>
         </scroll-pane>
 
-        <div class="close-contextmenu"
-             @click.prevent.stop="openAllMenu"
+        <div
+                class="close-contextmenu"
+                @click.prevent.stop="openAllMenu"
         >
             操作
         </div>
@@ -105,10 +105,10 @@
             //国际化标题
             generateTitle, // generateTitle by vue-i18n
             //是否显示侧边栏，如果没有子页面的时候，不显示侧边栏
-            isShowSlideBar (tag){
-                //有子页面的有redirectedFrom属性，所以通过这个来判断
-                if(!tag.hasOwnProperty('redirectedFrom')){
-                    const { dispatch } = this.$store;
+            isShowSlideBar(tag) {
+                // 有子页面的有redirectedFrom属性，所以通过这个来判断
+                if (!tag.hasOwnProperty('redirectedFrom')) {
+                    const {dispatch} = this.$store
                     dispatch({
                         type: 'app/updateSidebar', // 调用action
                         sidebarData: null, // 侧边栏的数据
@@ -146,7 +146,7 @@
                 })
                 return tags
             },
-            //初始化标签
+            // 初始化标签
             initTags() {
                 const affixTags = this.affixTags = this.filterAffixTags(this.routes)
                 for (const tag of affixTags) {
@@ -178,7 +178,7 @@
                     }
                 })
             },
-            //选项卡-刷新
+            // 选项卡-刷新
             refreshSelectedTag(view) {
                 this.$store.dispatch('tagsView/delCachedView', view).then(() => {
                     const {fullPath} = view
@@ -189,7 +189,7 @@
                     })
                 })
             },
-            //关闭该选项卡
+            // 关闭该选项卡
             closeSelectedTag(view) {
                 this.$store.dispatch('tagsView/delView', view).then(({visitedViews}) => {
                     if (this.isActive(view)) {
@@ -197,14 +197,14 @@
                     }
                 })
             },
-            //选项卡-关闭其他
+            // 选项卡-关闭其他
             closeOthersTags() {
-                this.$router.push(this.selectedTag);
+                this.$router.push(this.selectedTag)
                 this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
                     this.moveToCurrentTag()
                 })
             },
-            //选项卡-关闭全部
+            // 选项卡-关闭全部
             closeAllTags(view) {
                 this.$store.dispatch('tagsView/delAllViews').then(({visitedViews}) => {
                     if (this.affixTags.some(tag => tag.path === view.path)) {
@@ -230,7 +230,7 @@
                 }
             },
 
-            //右击打开关闭选项
+            // 右击打开关闭选项
             openMenu(tag, e) {
                 const menuMinWidth = 105
                 const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
@@ -249,20 +249,19 @@
                 this.top = e.clientY - 60
                 this.visible = true
                 this.selectedTag = tag
-
             },
-            //关闭选项
+            // 关闭选项
             closeMenu() {
                 this.visible = false
             },
-            //点击右侧全部菜单，打开选项
+            // 点击右侧全部菜单，打开选项
             openAllMenu(e) {
-                let self = this;
-                const tags = this.$refs.tag;
-                //记录当前路由
+                const self = this
+                const tags = this.$refs.tag
+                // 记录当前路由
                 for (const tag of this.visitedViews) {
                     if (tag.path === this.$route.path) {
-                        self.selectedTag = tag;
+                        self.selectedTag = tag
                         break
                     }
                 }
@@ -276,11 +275,11 @@
                 } else {
                     this.left = left
                 }
-                //this.top = e.clientY
+                // this.top = e.clientY
                 // 点击时，位于视窗的高度，减去顶部导航60
-                this.top = 90;
-                this.visible = true;
-            },
+                this.top = 90
+                this.visible = true
+            }
         }
     }
 </script>

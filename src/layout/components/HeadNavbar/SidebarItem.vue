@@ -9,34 +9,41 @@
                         :class="{'submenu-title-noDropdown':!isNest}"
                         @click="menuChange(onlyOneChild)"
                 >
-                    <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
-                          :title="generateTitle(onlyOneChild.meta.title)"/>
+                    <item
+                            :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
+                            :title="generateTitle(onlyOneChild.meta.title)"
+                    />
                 </el-menu-item>
             </app-link>
         </template>
         <!--<template v-else ref="subMenu" popper-append-to-body>
-                <app-link v-if="item.meta" :to="resolvePath(item.path)">
-                    <el-menu-item :index="resolvePath(item.path)"
-                                  @click="menuHasChild(item)" >
-                        <item :icon="item.meta && item.meta.icon" :title="item.meta.title"/>
-                    </el-menu-item>
-                </app-link>
-            </template>-->
+                    <app-link v-if="item.meta" :to="resolvePath(item.path)">
+                        <el-menu-item :index="resolvePath(item.path)"
+                                      @click="menuHasChild(item)" >
+                            <item :icon="item.meta && item.meta.icon" :title="item.meta.title"/>
+                        </el-menu-item>
+                    </app-link>
+                </template>-->
 
-        <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body
-                    @click.native="menuHasChild(item)">
+        <el-submenu
+                v-else
+                ref="subMenu"
+                :index="resolvePath(item.path)"
+                popper-append-to-body
+                @click.native="menuHasChild(item)"
+        >
             <template slot="title">
                 <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="generateTitle(item.meta.title)"/>
                 <!--增加固定宽度解决箭头被遮挡的问题-->
                 <!--<div style="display:inline-block;width: 18px "></div>-->
             </template>
             <!--<vertical-item
-                           v-for="child in item.children"
-                           :key="child.path"
-                           :is-nest="true"
-                           :item="child"
-                           :base-path="resolvePath(child.path)"
-                   />-->
+                                 v-for="child in item.children"
+                                 :key="child.path"
+                                 :is-nest="true"
+                                 :item="child"
+                                 :base-path="resolvePath(child.path)"
+                         />-->
             <sidebar-item
                     v-for="child in item.children"
                     v-show="false"
@@ -100,21 +107,21 @@
                 })
             },
             toggleMenuItem() {
-                const {dispatch} = this.$store;
-                //this.menuVisible = ! this.menuVisible;
+                const {dispatch} = this.$store
+                // this.menuVisible = ! this.menuVisible;
                 dispatch({
                     type: 'app/toggleMenu',
                     toggleMenuVisible: false
                 })
             },
             menuChange(onlyOneChild) {
-                //收起顶部标题
-                this.toggleMenuItem();
-                this.updateSidebar(null, false, null);
+                // 收起顶部标题
+                this.toggleMenuItem()
+                this.updateSidebar(null, false, null)
             },
             menuHasChild(item) {
-                //收起顶部标题
-                this.toggleMenuItem();
+                // 收起顶部标题
+                this.toggleMenuItem()
                 // 更改侧边栏
                 this.updateSidebar(item.children, true, item)
                 // 跳转重定向路由
