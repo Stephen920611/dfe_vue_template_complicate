@@ -1,52 +1,55 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-        <!--原有tags 超出滚动条滚动-->
-     <!-- <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
-        :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
-      >
-        {{ generateTitle(tag.title) }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>-->
+      <!--原有tags 超出滚动条滚动-->
+      <!-- <router-link
+                     v-for="tag in visitedViews"
+                     ref="tag"
+                     :key="tag.path"
+                     :class="isActive(tag)?'active':''"
+                     :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+                     tag="span"
+                     class="tags-view-item"
+                     @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+                     @contextmenu.prevent.native="openMenu(tag,$event)"
+                   >
+                     {{ generateTitle(tag.title) }}
+                     <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+                   </router-link>-->
 
-        <!--超出 显示左右按钮滚动-->
-        <el-tabs  type="card" class="tabs-container">
-                <el-tab-pane
-                        v-for="tag in visitedViews"
-                        :key="tag.path"
-                        tag="span"
-                        >
-                    <router-link
-                            slot="label"
-                            ref="tag"
-                            :key="tag.path"
-                            :class="isActive(tag)?'active':''"
-                            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-                            class="tags-view-item"
-                            tag="span"
-                            @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-                            @contextmenu.prevent.native="openMenu(tag,$event)"
-                    >
-                        {{generateTitle(tag.title)}}
-                        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-                    </router-link>
-                </el-tab-pane>
+      <!--超出 显示左右按钮滚动-->
+      <el-tabs type="card" class="tabs-container">
+        <el-tab-pane
+          v-for="tag in visitedViews"
+          :key="tag.path"
+          tag="span"
+        >
+          <router-link
+            slot="label"
+            ref="tag"
+            :key="tag.path"
+            :class="isActive(tag)?'active':''"
+            :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+            class="tags-view-item"
+            tag="span"
+            @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+            @contextmenu.prevent.native="openMenu(tag,$event)"
+            @click.native="isShowSlideBar(tag)"
+          >
+            {{ generateTitle(tag.title) }}
+            <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+          </router-link>
+        </el-tab-pane>
 
-
-        </el-tabs>
+      </el-tabs>
     </scroll-pane>
 
-      <div class="close-contextmenu"
-           @click.prevent.stop="openAllMenu"
-       >操作</div>
+    <div
+      class="close-contextmenu"
+      @click.prevent.stop="openAllMenu"
+    >
+      操作
+    </div>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">{{ $t('tagsView.close') }}</li>
@@ -86,7 +89,7 @@ export default {
       this.moveToCurrentTag()
     },
     visible(value) {
-        if (value) {
+      if (value) {
         document.body.addEventListener('click', this.closeMenu)
       } else {
         document.body.removeEventListener('click', this.closeMenu)
@@ -98,10 +101,26 @@ export default {
     this.addTags()
   },
   methods: {
+    // 国际化标题
     generateTitle, // generateTitle by vue-i18n
+    // 是否显示侧边栏，如果没有子页面的时候，不显示侧边栏
+    isShowSlideBar(tag) {
+      // 有子页面的有redirectedFrom属性，所以通过这个来判断
+      if (!tag.hasOwnProperty('redirectedFrom')) {
+        const { dispatch } = this.$store
+        dispatch({
+          type: 'app/updateSidebar', // 调用action
+          sidebarData: null, // 侧边栏的数据
+          hasSidebar: false, // 是否显示侧边栏
+          sidebarParents: null// 点击的顶部标题的数据
+        })
+      }
+    },
+    // 当前页是否显示
     isActive(route) {
       return route.path === this.$route.path
     },
+    // 是否有关闭标签页的功能
     isAffix(tag) {
       return tag.meta && tag.meta.affix
     },
@@ -126,6 +145,7 @@ export default {
       })
       return tags
     },
+    // 初始化标签
     initTags() {
       const affixTags = this.affixTags = this.filterAffixTags(this.routes)
       for (const tag of affixTags) {
@@ -143,7 +163,7 @@ export default {
       return false
     },
     moveToCurrentTag() {
-        const tags = this.$refs.tag
+      const tags = this.$refs.tag
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
@@ -157,7 +177,7 @@ export default {
         }
       })
     },
-      //选项卡-刷新
+    // 选项卡-刷新
     refreshSelectedTag(view) {
       this.$store.dispatch('tagsView/delCachedView', view).then(() => {
         const { fullPath } = view
@@ -168,7 +188,7 @@ export default {
         })
       })
     },
-      //关闭该选项卡
+    // 关闭该选项卡
     closeSelectedTag(view) {
       this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
@@ -176,14 +196,14 @@ export default {
         }
       })
     },
-      //选项卡-关闭其他
+    // 选项卡-关闭其他
     closeOthersTags() {
-        this.$router.push(this.selectedTag);
-        this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-          this.moveToCurrentTag()
+      this.$router.push(this.selectedTag)
+      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
+        this.moveToCurrentTag()
       })
     },
-      //选项卡-关闭全部
+    // 选项卡-关闭全部
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
@@ -209,7 +229,7 @@ export default {
       }
     },
 
-      //右击打开关闭选项
+    // 右击打开关闭选项
     openMenu(tag, e) {
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
@@ -223,160 +243,159 @@ export default {
         this.left = left
       }
 
-//      this.top = e.clientY
-        // 点击时，位于视窗的高度，减去顶部导航60
+      //      this.top = e.clientY
+      // 点击时，位于视窗的高度，减去顶部导航60
       this.top = e.clientY - 60
       this.visible = true
       this.selectedTag = tag
-
     },
-      //关闭选项
+    // 关闭选项
     closeMenu() {
       this.visible = false
     },
-//      点击右侧全部菜单，打开选项
-      openAllMenu(e) {
-        let self = this;
-          const tags = this.$refs.tag;
-          //记录当前路由
-          for (const tag of this.visitedViews) {
-              if (tag.path === this.$route.path) {
-                  self.selectedTag = tag;
-                  break
-              }
-          }
-          const menuMinWidth = 105
-          const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-          const offsetWidth = this.$el.offsetWidth // container width
-          const maxLeft = offsetWidth - menuMinWidth + 15 // left boundary
-          const left = e.clientX - offsetLeft + 15 // 15: margin right
-          if (left > maxLeft) {
-              this.left = maxLeft
-          } else {
-              this.left = left
-          }
-//      this.top = e.clientY
-          // 点击时，位于视窗的高度，减去顶部导航60
-          this.top = 90;
-          this.visible = true;
-      },
+    // 点击右侧全部菜单，打开选项
+    openAllMenu(e) {
+      const self = this
+      const tags = this.$refs.tag
+      // 记录当前路由
+      for (const tag of this.visitedViews) {
+        if (tag.path === this.$route.path) {
+          self.selectedTag = tag
+          break
+        }
+      }
+      const menuMinWidth = 105
+      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      const offsetWidth = this.$el.offsetWidth // container width
+      const maxLeft = offsetWidth - menuMinWidth + 15 // left boundary
+      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      if (left > maxLeft) {
+        this.left = maxLeft
+      } else {
+        this.left = left
+      }
+      // this.top = e.clientY
+      // 点击时，位于视窗的高度，减去顶部导航60
+      this.top = 90
+      this.visible = true
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped type="text/scss">
-.tags-view-container {
-    /*position: fixed;*/
-    /*z-index: 1000;*/
-    /*top: 110px;*/
-  height: 34px;
-  width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
-    display: flex;
-    justify-content: space-between;
-  .tags-view-wrapper {
-    .tags-view-item {
-      display: inline-block;
-      position: relative;
-      cursor: pointer;
-      height: 26px;
-      line-height: 26px;
-      border: 1px solid #d8dce5;
-      color: #495060;
-      background: #fff;
-      padding: 0 8px;
-      font-size: 12px;
-      margin-left: 5px;
-      margin-top: 4px;
-      &:first-of-type {
-        margin-left: 15px;
-      }
-      &:last-of-type {
-        margin-right: 15px;
-      }
-      &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
-        &::before {
-          content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 2px;
+    .tags-view-container {
+        /*position: fixed;*/
+        /*z-index: 1000;*/
+        /*top: 110px;*/
+        height: 34px;
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #d8dce5;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+        display: flex;
+        justify-content: space-between;
+        .tags-view-wrapper {
+            .tags-view-item {
+                display: inline-block;
+                position: relative;
+                cursor: pointer;
+                height: 26px;
+                line-height: 26px;
+                border: 1px solid #d8dce5;
+                color: #495060;
+                background: #fff;
+                padding: 0 8px;
+                font-size: 12px;
+                margin-left: 5px;
+                margin-top: 4px;
+                &:first-of-type {
+                    margin-left: 15px;
+                }
+                &:last-of-type {
+                    margin-right: 15px;
+                }
+                &.active {
+                    background-color: #42b983;
+                    color: #fff;
+                    border-color: #42b983;
+                    &::before {
+                        content: '';
+                        background: #fff;
+                        display: inline-block;
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        position: relative;
+                        margin-right: 2px;
+                    }
+                }
+            }
         }
-      }
-    }
-  }
-    .close-contextmenu{
-        font-size: 12px;
-        width: 100px;
-        line-height: 34px;
-        text-align: center;
-        /*border-left: 1px solid #d8dce5;*/
-        box-shadow: -1px 0px 2px 0 rgba(0,0,0,0.12)    ;
-        &:hover{
-            cursor: pointer;
+        .close-contextmenu {
+            font-size: 12px;
+            width: 100px;
+            line-height: 34px;
+            text-align: center;
+            /*border-left: 1px solid #d8dce5;*/
+            box-shadow: -1px 0px 2px 0 rgba(0, 0, 0, 0.12);
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .contextmenu {
+            margin: 0;
+            background: #fff;
+            z-index: 3000;
+            position: absolute;
+            list-style-type: none;
+            padding: 5px 0;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 400;
+            color: #333;
+            /*box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);*/
+            box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, .3);
+            li {
+                margin: 0;
+                padding: 7px 16px;
+                cursor: pointer;
+                &:hover {
+                    background: #eee;
+                }
+            }
         }
     }
-  .contextmenu {
-    margin: 0;
-    background: #fff;
-    z-index: 3000;
-    position: absolute;
-    list-style-type: none;
-    padding: 5px 0;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 400;
-    color: #333;
-    /*box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);*/
-    box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, .3);
-    li {
-      margin: 0;
-      padding: 7px 16px;
-      cursor: pointer;
-      &:hover {
-        background: #eee;
-      }
-    }
-  }
-}
 </style>
-<style lang="scss" scoped type="text/scss" >
-//reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    &>>>.el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: 2px;
-      border-radius: 50%;
-      text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      transform-origin: 100% 50%;
-      &:before {
-        transform: scale(.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-      &:hover {
-        background-color: #b4bccc;
-        color: #fff;
-      }
+<style lang="scss" scoped type="text/scss">
+    //reset element css of el-icon-close
+    .tags-view-wrapper {
+        .tags-view-item {
+            & > > > .el-icon-close {
+                width: 16px;
+                height: 16px;
+                vertical-align: 2px;
+                border-radius: 50%;
+                text-align: center;
+                transition: all .3s cubic-bezier(.645, .045, .355, 1);
+                transform-origin: 100% 50%;
+                &:before {
+                    transform: scale(.6);
+                    display: inline-block;
+                    vertical-align: -3px;
+                }
+                &:hover {
+                    background-color: #b4bccc;
+                    color: #fff;
+                }
+            }
+        }
     }
-  }
-}
 </style>
 
 <!--左右按键滚动样式-->
 <style lang="scss" scoped type="text/scss">
-    .tabs-container{
+    .tabs-container {
         .tags-view-item {
             &:first-of-type {
                 margin-left: 5px !important;
@@ -385,19 +404,19 @@ export default {
                 margin-right: 5px !important;
             }
         }
-        &>>>.el-tabs__nav-next, &>>>.el-tabs__nav-prev{
+        & > > > .el-tabs__nav-next, & > > > .el-tabs__nav-prev {
             line-height: 34px !important;
             font-size: 15px;
             padding: 0 5px;
         }
         /deep/ {
-            .el-tabs__nav{
+            .el-tabs__nav {
                 border: none;
             }
-            .el-tabs__item:last-child{
+            .el-tabs__item:last-child {
                 padding-right: 0 !important;
             }
-            .el-tabs__item{
+            .el-tabs__item {
                 border-bottom: none;
                 border-left: none;
                 padding: 0;
@@ -406,40 +425,42 @@ export default {
                 &:first-child {
                     margin-left: 10px !important;
                 }
-                &:last-child{
+                &:last-child {
                     margin-right: 10px !important;
                 }
                 &>>>.is-active{
                     color: #fff;
                 }
             }
-            .el-tabs__nav-wrap{
+            .el-tabs__nav-wrap {
                 margin-bottom: 0;
             }
-            .el-tabs__header{
+            .el-tabs__header {
                 border-bottom: none;
             }
-            .el-tabs__content{
+            .el-tabs__content {
                 display: none;
             }
-            .el-tabs__item:nth-child(2){
-                padding-left: 0!important;
+            .el-tabs__item:nth-child(2) {
+                padding-left: 0 !important;
             }
-            .el-icon-close{
+            .el-icon-close {
                 vertical-align: middle !important;
-                &:before{
+                &:before {
                     vertical-align: middle !important;
                 }
             }
         }
 
     }
+
     .scroll-container {
-        &>>>.is-vertical{
+        & > > > .is-vertical {
             display: none !important;
         }
     }
-    .tags-view-container >>> .el-tabs__header{
+
+    .tags-view-container > > > .el-tabs__header {
         margin: 0 !important;
     }
 </style>

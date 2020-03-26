@@ -133,56 +133,56 @@ export const constantRoutes = [
         meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
-  },
-  /*{
-    path: '/step-form',
-    component: Layout,
-    redirect: '/step-form/index',
-    // hidden: true,
-    // name: 'step',
-    meta: {
-      title: '分步表单',
-      icon: 'user'
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/step-form/index'),
-        // redirect: '/step-form/index/step1',
-        name: 'StepFrom', // 设定路由的名字
-        // hidden: true,
-        meta: {
-          title: '分步表单',
-          icon: 'user'
-          // noCache: true,///如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
-          // breadcrumb: false // 如果设置为false，则不会在breadcrumb面包屑中显示
+  }
+  /* {
+      path: '/step-form',
+      component: Layout,
+      redirect: '/step-form/index',
+      // hidden: true,
+      // name: 'step',
+      meta: {
+        title: '分步表单',
+        icon: 'user'
+      },
+      children: [
+        {
+          path: 'index',
+          component: () => import('@/views/step-form/index'),
+          // redirect: '/step-form/index/step1',
+          name: 'StepFrom', // 设定路由的名字
+          // hidden: true,
+          meta: {
+            title: '分步表单',
+            icon: 'user'
+            // noCache: true,///如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
+            // breadcrumb: false // 如果设置为false，则不会在breadcrumb面包屑中显示
+          }
+        },
+        {
+          path: 'step1',
+          component: () => import('@/views/step-form/step1'),
+          name: 'Step1', // 设定路由的名字
+          hidden: true
+          // breadcrumb:false,
+        },
+        {
+          path: 'step2',
+          component: () => import('@/views/step-form/step2'),
+          name: 'Step2', // 设定路由的名字
+          hidden: true,
+          noCache: true// /如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
+          // breadcrumb:false,
+        },
+        {
+          path: 'step3',
+          component: () => import('@/views/step-form/step3'),
+          name: 'Step3', // 设定路由的名字
+          hidden: true
+          // breadcrumb:false,
         }
-      },
-      {
-        path: 'step1',
-        component: () => import('@/views/step-form/step1'),
-        name: 'Step1', // 设定路由的名字
-        hidden: true
-        // breadcrumb:false,
-      },
-      {
-        path: 'step2',
-        component: () => import('@/views/step-form/step2'),
-        name: 'Step2', // 设定路由的名字
-        hidden: true,
-        noCache: true// /如果设置为true，则不会被 <keep-alive> 缓存(默认 false)--- 如果为true时，点击路由会重新渲染
-        // breadcrumb:false,
-      },
-      {
-        path: 'step3',
-        component: () => import('@/views/step-form/step3'),
-        name: 'Step3', // 设定路由的名字
-        hidden: true
-        // breadcrumb:false,
-      }
 
-    ]
-  }*/
+      ]
+    }*/
 ]
 
 /**
@@ -208,7 +208,7 @@ export const asyncRoutes = [
         name: 'PagePermission',
         meta: {
           title: 'pagePermission',
-            icon: 'lock',
+          icon: 'lock',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
@@ -218,7 +218,7 @@ export const asyncRoutes = [
         name: 'DirectivePermission',
         meta: {
           title: 'directivePermission',
-            icon: 'lock',
+          icon: 'lock'
           // if do not set roles, means: this page does not require permission
         }
       },
@@ -228,13 +228,12 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
-            icon: 'lock',
+          icon: 'lock',
           roles: ['admin']
         }
       }
     ]
   },
-
 
   /** when your routing map is too long, you can split it into small modules **/
   componentsRouter,
@@ -257,8 +256,8 @@ export const asyncRoutes = [
         component: () => import('@/views/example/create'),
         name: 'CreateArticle',
         meta: {
-            title: 'createArticle',
-            icon: 'edit',
+          title: 'createArticle',
+          icon: 'edit'
         }
       },
       {
@@ -277,115 +276,115 @@ export const asyncRoutes = [
     ]
   },
 
-//移动到组件中的路由
-/*  {
-    path: '/tab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/tab/index'),
-        name: 'Tab',
-        meta: { title: 'tab', icon: 'tab' }
-      }
-    ]
-  },
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
-    meta: {
-      title: 'errorPages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: 'page401', noCache: true }
+  // 移动到组件中的路由
+  /*  {
+        path: '/tab',
+        component: Layout,
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/tab/index'),
+            name: 'Tab',
+            meta: { title: 'tab', icon: 'tab' }
+          }
+        ]
       },
       {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: 'page404', noCache: true }
-      }
-    ]
-  },
-      {
-      path: '/excel',
-      component: Layout,
-      redirect: '/excel/export-excel',
-      name: 'Excel',
-      meta: {
-        title: 'excel',
-        icon: 'excel'
+        path: '/error',
+        component: Layout,
+        redirect: 'noRedirect',
+        name: 'ErrorPages',
+        meta: {
+          title: 'errorPages',
+          icon: '404'
+        },
+        children: [
+          {
+            path: '401',
+            component: () => import('@/views/error-page/401'),
+            name: 'Page401',
+            meta: { title: 'page401', noCache: true }
+          },
+          {
+            path: '404',
+            component: () => import('@/views/error-page/404'),
+            name: 'Page404',
+            meta: { title: 'page404', noCache: true }
+          }
+        ]
       },
-      children: [
-        {
-          path: 'export-excel',
-          component: () => import('@/views/excel/export-excel'),
-          name: 'ExportExcel',
-          meta: { title: 'exportExcel',icon: 'excel' }
+          {
+          path: '/excel',
+          component: Layout,
+          redirect: '/excel/export-excel',
+          name: 'Excel',
+          meta: {
+            title: 'excel',
+            icon: 'excel'
+          },
+          children: [
+            {
+              path: 'export-excel',
+              component: () => import('@/views/excel/export-excel'),
+              name: 'ExportExcel',
+              meta: { title: 'exportExcel',icon: 'excel' }
+            },
+            {
+              path: 'export-selected-excel',
+              component: () => import('@/views/excel/select-excel'),
+              name: 'SelectExcel',
+              meta: { title: 'selectExcel',icon: 'excel' }
+            },
+            {
+              path: 'export-merge-header',
+              component: () => import('@/views/excel/merge-header'),
+              name: 'MergeHeader',
+              meta: { title: 'mergeHeader',icon: 'excel' }
+            },
+            {
+              path: 'upload-excel',
+              component: () => import('@/views/excel/upload-excel'),
+              name: 'UploadExcel',
+              meta: { title: 'uploadExcel',icon: 'excel' }
+            }
+          ]
         },
-        {
-          path: 'export-selected-excel',
-          component: () => import('@/views/excel/select-excel'),
-          name: 'SelectExcel',
-          meta: { title: 'selectExcel',icon: 'excel' }
-        },
-        {
-          path: 'export-merge-header',
-          component: () => import('@/views/excel/merge-header'),
-          name: 'MergeHeader',
-          meta: { title: 'mergeHeader',icon: 'excel' }
-        },
-        {
-          path: 'upload-excel',
-          component: () => import('@/views/excel/upload-excel'),
-          name: 'UploadExcel',
-          meta: { title: 'uploadExcel',icon: 'excel' }
-        }
-      ]
-    },
 
-    {
-      path: '/zip',
-      component: Layout,
-      redirect: '/zip/download',
-      alwaysShow: true,
-      name: 'Zip',
-      meta: { title: 'zip', icon: 'zip' },
-      children: [
         {
-          path: 'download',
-          component: () => import('@/views/zip/index'),
-          name: 'ExportZip',
-          meta: { title: 'exportZip',icon: 'zip' }
-        }
-      ]
-    },
+          path: '/zip',
+          component: Layout,
+          redirect: '/zip/download',
+          alwaysShow: true,
+          name: 'Zip',
+          meta: { title: 'zip', icon: 'zip' },
+          children: [
+            {
+              path: 'download',
+              component: () => import('@/views/zip/index'),
+              name: 'ExportZip',
+              meta: { title: 'exportZip',icon: 'zip' }
+            }
+          ]
+        },
 
-    {
-      path: '/pdf',
-      component: Layout,
-      redirect: '/pdf/index',
-      children: [
         {
-          path: 'index',
-          component: () => import('@/views/pdf/index'),
-          name: 'PDF',
-          meta: { title: 'pdf', icon: 'pdf' }
-        }
-      ]
-    },
-    {
-      path: '/pdf/download',
-      component: () => import('@/views/pdf/download'),
-      hidden: true
-    },*/
+          path: '/pdf',
+          component: Layout,
+          redirect: '/pdf/index',
+          children: [
+            {
+              path: 'index',
+              component: () => import('@/views/pdf/index'),
+              name: 'PDF',
+              meta: { title: 'pdf', icon: 'pdf' }
+            }
+          ]
+        },
+        {
+          path: '/pdf/download',
+          component: () => import('@/views/pdf/download'),
+          hidden: true
+        },*/
 
   {
     path: '/error-log',
