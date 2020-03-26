@@ -77,6 +77,12 @@ export default {
       }
     }
   },
+    watch: {
+      //监听路由变化，路由改变滚动条返回到顶部
+        $route() {
+            document.getElementById('main-container').scrollTop = 0
+        },
+    },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })

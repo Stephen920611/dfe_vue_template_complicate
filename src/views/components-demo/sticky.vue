@@ -32,7 +32,7 @@
       </div>
 
       <el-button style="margin-left: 10px;" type="success">
-        publish
+        发布
       </el-button>
     </sticky>
 
