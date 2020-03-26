@@ -82,7 +82,7 @@ export const constantRoutes = [
         meta: {
           title: 'dashboard',
           icon: 'dashboard',
-          affix: true // tags后面的关闭按钮是否显示
+          // affix: true // tags后面的关闭按钮是否显示
         }
       }
     ]
@@ -98,7 +98,7 @@ export const constantRoutes = [
         meta: {
           title: 'documentation',
           icon: 'documentation',
-          affix: true
+          // affix: true
         }
       }
     ]
