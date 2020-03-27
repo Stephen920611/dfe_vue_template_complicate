@@ -107,9 +107,6 @@
              * @param parents {Object} 选中顶部标题的数据
              */
             updateSidebar(data, status, parents) {
-                console.log(data);
-                console.log(status);
-                console.log(parents);
                 const {dispatch} = this.$store;
                 dispatch({
                     type: 'app/updateSidebar', // 调用action
