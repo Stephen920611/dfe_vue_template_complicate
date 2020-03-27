@@ -159,6 +159,7 @@
                     }
                 }
             },
+            //添加tags标签
             addTags() {
                 const {name} = this.$route
                 if (name) {
@@ -166,13 +167,15 @@
                 }
                 return false
             },
+            //路由改变，移动到当前界面
             moveToCurrentTag() {
+                console.log('22222222');
                 const tags = this.$refs.tag
                 this.$nextTick(() => {
                     for (const tag of tags) {
                         if (tag.to.path === this.$route.path) {
                             this.$refs.scrollPane.moveToTarget(tag)
-                            // when query is different then update
+                            // 当查询不同时，则更新
                             if (tag.to.fullPath !== this.$route.fullPath) {
                                 this.$store.dispatch('tagsView/updateVisitedView', this.$route)
                             }
@@ -216,14 +219,14 @@
                     this.toLastView(visitedViews, view)
                 })
             },
-
+            //关闭全部后，跳转到固定路由或者首页
             toLastView(visitedViews, view) {
                 const latestView = visitedViews.slice(-1)[0]
                 if (latestView) {
                     this.$router.push(latestView.fullPath)
                 } else {
-                    // now the default is to redirect to the home page if there is no tags-view,
-                    // you can adjust it according to your needs.
+                    // 现在默认是如果没有标签视图，则重定向到主页，
+                    // 您可以根据需要进行调整。
                     if (view.name === 'Dashboard') {
                         // to reload home page
                         this.$router.replace({path: '/redirect' + view.fullPath})
