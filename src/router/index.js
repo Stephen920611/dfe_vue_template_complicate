@@ -16,27 +16,28 @@ import nestedRouter from './modules/nested'
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * hidden: true                   是否在侧边栏或者顶部导航栏显示；设为true, 该路由会隐藏（默认为false）
+ * alwaysShow: true               如果设置为true，将始终显示根菜单，
+ *                                如果未设置alwaysShow，则当项具有多个子路线时，
+ *                                它将变为嵌套模式，否则不显示根菜单
+ * redirect: noRedirect           如果设置noRedirect，则不会在面包屑中重定向
+ * name:'router-name'             该名称由<keep-alive>使用（必须设置！！！）
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    roles: ['admin','editor']    权限，控制页面角色（您可以设置多个角色）
+    title: 'title'               名称，显示在侧边栏和面包屑中（推荐设置）
+    icon: 'svg-name'             侧栏中或顶部导航栏的图标显示
+    noCache: true                如果设置为true，将不缓存页面（默认为false）
+    affix: true                  如果设为true,则改路由标签将粘贴在标签视图tags-view中（注：tags-view每项后面的小叉号）
+    breadcrumb: false            如果设为false,该路由将在breadcrumb面包屑中隐藏（默认是false）
+    activeMenu: '/example/list'  如果设置了路径，则侧边栏将突出高亮显示您设置的路径
+    isShowSlideBar:true          是否需要显示侧边栏；设为true,该路由会显示侧边栏（默认是false）
   }
  */
 
 /**
  * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
+ * 没有权限要求的基本页面
+ * 可以访问所有角色
  */
 export const constantRoutes = [
     {
@@ -82,7 +83,7 @@ export const constantRoutes = [
                 meta: {
                     title: 'dashboard',
                     icon: 'dashboard',
-                    affix: true // tags后面的关闭按钮是否显示
+                    affix: true, // tags后面的关闭按钮是否显示
                 }
             }
         ]
@@ -187,7 +188,7 @@ export const constantRoutes = [
 
 /**
  * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
+ * 需要根据用户角色动态加载的路由
  */
 export const asyncRoutes = [
     {
@@ -209,7 +210,8 @@ export const asyncRoutes = [
                 meta: {
                     title: 'pagePermission',
                     icon: 'lock',
-                    roles: ['admin'] // or you can only set roles in sub nav
+                    isShowSlideBar:true,
+                    roles: ['admin'], // or you can only set roles in sub nav
                 }
             },
             {
@@ -218,7 +220,8 @@ export const asyncRoutes = [
                 name: 'DirectivePermission',
                 meta: {
                     title: 'directivePermission',
-                    icon: 'lock'
+                    icon: 'lock',
+                    isShowSlideBar:true,
                     // if do not set roles, means: this page does not require permission
                 }
             },
@@ -229,6 +232,7 @@ export const asyncRoutes = [
                 meta: {
                     title: 'rolePermission',
                     icon: 'lock',
+                    isShowSlideBar:true,
                     roles: ['admin']
                 }
             }
@@ -257,21 +261,31 @@ export const asyncRoutes = [
                 name: 'CreateArticle',
                 meta: {
                     title: 'createArticle',
-                    icon: 'edit'
+                    icon: 'edit',
+                    isShowSlideBar:true,
                 }
             },
             {
                 path: 'edit/:id(\\d+)',
                 component: () => import('@/views/example/edit'),
                 name: 'EditArticle',
-                meta: {title: 'editArticle', noCache: true, activeMenu: '/example/list'},
-                hidden: true
+                hidden: true,
+                meta: {
+                    title: 'editArticle',
+                    noCache: true,
+                    activeMenu: '/example/list',
+                    isShowSlideBar:true,
+                },
             },
             {
                 path: 'list',
                 component: () => import('@/views/example/list'),
                 name: 'ArticleList',
-                meta: {title: 'articleList', icon: 'list'}
+                meta: {
+                    title: 'articleList',
+                    icon: 'list',
+                    isShowSlideBar:true,
+                }
             }
         ]
     },

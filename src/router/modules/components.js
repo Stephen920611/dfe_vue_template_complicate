@@ -21,7 +21,8 @@ const componentsRouter = {
             name: 'TinymceDemo',
             meta: {
                 title: 'tinymce',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -30,7 +31,8 @@ const componentsRouter = {
             name: 'MarkdownDemo',
             meta: {
                 title: 'markdown',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -39,7 +41,8 @@ const componentsRouter = {
             name: 'JsonEditorDemo',
             meta: {
                 title: 'jsonEditor',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -48,7 +51,8 @@ const componentsRouter = {
             name: 'SplitpaneDemo',
             meta: {
                 title: 'splitPane',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -57,7 +61,8 @@ const componentsRouter = {
             name: 'AvatarUploadDemo',
             meta: {
                 title: 'avatarUpload',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -66,7 +71,8 @@ const componentsRouter = {
             name: 'DropzoneDemo',
             meta: {
                 title: 'dropzone',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -75,7 +81,8 @@ const componentsRouter = {
             name: 'StickyDemo',
             meta: {
                 title: 'sticky',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -84,7 +91,8 @@ const componentsRouter = {
             name: 'CountToDemo',
             meta: {
                 title: 'countTo',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -93,7 +101,8 @@ const componentsRouter = {
             name: 'ComponentMixinDemo',
             meta: {
                 title: 'componentMixin',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -102,7 +111,8 @@ const componentsRouter = {
             name: 'BackToTopDemo',
             meta: {
                 title: 'backToTop',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -111,7 +121,8 @@ const componentsRouter = {
             name: 'DragDialogDemo',
             meta: {
                 title: 'dragDialog',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -120,7 +131,8 @@ const componentsRouter = {
             name: 'DragSelectDemo',
             meta: {
                 title: 'dragSelect',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -129,7 +141,8 @@ const componentsRouter = {
             name: 'DndListDemo',
             meta: {
                 title: 'dndList',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -138,7 +151,8 @@ const componentsRouter = {
             name: 'DragKanbanDemo',
             meta: {
                 title: 'dragKanban',
-                icon: 'component'
+                icon: 'component',
+                isShowSlideBar:true,
             }
         },
         {
@@ -203,25 +217,41 @@ const componentsRouter = {
                     path: 'export-excel',
                     component: () => import('@/views/excel/export-excel'),
                     name: 'ExportExcel',
-                    meta: {title: 'exportExcel', icon: 'excel'}
+                    meta: {
+                        title: 'exportExcel',
+                        icon: 'excel',
+                        isShowSlideBar:true,
+                    }
                 },
                 {
                     path: 'export-selected-excel',
                     component: () => import('@/views/excel/select-excel'),
                     name: 'SelectExcel',
-                    meta: {title: 'selectExcel', icon: 'excel'}
+                    meta: {
+                        title: 'selectExcel',
+                        icon: 'excel',
+                        isShowSlideBar:true,
+                    }
                 },
                 {
                     path: 'export-merge-header',
                     component: () => import('@/views/excel/merge-header'),
                     name: 'MergeHeader',
-                    meta: {title: 'mergeHeader', icon: 'excel'}
+                    meta: {
+                        title: 'mergeHeader',
+                        icon: 'excel',
+                        isShowSlideBar:true,
+                    }
                 },
                 {
                     path: 'upload-excel',
                     component: () => import('@/views/excel/upload-excel'),
                     name: 'UploadExcel',
-                    meta: {title: 'uploadExcel', icon: 'excel'}
+                    meta: {
+                        title: 'uploadExcel',
+                        icon: 'excel',
+                        isShowSlideBar:true,
+                    }
                 }
             ]
         },
@@ -257,13 +287,21 @@ const componentsRouter = {
                     path: '401',
                     component: () => import('@/views/error-page/401'),
                     name: 'Page401',
-                    meta: { title: 'page401', noCache: true }
+                    meta: {
+                        title: 'page401',
+                        noCache: true,
+                        isShowSlideBar:true,
+                    }
                 },
                 {
                     path: '404',
                     component: () => import('@/views/error-page/404'),
                     name: 'Page404',
-                    meta: { title: 'page404', noCache: true }
+                    meta: {
+                        title: 'page404',
+                        noCache: true,
+                        isShowSlideBar:true,
+                    }
                 }
             ]
         },

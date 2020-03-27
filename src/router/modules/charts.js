@@ -20,7 +20,8 @@ const chartsRouter = {
             meta: {
                 title: 'keyboardChart',
                 icon: 'chart',
-                noCache: true
+                noCache: true,
+                isShowSlideBar:true,
             }
         },
         {
@@ -30,7 +31,8 @@ const chartsRouter = {
             meta: {
                 title: 'lineChart',
                 icon: 'chart',
-                noCache: true
+                noCache: true,
+                isShowSlideBar:true,
             }
         },
         {
@@ -40,7 +42,8 @@ const chartsRouter = {
             meta: {
                 title: 'mixChart',
                 icon: 'chart',
-                noCache: true
+                noCache: true,
+                isShowSlideBar:true,
             }
         }
     ]

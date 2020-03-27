@@ -103,11 +103,15 @@
         methods: {
             // 国际化标题
             generateTitle, // generateTitle by vue-i18n
-            // 是否显示侧边栏，如果没有子页面的时候，不显示侧边栏
+
+            /**
+             * 是否显示侧边栏
+             * @param tag {Object} 点击tag的数据
+             */
             isShowSlideBar(tag) {
-                // 有子页面的有redirectedFrom属性，所以通过这个来判断
-                if (!tag.hasOwnProperty('redirectedFrom')) {
-                    const {dispatch} = this.$store
+                const {dispatch} = this.$store;
+                // 是否显示侧边栏
+                if (!(tag.hasOwnProperty('meta') && tag.meta.hasOwnProperty('isShowSlideBar') && tag.meta.isShowSlideBar)) {
                     dispatch({
                         type: 'app/updateSidebar', // 调用action
                         sidebarData: null, // 侧边栏的数据
