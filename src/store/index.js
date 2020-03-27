@@ -7,8 +7,8 @@ Vue.use(Vuex)
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 const modulesFiles = require.context('./modules', true, /\.js$/)
 
-// you do not need `import app from './modules/app'`
-// it will auto require all vuex module from modules file
+// 您不需要`import app from './modules/app'`
+// 它将自动需要来自模块文件的所有vuex模块
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   // set './app.js' => 'app'
   const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
