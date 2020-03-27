@@ -169,7 +169,6 @@
             },
             //路由改变，移动到当前界面
             moveToCurrentTag() {
-                console.log('22222222');
                 const tags = this.$refs.tag
                 this.$nextTick(() => {
                     for (const tag of tags) {

@@ -17,7 +17,7 @@ import nestedRouter from './modules/nested'
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
  * hidden: true                   是否在侧边栏或者顶部导航栏显示；设为true, 该路由会隐藏（默认为false）
- * alwaysShow: true               如果设置为true，将始终显示根菜单，
+ * alwaysShow: true               如果设置为true，将始终显示根菜单
  *                                如果未设置alwaysShow，则当项具有多个子路线时，
  *                                它将变为嵌套模式，否则不显示根菜单
  * redirect: noRedirect           如果设置noRedirect，则不会在面包屑中重定向
@@ -37,7 +37,7 @@ import nestedRouter from './modules/nested'
 /**
  * constantRoutes
  * 没有权限要求的基本页面
- * 可以访问所有角色
+ * 所有角色都可以访问
  */
 export const constantRoutes = [
     {
@@ -195,12 +195,12 @@ export const asyncRoutes = [
         path: '/permission',
         component: Layout,
         redirect: '/permission/page',
-        alwaysShow: true, // will always show the root menu
+        alwaysShow: true, // 始终显示根菜单
         name: 'Permission',
         meta: {
             title: 'permission',
             icon: 'lock',
-            roles: ['admin', 'editor'] // you can set roles in root nav
+            roles: ['admin', 'editor'] // 可以在根导航中设置角色
         },
         children: [
             {
@@ -211,7 +211,7 @@ export const asyncRoutes = [
                     title: 'pagePermission',
                     icon: 'lock',
                     isShowSlideBar:true,
-                    roles: ['admin'], // or you can only set roles in sub nav
+                    roles: ['admin'], // 或者只能在子导航中设置角色
                 }
             },
             {
@@ -222,7 +222,7 @@ export const asyncRoutes = [
                     title: 'directivePermission',
                     icon: 'lock',
                     isShowSlideBar:true,
-                    // if do not set roles, means: this page does not require permission
+                    // 如果未设置角色，则表示：该页面不需要权限
                 }
             },
             {
@@ -239,7 +239,7 @@ export const asyncRoutes = [
         ]
     },
 
-    /** when your routing map is too long, you can split it into small modules **/
+    /** 当您的路由图太长时，您可以将其拆分为小模块 **/
     componentsRouter,
     // chartsRouter,
     nestedRouter,

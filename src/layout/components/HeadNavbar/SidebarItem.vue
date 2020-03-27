@@ -144,13 +144,11 @@
              * @returns {boolean}
              */
             hasOneShowingChild(children = [], parent) {
-//                console.log('children',children)
-//                console.log('parent',parent)
                 const showingChildren = children.filter(item => {
                     if (item.hidden) {
                         return false
                     } else {
-                        // Temp set(will be used if only has one showing child)
+                        // Temp set 临时集（如果只有一个显示子级，将使用该集）
                         this.onlyOneChild = item
                         return true
                     }
@@ -175,7 +173,7 @@
              * @returns {*}
              */
             resolvePath(routePath) {
-                //判断路由是否是外链地址 https://
+                //判断路由是否是外链地址 https://...
                 if (isExternal(routePath)) {
                     return routePath
                 }
