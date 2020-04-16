@@ -40,102 +40,102 @@ import nestedRouter from './modules/nested'
  * 所有角色都可以访问
  */
 export const constantRoutes = [
-    {
-        path: '/redirect',
-        component: Layout,
-        hidden: true,
-        children: [
-            {
-                path: '/redirect/:path(.*)',
-                component: () => import('@/views/redirect/index')
-            }
-        ]
-    },
-    {
-        path: '/login',
-        component: () => import('@/views/login/index'),
-        hidden: true
-    },
-    {
-        path: '/auth-redirect',
-        component: () => import('@/views/login/auth-redirect'),
-        hidden: true
-    },
-    {
-        path: '/404',
-        component: () => import('@/views/error-page/404'),
-        hidden: true
-    },
-    {
-        path: '/401',
-        component: () => import('@/views/error-page/401'),
-        hidden: true
-    },
-    {
-        path: '/',
-        component: Layout,
-        redirect: '/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                component: () => import('@/views/dashboard/index'),
-                name: 'Dashboard',
-                meta: {
-                    title: 'dashboard',
-                    icon: 'dashboard',
-                    affix: true, // tags后面的关闭按钮是否显示
-                }
-            }
-        ]
-    },
-    {
-        path: '/documentation',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/documentation/index'),
-                name: 'Documentation',
-                meta: {
-                    title: 'documentation',
-                    icon: 'documentation',
-                    affix: true
-                }
-            }
-        ]
-    },
-    {
-        path: '/guide',
-        component: Layout,
-        redirect: '/guide/index',
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/guide/index'),
-                name: 'Guide',
-                meta: {
-                    title: 'guide',
-                    icon: 'guide',
-                    noCache: true
-                }
-            }
-        ]
-    },
-    {
-        path: '/profile',
-        component: Layout,
-        redirect: '/profile/index',
-        hidden: true,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/profile/index'),
-                name: 'Profile',
-                meta: {title: 'profile', icon: 'user', noCache: true}
-            }
-        ]
-    }
-    /* {
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/auth-redirect',
+    component: () => import('@/views/login/auth-redirect'),
+    hidden: true
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: {
+          title: 'dashboard',
+          icon: 'dashboard',
+          affix: true // tags后面的关闭按钮是否显示
+        }
+      }
+    ]
+  },
+  {
+    path: '/documentation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation',
+        meta: {
+          title: 'documentation',
+          icon: 'documentation',
+          affix: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/guide',
+    component: Layout,
+    redirect: '/guide/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/guide/index'),
+        name: 'Guide',
+        meta: {
+          title: 'guide',
+          icon: 'guide',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'profile', icon: 'user', noCache: true }
+      }
+    ]
+  }
+  /* {
         path: '/step-form',
         component: Layout,
         redirect: '/step-form/index',
@@ -191,107 +191,107 @@ export const constantRoutes = [
  * 需要根据用户角色动态加载的路由
  */
 export const asyncRoutes = [
-    {
-        path: '/permission',
-        component: Layout,
-        redirect: '/permission/page',
-        alwaysShow: true, // 始终显示根菜单
-        name: 'Permission',
-        meta: {
-            title: 'permission',
-            icon: 'lock',
-            roles: ['admin', 'editor'] // 可以在根导航中设置角色
-        },
-        children: [
-            {
-                path: 'page',
-                component: () => import('@/views/permission/page'),
-                name: 'PagePermission',
-                meta: {
-                    title: 'pagePermission',
-                    icon: 'lock',
-                    isShowSlideBar:true,
-                    roles: ['admin'], // 或者只能在子导航中设置角色
-                }
-            },
-            {
-                path: 'directive',
-                component: () => import('@/views/permission/directive'),
-                name: 'DirectivePermission',
-                meta: {
-                    title: 'directivePermission',
-                    icon: 'lock',
-                    isShowSlideBar:true,
-                    // 如果未设置角色，则表示：该页面不需要权限
-                }
-            },
-            {
-                path: 'role',
-                component: () => import('@/views/permission/role'),
-                name: 'RolePermission',
-                meta: {
-                    title: 'rolePermission',
-                    icon: 'lock',
-                    isShowSlideBar:true,
-                    roles: ['admin']
-                }
-            }
-        ]
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // 始终显示根菜单
+    name: 'Permission',
+    meta: {
+      title: 'permission',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // 可以在根导航中设置角色
     },
-
-    /** 当您的路由图太长时，您可以将其拆分为小模块 **/
-    componentsRouter,
-    // chartsRouter,
-    nestedRouter,
-    // tableRouter,
-
-    {
-        path: '/example',
-        component: Layout,
-        redirect: '/example/list',
-        name: 'Example',
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
         meta: {
-            title: 'example',
-            icon: 'example'
-        },
-        children: [
-            {
-                path: 'create',
-                component: () => import('@/views/example/create'),
-                name: 'CreateArticle',
-                meta: {
-                    title: 'createArticle',
-                    icon: 'edit',
-                    isShowSlideBar:true,
-                }
-            },
-            {
-                path: 'edit/:id(\\d+)',
-                component: () => import('@/views/example/edit'),
-                name: 'EditArticle',
-                hidden: true,
-                meta: {
-                    title: 'editArticle',
-                    noCache: true,
-                    activeMenu: '/example/list',
-                    isShowSlideBar:true,
-                },
-            },
-            {
-                path: 'list',
-                component: () => import('@/views/example/list'),
-                name: 'ArticleList',
-                meta: {
-                    title: 'articleList',
-                    icon: 'list',
-                    isShowSlideBar:true,
-                }
-            }
-        ]
-    },
+          title: 'pagePermission',
+          icon: 'lock',
+          isShowSlideBar: true,
+          roles: ['admin'] // 或者只能在子导航中设置角色
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/permission/directive'),
+        name: 'DirectivePermission',
+        meta: {
+          title: 'directivePermission',
+          icon: 'lock',
+          isShowSlideBar: true
+          // 如果未设置角色，则表示：该页面不需要权限
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/permission/role'),
+        name: 'RolePermission',
+        meta: {
+          title: 'rolePermission',
+          icon: 'lock',
+          isShowSlideBar: true,
+          roles: ['admin']
+        }
+      }
+    ]
+  },
 
-    // 移动到组件中的路由
-    /*  {
+  /** 当您的路由图太长时，您可以将其拆分为小模块 **/
+  componentsRouter,
+  // chartsRouter,
+  nestedRouter,
+  // tableRouter,
+
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/list',
+    name: 'Example',
+    meta: {
+      title: 'example',
+      icon: 'example'
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/example/create'),
+        name: 'CreateArticle',
+        meta: {
+          title: 'createArticle',
+          icon: 'edit',
+          isShowSlideBar: true
+        }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/example/edit'),
+        name: 'EditArticle',
+        hidden: true,
+        meta: {
+          title: 'editArticle',
+          noCache: true,
+          activeMenu: '/example/list',
+          isShowSlideBar: true
+        }
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/example/list'),
+        name: 'ArticleList',
+        meta: {
+          title: 'articleList',
+          icon: 'list',
+          isShowSlideBar: true
+        }
+      }
+    ]
+  },
+
+  // 移动到组件中的路由
+  /*  {
           path: '/tab',
           component: Layout,
           children: [
@@ -400,61 +400,61 @@ export const asyncRoutes = [
             hidden: true
           },*/
 
-    {
-        path: '/error-log',
-        component: Layout,
-        children: [
-            {
-                path: 'log',
-                component: () => import('@/views/error-log/index'),
-                name: 'ErrorLog',
-                meta: {title: 'errorLog', icon: 'bug'}
-            }
-        ]
-    },
+  {
+    path: '/error-log',
+    component: Layout,
+    children: [
+      {
+        path: 'log',
+        component: () => import('@/views/error-log/index'),
+        name: 'ErrorLog',
+        meta: { title: 'errorLog', icon: 'bug' }
+      }
+    ]
+  },
 
-    {
-        path: '/theme',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/theme/index'),
-                name: 'Theme',
-                meta: {title: 'theme', icon: 'theme'}
-            }
-        ]
-    },
+  {
+    path: '/theme',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/theme/index'),
+        name: 'Theme',
+        meta: { title: 'theme', icon: 'theme' }
+      }
+    ]
+  },
 
-    {
-        path: '/i18n',
-        component: Layout,
-        children: [
-            {
-                path: 'index',
-                component: () => import('@/views/i18n-demo/index'),
-                name: 'I18n',
-                meta: {title: 'i18n', icon: 'international'}
-            }
-        ]
-    },
+  {
+    path: '/i18n',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/i18n-demo/index'),
+        name: 'I18n',
+        meta: { title: 'i18n', icon: 'international' }
+      }
+    ]
+  },
 
-    // 404 page must be placed at the end !!!
-    {path: '*', redirect: '/404', hidden: true}
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
-    // mode: 'history', // require service support
-    scrollBehavior: () => ({y: 0}),
-    routes: constantRoutes
+  mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-    const newRouter = createRouter()
-    router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
 }
 
 export default router

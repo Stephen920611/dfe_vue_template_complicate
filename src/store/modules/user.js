@@ -36,7 +36,7 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token) // 登录成功后将token存储在cookie之中
-        setToken(data.token)
+        setToken(data)
         resolve()
       }).catch(error => {
         reject(error)
@@ -82,7 +82,7 @@ const actions = {
         resetRouter()
 
         // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
+        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485 账户切换，快捷标签栏按钮显示的是上一个账户的
         dispatch('tagsView/delAllViews', null, { root: true })
 
         resolve()
