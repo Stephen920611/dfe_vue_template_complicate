@@ -1,7 +1,7 @@
 
 const tokens = {
   admin: {
-    token: 'admin-token'
+    token: 'yt_help_poor_web_token'
   },
   editor: {
     token: 'editor-token'
@@ -9,7 +9,7 @@ const tokens = {
 }
 
 const users = {
-  'admin-token': {
+  'yt_help_poor_web_token': {
     roles: ['admin'],
     introduction: 'I am a super administrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',

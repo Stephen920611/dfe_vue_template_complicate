@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Admin-Token'
-
-// const TokenKey = 'dfdz_vue_token';
+const TokenKey = 'yt_help_poor_web_token'
 
 export function getToken() {
   return Cookies.get(TokenKey)

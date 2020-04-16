@@ -4,6 +4,7 @@ import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
+  userInfo: {}, // 用户信息
   name: '',
   avatar: '',
   introduction: '',
@@ -25,17 +26,21 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_USER_INFO: (state, userInfo) => {
+    state.userInfo = userInfo
   }
 }
 
 const actions = {
-  // user login
+  // 用户登录
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token) // 登录成功后将token存储在cookie之中
+        commit('SET_USER_INFO', data.user) // 登录成功后将userInfo存起来
         setToken(data)
         resolve()
       }).catch(error => {

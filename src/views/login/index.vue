@@ -64,30 +64,30 @@
       </el-button>
 
       <!--<div style="position:relative">
-                <div class="tips">
-                    <span>{{ $t('login.username') }} : admin</span>
-                    <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-                </div>
-                <div class="tips">
-                    <span style="margin-right:18px;">
-                        {{ $t('login.username') }} : editor
-                    </span>
-                    <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
-                </div>
+                      <div class="tips">
+                          <span>{{ $t('login.username') }} : admin</span>
+                          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+                      </div>
+                      <div class="tips">
+                          <span style="margin-right:18px;">
+                              {{ $t('login.username') }} : editor
+                          </span>
+                          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+                      </div>
 
-                <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-                    {{ $t('login.thirdparty') }}
-                </el-button>
-            </div>-->
+                      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+                          {{ $t('login.thirdparty') }}
+                      </el-button>
+                  </div>-->
     </el-form>
 
     <!--<el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
-            {{ $t('login.thirdpartyTips') }}
-            <br>
-            <br>
-            <br>
-            <social-sign/>
-        </el-dialog>-->
+                {{ $t('login.thirdpartyTips') }}
+                <br>
+                <br>
+                <br>
+                <social-sign/>
+            </el-dialog>-->
   </div>
 </template>
 
@@ -175,11 +175,10 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
-        console.log(valid, 'valid')
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
+            .then(resp => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery }) // 登录成功之后重定向到首页
               this.loading = false
             })
