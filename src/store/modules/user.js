@@ -8,6 +8,7 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
+  // roles: ['ducha','editor','admin']
   roles: []
 }
 
@@ -49,31 +50,40 @@ const actions = {
     })
   },
 
-  // get user info
+  // TODO 获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
+      // getInfo(state.token).then(response => {
+      const response = {
+        code: 2000,
+        data: {
+          roles: ['admin', 'ducha'],
+          introduction: 'I am a super administrator',
+          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+          name: 'Super Admin'
         }
+      }
+      const { data } = response
 
-        const { roles, name, avatar, introduction } = data
+      if (!data) {
+        reject('Verification failed, please Login again.')
+      }
 
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
+      const { roles, name, avatar, introduction } = data
 
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
+      // roles must be a non-empty array
+      if (!roles || roles.length <= 0) {
+        reject('getInfo: roles must be a non-null array!')
+      }
+
+      commit('SET_ROLES', roles)
+      commit('SET_NAME', name)
+      commit('SET_AVATAR', avatar)
+      commit('SET_INTRODUCTION', introduction)
+      resolve(data)
+      /* }).catch(error => {
         reject(error)
-      })
+      })*/
     })
   },
 

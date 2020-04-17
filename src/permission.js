@@ -27,34 +27,35 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      /* // 确定用户是否已通过getInfo获得其权限角色 determine whether the user has obtained his permission roles through getInfo
-            const hasRoles = store.getters.roles && store.getters.roles.length > 0
-            if (hasRoles) {
-                next()
-            } else {
-                try {
-                    // 获取用户信息
-                    // 注意：角色必须是对象数组！ such as: ['admin'] or ,['developer','editor']
-                    const {roles} = await store.dispatch('user/getInfo')
+      // 确定用户是否已通过getInfo获得其权限角色 determine whether the user has obtained his permission roles through getInfo
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
+        next()
+      } else {
+        try {
+          // 获取用户信息
+          // 注意：角色必须是对象数组！ such as: ['admin'] or ,['developer','editor']
+          const { roles } = await store.dispatch('user/getInfo')
 
-                    // 根据角色生成可访问的路由 generate accessible routes map based on roles
-                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          // 根据角色生成可访问的路由 generate accessible routes map based on roles
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
-                    // 动态添加可访问的路由
-                    router.addRoutes(accessRoutes)
+          // 动态添加可访问的路由
+          router.addRoutes(accessRoutes)
 
-                    // hack方法，以确保addRoutes是完整的
-                    // 设置replace：true，因此导航不会留下历史记录
-                    next({...to, replace: true})
-                } catch (error) {
-                    // 删除token并进入登录页面以重新登录
-                    await store.dispatch('user/resetToken')
-                    Message.error(error || 'Has Error')
-                    next(`/login?redirect=${to.path}`)
-                    NProgress.done()
-                }
-            }*/
-      next()
+          // hack方法，以确保addRoutes是完整的
+          // 设置replace：true，因此导航不会留下历史记录
+          next({ ...to, replace: true })
+        } catch (error) {
+          // 删除token并进入登录页面以重新登录
+          await store.dispatch('user/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
+        }
+      }
+
+      // next()
     }
   } else {
     /* has no token*/

@@ -74,6 +74,7 @@ import path from 'path'
 import { deepClone } from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
 import i18n from '@/lang'
+import { asyncRoutes, constantRoutes } from '@/router'
 
 const defaultRole = {
   key: '',
@@ -110,6 +111,10 @@ export default {
   methods: {
     async getRoutes() {
       const res = await getRoutes()
+      /* const res = {
+            code: 20000,
+            data: deepClone([...constantRoutes, ...asyncRoutes])
+        };*/
       this.serviceRoutes = res.data
       const routes = this.generateRoutes(res.data)
       this.routes = this.i18n(routes)
