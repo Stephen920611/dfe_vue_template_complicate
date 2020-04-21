@@ -24,7 +24,7 @@
             <div :class="{'fixed-header':fixedHeader}" class="navbar-container"
                  :style="!hasSidebar ? 'margin-left:0;width:100%' : null">
                 <navbar/>
-                <tags-view v-if="needTagsView"/>
+                <!--<tags-view v-if="needTagsView"/>-->
             </div>
         </div>
         <div id="main-container" v-scrollBar class="main-container" :style="!hasSidebar ? 'margin-left:0' : null">

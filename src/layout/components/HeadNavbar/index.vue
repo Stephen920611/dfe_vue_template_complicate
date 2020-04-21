@@ -36,7 +36,7 @@
                  <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
              </div>-->
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
+      <!--<template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
         <error-log class="errLog-container right-menu-item hover-effect" />
@@ -49,7 +49,7 @@
 
         <lang-select class="right-menu-item hover-effect" />
 
-      </template>
+      </template>-->
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">

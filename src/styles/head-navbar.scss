@@ -5,8 +5,8 @@
         transition: margin-left .28s;
         margin-left: $sideBarWidth;
         position: relative;
-        margin-top: 144px;
-        height: calc(100vh - 144px);
+        margin-top: 110px; //tag34
+        height: calc(100vh - 110px);
         overflow: auto;
     }
     .navbar-container{
