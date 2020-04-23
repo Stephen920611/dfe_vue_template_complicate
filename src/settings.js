@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'vue公共模板',
+  title: '烟台市扶贫开发监测管理系统',
 
   /**
    * @type {boolean} true | false

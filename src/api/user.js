@@ -27,6 +27,17 @@ export function logout() {
   })
 }
 
+/**
+ * 获取验证码
+ */
+export function getVerify(params) {
+  return request({
+    url: '/user/getVertify',
+    method: 'get',
+    query: params
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/vue-element-admin/user/info',
