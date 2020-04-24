@@ -52,29 +52,29 @@ service.interceptors.response.use(
     // 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
     // if the custom code is not 20000, it is judged as an error.
     /* if (res.code !== 20000) {
-                Message({
-                    message: res.message || 'Error',
-                    type: 'error',
-                    duration: 5 * 1000
-                })
-
-                // 50008: （非法taken）Illegal token; 50012: （其他客户端登录了）Other clients logged in; 50014: (Token过期)Token expired;
-                if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-                    // to re-login
-                    MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
-                        confirmButtonText: '重新登录',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        store.dispatch('user/resetToken').then(() => {
-                            location.reload()// 为了重新实例化vue-router对象 避免bug
-                        })
+                    Message({
+                        message: res.message || 'Error',
+                        type: 'error',
+                        duration: 5 * 1000
                     })
-                }
-                return Promise.reject(new Error(res.message || 'Error'))
-            } else {
-                return res
-            }*/
+
+                    // 50008: （非法taken）Illegal token; 50012: （其他客户端登录了）Other clients logged in; 50014: (Token过期)Token expired;
+                    if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+                        // to re-login
+                        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+                            confirmButtonText: '重新登录',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                        }).then(() => {
+                            store.dispatch('user/resetToken').then(() => {
+                                location.reload()// 为了重新实例化vue-router对象 避免bug
+                            })
+                        })
+                    }
+                    return Promise.reject(new Error(res.message || 'Error'))
+                } else {
+                    return res
+                }*/
     const res = response.data
     if (res.code !== 1000) {
       Message({
