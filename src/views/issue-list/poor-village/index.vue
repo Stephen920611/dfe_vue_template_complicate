@@ -1,24 +1,24 @@
 <template>
-    <div class="app-container">
-        贫困村问题清单
-    </div>
+  <div class="app-container">
+    贫困村问题清单
+  </div>
 </template>
 
 <script>
 
-    export default {
-        name: 'IssueListPoorVillage',
-        data() {
-            return {
+export default {
+  name: 'IssueListPoorVillage',
+  data() {
+    return {
 
-            }
-        },
-        created() {
-        },
-        methods: {
-
-        }
     }
+  },
+  created() {
+  },
+  methods: {
+
+  }
+}
 </script>
 
 <style scoped>

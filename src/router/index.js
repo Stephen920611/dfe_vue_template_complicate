@@ -40,55 +40,55 @@ import nestedRouter from './modules/nested'
  * 所有角色都可以访问
  */
 export const constantRoutes = [
-    {
-        path: '/redirect',
-        component: Layout,
-        hidden: true,
-        children: [
-            {
-                path: '/redirect/:path(.*)',
-                component: () => import('@/views/redirect/index')
-            }
-        ]
-    },
-    {
-        path: '/login',
-        component: () => import('@/views/login/index'),
-        hidden: true
-    },
-    {
-        path: '/auth-redirect',
-        component: () => import('@/views/login/auth-redirect'),
-        hidden: true
-    },
-    {
-        path: '/404',
-        component: () => import('@/views/error-page/404'),
-        hidden: true
-    },
-    {
-        path: '/401',
-        component: () => import('@/views/error-page/401'),
-        hidden: true
-    },
-    {
-        path: '/',
-        component: Layout,
-        redirect: '/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                component: () => import('@/views/dashboard/index'),
-                name: 'Dashboard',
-                meta: {
-                    title: 'dashboard',
-                    icon: 'dashboard',
-                    affix: true // tags后面的关闭按钮是否显示
-                }
-            }
-        ]
-    },
-    /*{
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/auth-redirect',
+    component: () => import('@/views/login/auth-redirect'),
+    hidden: true
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: {
+          title: 'dashboard',
+          icon: 'dashboard',
+          affix: true // tags后面的关闭按钮是否显示
+        }
+      }
+    ]
+  }
+  /* {
       path: '/documentation',
       component: Layout,
       children: [
@@ -135,7 +135,7 @@ export const constantRoutes = [
         }
       ]
     }*/
-    /* {
+  /* {
           path: '/step-form',
           component: Layout,
           redirect: '/step-form/index',
@@ -181,7 +181,7 @@ export const constantRoutes = [
               hidden: true
               // breadcrumb:false,
             }
-  
+
           ]
         }*/
 ]
@@ -191,7 +191,7 @@ export const constantRoutes = [
  * 需要根据用户角色动态加载的路由
  */
 export const asyncRoutes = [
-    /*{
+  /* {
       path: '/permission',
       component: Layout,
       redirect: '/permission/page',
@@ -238,14 +238,14 @@ export const asyncRoutes = [
         }
       ]
     },*/
-    
-    /** 当您的路由图太长时，您可以将其拆分为小模块 **/
-    /* componentsRouter,
+
+  /** 当您的路由图太长时，您可以将其拆分为小模块 **/
+  /* componentsRouter,
      // chartsRouter,
      nestedRouter,*/
-    // tableRouter,
-    
-    /*{
+  // tableRouter,
+
+  /* {
         path: '/example',
         component: Layout,
         redirect: '/example/list',
@@ -289,69 +289,69 @@ export const asyncRoutes = [
             }
         ]
     },*/
-    
-    {
-        path: '/issueList',
-        component: Layout,
-        redirect: '/issueList/poorHouseholds',
-        name: 'IssueList',
+
+  {
+    path: '/issueList',
+    component: Layout,
+    redirect: '/issueList/poorHouseholds',
+    name: 'IssueList',
+    meta: {
+      title: 'issueList',
+      icon: 'list'
+    },
+    children: [
+      {
+        path: 'poorHouseholds',
+        redirect: '/issueList/poorHouseholds/index',
+        component: () => import('@/views/issue-list/poor-households/index'),
+        name: 'IssueListPoorHouseholds',
         meta: {
-            title: 'issueList',
-            icon: 'list'
+          title: 'poorHouseholds',
+          icon: 'list',
+          isShowSlideBar: true
         },
         children: [
-            {
-                path: 'poorHouseholds',
-                redirect: '/issueList/poorHouseholds/index',
-                component: () => import('@/views/issue-list/poor-households/index'),
-                name: 'IssueListPoorHouseholds',
-                meta: {
-                    title: 'poorHouseholds',
-                    icon: 'list',
-                    isShowSlideBar: true
-                },
-                children: [
-                    {
-                        path: 'index',
-                        component: () => import('@/views/issue-list/poor-households/list'),
-                        name: 'IssueListPoorHouseholdsIndex',
-                        hidden: true,
-                        meta: {
-                            title: '',
-                            activeMenu: '/issueList/poorHouseholds',
-                            noCache: true,
-                            isShowSlideBar: true
-                        },
-                    },
-                    {
-                        path: 'detail',
-                        component: () => import('@/views/issue-list/poor-households/detail'),
-                        name: 'IssueListPoorHouseholdsDetail',
-                        hidden: true,
-                        meta: {
-                            title: 'poorHouseholdsDetail',
-                            activeMenu: '/issueList/poorHouseholds',
-                            noCache: true,
-                            isShowSlideBar: true
-                        }
-                    },
-                ]
-            },
-            {
-                path: 'poorVillage',
-                component: () => import('@/views/issue-list/poor-village/index'),
-                name: 'IssueListPoorVillage',
-                meta: {
-                    title: 'poorVillage',
-                    icon: 'list',
-                    isShowSlideBar: true
-                }
-            },
+          {
+            path: 'index',
+            component: () => import('@/views/issue-list/poor-households/list'),
+            name: 'IssueListPoorHouseholdsIndex',
+            hidden: true,
+            meta: {
+              title: '',
+              activeMenu: '/issueList/poorHouseholds',
+              noCache: true,
+              isShowSlideBar: true
+            }
+          },
+          {
+            path: 'detail',
+            component: () => import('@/views/issue-list/poor-households/detail'),
+            name: 'IssueListPoorHouseholdsDetail',
+            hidden: true,
+            meta: {
+              title: 'poorHouseholdsDetail',
+              activeMenu: '/issueList/poorHouseholds',
+              noCache: true,
+              isShowSlideBar: true
+            }
+          }
         ]
-    },
-    
-    // 移动到组件中的路由
-    /*  {
+      },
+      {
+        path: 'poorVillage',
+        component: () => import('@/views/issue-list/poor-village/index'),
+        name: 'IssueListPoorVillage',
+        meta: {
+          title: 'poorVillage',
+          icon: 'list',
+          isShowSlideBar: true
+        }
+      }
+    ]
+  },
+
+  // 移动到组件中的路由
+  /*  {
             path: '/tab',
             component: Layout,
             children: [
@@ -423,7 +423,7 @@ export const asyncRoutes = [
                 }
               ]
             },
-  
+
             {
               path: '/zip',
               component: Layout,
@@ -440,7 +440,7 @@ export const asyncRoutes = [
                 }
               ]
             },
-  
+
             {
               path: '/pdf',
               component: Layout,
@@ -459,8 +459,8 @@ export const asyncRoutes = [
               component: () => import('@/views/pdf/download'),
               hidden: true
             },*/
-    
-    /*{
+
+  /* {
       path: '/error-log',
       component: Layout,
       children: [
@@ -472,7 +472,7 @@ export const asyncRoutes = [
         }
       ]
     },
-  
+
     {
       path: '/theme',
       component: Layout,
@@ -485,7 +485,7 @@ export const asyncRoutes = [
         }
       ]
     },
-  
+
     {
       path: '/i18n',
       component: Layout,
@@ -498,23 +498,23 @@ export const asyncRoutes = [
         }
       ]
     },*/
-    
-    // 404 page must be placed at the end !!!
-    {path: '*', redirect: '/404', hidden: true}
+
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
-    mode: 'history', // require service support
-    scrollBehavior: () => ({y: 0}),
-    routes: constantRoutes
+  mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
 })
 
 const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-    const newRouter = createRouter()
-    router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
 }
 
 export default router

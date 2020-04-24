@@ -5,11 +5,11 @@ import request from '@/utils/request'
  * @param data
  */
 export function fetchList(data) {
-    return request({
-        url: '/question/page',
-        method: 'get',
-        params: data
-    })
+  return request({
+    url: '/question/page',
+    method: 'get',
+    params: data
+  })
 }
 
 /**
@@ -17,11 +17,11 @@ export function fetchList(data) {
  * @param data
  */
 export function saveQuestion(data) {
-    return request({
-        url: '/question/save',
-        method: 'post',
-        data
-    })
+  return request({
+    url: '/question/save',
+    method: 'post',
+    data
+  })
 }
 
 /**
@@ -29,9 +29,9 @@ export function saveQuestion(data) {
  * @param data
  */
 export function deleteQuestion(data) {
-    return request({
-        url: '/question/delete',
-        method: 'post',
-        data
-    })
+  return request({
+    url: '/question/delete',
+    method: 'post',
+    data
+  })
 }
