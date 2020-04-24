@@ -83,13 +83,30 @@
                 return toPath(params)
             },
             handleLink(item) {
+                this.isShowSlideBar(item);
                 const {redirect, path} = item
                 if (redirect) {
                     this.$router.push(redirect)
                     return
                 }
                 this.$router.push(this.pathCompile(path))
-            }
+            },
+            /**
+             * 是否显示侧边栏
+             * @param tag {Object} 点击tag的数据
+             */
+            isShowSlideBar(tag) {
+                const {dispatch} = this.$store;
+                // 是否显示侧边栏
+                if (!(tag.hasOwnProperty('meta') && tag.meta.hasOwnProperty('isShowSlideBar') && tag.meta.isShowSlideBar)) {
+                    dispatch({
+                        type: 'app/updateSidebar', // 调用action
+                        sidebarData: null, // 侧边栏的数据
+                        hasSidebar: false, // 是否显示侧边栏
+                        sidebarParents: null// 点击的顶部标题的数据
+                    })
+                }
+            },
         }
     }
 </script>

@@ -19,7 +19,7 @@ export default {
   props: {},
   data() {
     return {
-      title: 'vue复杂版',
+      title: '烟台市扶贫开发监测管理系统',
       logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   }
