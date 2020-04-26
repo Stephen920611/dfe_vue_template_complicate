@@ -11,7 +11,7 @@ export function login(data) {
         data
     })*/
   return request({
-    url: '/auth/login',
+    url: '/auth/web-login',
     method: 'post',
     data
   })
@@ -32,8 +32,8 @@ export function logout() {
  */
 export function getVerify(params) {
   return request({
-    url: '/user/getVertify',
-    method: 'get',
+    url: '/auth/getVertify',
+    method: 'post',
     query: params
   })
 }

@@ -31,8 +31,8 @@
                             auto-complete="on"
                     />
                     <span class="svg-container">
-            <svg-icon icon-class="user"/>
-          </span>
+                        <svg-icon icon-class="user"/>
+                    </span>
                 </el-form-item>
                 <!-- 密码 -->
                 <el-form-item prop="password">
@@ -47,11 +47,11 @@
                             auto-complete="on"
                     />
                     <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
-          </span>
+                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
+                    </span>
                 </el-form-item>
                 <el-form-item class="yanzheng" prop="verifyCode">
-                    <el-input v-model="loginForm.verifyCode" placeholder="请输入验证码" auto-complete="on"/>
+                    <el-input v-model="loginForm.vertifyCode" placeholder="请输入验证码" auto-complete="on"/>
                 </el-form-item>
                 <img :src="verifyCodeBase64" class="vertify-image" @click="getVerifyImage">
                 <!-- 按钮 -->
@@ -94,11 +94,11 @@
                 }
             }
             return {
-                verifyCodeBase64: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF8AAAAZCAIAAADYL2XTAAAB30lEQVR42uWYTU7EMAyFfQquwYojcAIEYj0LtiM2XH+oFCmynmPn2SGoMKNo1LRJ3H59/knllvxdr5+3u/lJYc4/BgSPJrXJdwIorZ3H9y/d/pYWyCmtbaFzKlmV6bQDqaEJzLczD5en3oIFX1/eetsNiCfVR1bogCWwenQ1Gg0IRmo0ra3ozpsb3Op0lsQ3BFc9t9LDgIju6mEgGQbQ88flaFlAPB37mmUqOX0V6AwBBXT0MMAx9a+GJqbDqCMFSBiHbAOASO+CY8NqQzrHv8YBXY8LQ4d5/mnDjA5nGZMalre6dSuN0sadKRqGzlQvHj4bv4VPfl4MCmx7whkCArjtoBE5jlfokPisdbF5PhuDPGPDjK6t2LhjvaDj6HTIvJZ1BQDUDoQvDUAsnnaGqrFuH8Qdyxq0w7zILCCt63k1GAOyQYek08d7Gd2zbj0rK/ZUpTPQThaQl6qmVfKUThCesxVjFpB2IFkXJ9CxhbLnYkzOGmpn91Yusc/KAmLo2Ogz3WelctbippTaZ2mNxfqsffex9dE+OjV/THhWNkeSz08yOjuduEgnEQR59ITfetJxJ+jyXg3OWKOTnbiFDg9o8evMLzDKmpDaogXJkILaymgLnVrR+SOkdizOv5JveaYmkpIPWkwAAAAASUVORK5CYII=',
+                verifyCodeBase64: 'base64',
                 loginForm: {
-                    username: 'ducha',
+                    username: 'wangkai',
                     password: '123456',
-                    verifyCode: ''
+                    vertifyCode: ''
                 },
                 rules: {
                     username: [{required: true, message: '必填', trigger: 'change'}],
@@ -126,8 +126,7 @@
             }
         },
         created() {
-            // TODO 临时关闭验证码获取，等待高毅写完后然后打开
-            //            this.getVerifyImage()
+            this.getVerifyImage()
             // window.addEventListener('storage', this.afterQRScan)
         },
         mounted() {
@@ -144,6 +143,7 @@
             // 获取验证码
             getVerifyImage() {
                 getVerify().then(res => {
+                    console.log(res, 'res');
                     this.verifyCodeBase64 = res.data
                 })
             },
@@ -165,6 +165,7 @@
             // 登录
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
+                    console.log(this.loginForm,'this.loginForm');
                     if (valid) {
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
@@ -175,8 +176,7 @@
                             .catch((err) => {
                                 // 公共方法有，所以不需要加提示了
                                 //                                this.$message.error(err.msg)
-                                // TODO 真实有接口的时候在放开
-                                //                                this.getVerifyImage()
+                                this.getVerifyImage();
                                 this.loading = false
                             })
                     } else {
