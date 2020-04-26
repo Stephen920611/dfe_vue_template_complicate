@@ -889,7 +889,7 @@
                     baseImgList: [],
                     problemInfo: {},
                     daa1: null,
-                    daa2: 1,
+                    daa2: null,
                     dab11: null,
                     dab2: null,
                     dac16: null,

@@ -16,7 +16,18 @@
                     <!--</el-col>-->
                     <!--</el-row>-->
                     <div class="filter-container">
-                        <el-select v-model="areaValue" class="filter-item" placeholder="请选择县市区">
+                        <el-cascader
+                                style="min-width: 250px;"
+                                class="filter-item"
+                                v-model="areaValue"
+                                :options="allAreaTree"
+                                :props="{ expandTrigger: 'hover' }"
+                                @change="changeArea"
+                                clearable
+                                placeholder="请选择县市区"
+                        >
+                        </el-cascader>
+                        <!--<el-select v-model="areaValue" class="filter-item" placeholder="请选择县市区">
                             <el-option
                                     v-for="item in areaOptions"
                                     :key="item.value"
@@ -39,7 +50,7 @@
                                     :label="item.label"
                                     :value="item.value"
                             />
-                        </el-select>
+                        </el-select>-->
                         <el-input
                                 v-model="listQuery.content"
                                 placeholder="请输入贫困户户主姓名"
@@ -176,44 +187,16 @@
             return {
                 downLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/download',
                 upLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/upload',
-                // 县市区
-                areaOptions: [],
-                areaValue: '',
-                // 乡镇
-                townOptions: [],
-                townValue: '',
-                // 村
-                villageOptions: [],
-                villageValue: '',
-                // 是否有问题
-                isProblemOptions: [
-                    {
-                        value: '0',
-                        label: '无问题'
-                    },
-                    {
-                        value: '1',
-                        label: '有问题'
-                    },
-                    {
-                        value: '2',
-                        label: '不涉及'
-                    }
-                ],
-                isProblemValue: '',
-                // 贫困户类型
-                householdsTypeOptions: [
-                    {
-                        value: '0',
-                        label: '建档立卡'
-                    },
-                    {
-                        value: '1',
-                        label: '即时帮扶'
-                    }
-                ],
-                householdsTypeValue: '',
-
+//                // 县市区
+//                areaOptions: [],
+//                areaValue: '',
+//                // 乡镇
+//                townOptions: [],
+//                townValue: '',
+//                // 村
+//                villageOptions: [],
+//                villageValue: '',
+                //模拟假数据
                 allArea: [
                     {
                         'code': 'area',
@@ -272,6 +255,40 @@
                         'text': '牟平区'
                     }
                 ],
+                //县乡村的树
+                allAreaTree: [],
+                //县乡村的树的值
+                areaValue: [],
+                // 是否有问题
+                isProblemOptions: [
+                    {
+                        value: '0',
+                        label: '无问题'
+                    },
+                    {
+                        value: '1',
+                        label: '有问题'
+                    },
+                    {
+                        value: '2',
+                        label: '不涉及'
+                    }
+                ],
+                isProblemValue: '',
+                // 贫困户类型
+                householdsTypeOptions: [
+                    {
+                        value: '0',
+                        label: '建档立卡'
+                    },
+                    {
+                        value: '1',
+                        label: '即时帮扶'
+                    }
+                ],
+                householdsTypeValue: '',
+
+
 
                 // 左侧列表
                 clickNode: {},
@@ -297,7 +314,7 @@
                     },
                     {
                         'townName': '苏家店镇',
-                        'familyType': 2, // 【1即时帮扶 2将档立卡】
+                        'familyType': 1, // 【1即时帮扶 2将档立卡】
                         'familyCont': 1, // 【户人数】
                         'helperName': '栖霞督查56', // 【帮扶人】
                         'personNum': '37062819590530741744',
@@ -493,8 +510,26 @@
         methods: {
             // 获取地区数据
             fetchArea() {
-                const areaData = []
+                this.allAreaTree = this.dealAreaData(this.allArea);
+                console.log(this.allAreaTree,'this.allAreaTree');
             },
+
+            //将后台返回的树处理成前端组件需要的树
+            dealAreaData (data) {
+                return data.map( val => {
+                    let children = null;
+                    if(val.hasOwnProperty("children")){
+                        children = this.dealAreaData(val.children)
+                    }
+                    return {
+                        ...val,
+                        label: val.text,
+                        value: val.text,
+                        children
+                    }
+                })
+            },
+
             // 获取数据
             getList() {
                 this.listLoading = true
@@ -517,6 +552,11 @@
                 this.getList()
             },
 
+            //改变县市区
+            changeArea(value) {
+                this.areaValue = value;
+            },
+
             // 导出触发
             handleDownload() {
                 this.$refs['downExcelDo'].click()
@@ -527,6 +567,7 @@
                 this.listQuery.page = 1
                 this.getList()
             },
+
             // 重置查询
             handleReset() {
                 this.listQuery.content = ''

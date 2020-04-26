@@ -9,14 +9,20 @@
                             <el-tabs v-model="tabValue" type="card" @tab-click="changeTab">
                                 <!--两不愁三保障-->
                                 <el-tab-pane label="两不愁三保障" name="first">
-                                    <build-step-a />
+                                    <build-step-a/>
                                 </el-tab-pane>
                                 <!--行业扶贫政策落实-->
-                                <el-tab-pane label="行业扶贫政策" name="second">配置管理</el-tab-pane>
+                                <el-tab-pane label="行业扶贫政策" name="second">
+                                    <build-step-b/>
+                                </el-tab-pane>
                                 <!--帮扶责任落实-->
-                                <el-tab-pane label="帮扶责任落实" name="third">角色管理</el-tab-pane>
+                                <el-tab-pane label="帮扶责任落实" name="third">
+                                    <build-step-c/>
+                                </el-tab-pane>
                                 <!--贫困户满意度-->
-                                <el-tab-pane label="贫困户满意度" name="fourth">定时任务补偿</el-tab-pane>
+                                <el-tab-pane label="贫困户满意度" name="fourth">
+                                    <build-step-d/>
+                                </el-tab-pane>
                             </el-tabs>
                         </template>
                         <!--即时帮扶-->
@@ -24,12 +30,16 @@
                             <el-tabs v-model="tabValue" type="card" @tab-click="changeTab">
                                 <!--两不愁三保障-->
                                 <el-tab-pane label="两不愁三保障" name="first">
-                                    配置管理
+                                    <immediate-step-a/>
                                 </el-tab-pane>
                                 <!--行业扶贫政策落实-->
-                                <el-tab-pane label="行业扶贫政策" name="second">配置管理</el-tab-pane>
+                                <el-tab-pane label="行业扶贫政策" name="second">
+                                    <immediate-step-b/>
+                                </el-tab-pane>
                                 <!--帮扶责任落实-->
-                                <el-tab-pane label="帮扶责任落实" name="third">角色管理</el-tab-pane>
+                                <el-tab-pane label="帮扶责任落实" name="third">
+                                    <immediate-step-c/>
+                                </el-tab-pane>
                             </el-tabs>
                         </template>
 
@@ -48,6 +58,12 @@
     import Pagination from '@/components/Pagination'
 
     import buildStepA from './bookBuilding/stepA.vue'
+    import buildStepB from './bookBuilding/stepB.vue'
+    import buildStepC from './bookBuilding/stepC.vue'
+    import buildStepD from './bookBuilding/stepD.vue'
+    import immediateStepA from './immediate/stepA.vue'
+    import immediateStepB from './immediate/stepB.vue'
+    import immediateStepC from './immediate/stepC.vue'
 
     import {fetchList, saveQuestion, deleteQuestion} from '@/api/issueList'
 
@@ -55,7 +71,16 @@
 
     export default {
         name: 'IssueListPoorHouseholdsDetail',
-        components: {Pagination, buildStepA},
+        components: {
+            Pagination,
+            buildStepA,
+            buildStepB,
+            buildStepC,
+            buildStepD,
+            immediateStepA,
+            immediateStepB,
+            immediateStepC,
+        },
         directives: {waves, elDragDialog},
         data() {
             return {
