@@ -511,7 +511,6 @@
             // 获取地区数据
             fetchArea() {
                 this.allAreaTree = this.dealAreaData(this.allArea);
-                console.log(this.allAreaTree,'this.allAreaTree');
             },
 
             //将后台返回的树处理成前端组件需要的树
@@ -578,7 +577,6 @@
             // 查看详情
             showDetail(data) {
                 this.$store.dispatch('issueList/setHouseholdsData', data)
-                console.log(data,'data');
                 this.$router.push(
                     {
                         name: 'IssueListPoorHouseholdsDetail',

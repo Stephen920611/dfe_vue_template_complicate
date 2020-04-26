@@ -53,27 +53,11 @@
                         </el-select>-->
                         <el-input
                                 v-model="listQuery.content"
-                                placeholder="请输入贫困户户主姓名"
+                                placeholder="请输入贫困村名字"
                                 style="width: 200px;"
                                 class="filter-item"
                                 @keyup.enter.native="handleFilter"
                         />
-                        <el-select v-model="isProblemValue" class="filter-item" placeholder="请选择是否有问题">
-                            <el-option
-                                    v-for="item in isProblemOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="householdsTypeValue" class="filter-item" placeholder="贫困户类型">
-                            <el-option
-                                    v-for="item in householdsTypeOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
                         <el-button
                                 v-waves
                                 class="filter-item"
@@ -180,7 +164,7 @@
     import {fetchList, saveQuestion, deleteQuestion} from '@/api/issueList'
 
     export default {
-        name: 'IssueListPoorHouseholds',
+        name: 'IssueListPoorVillage',
         components: {Pagination},
         directives: {waves, elDragDialog},
         data() {
@@ -259,39 +243,7 @@
                 allAreaTree: [],
                 //县乡村的树的值
                 areaValue: [],
-                // 是否有问题
-                isProblemOptions: [
-                    {
-                        value: '0',
-                        label: '无问题'
-                    },
-                    {
-                        value: '1',
-                        label: '有问题'
-                    },
-                    {
-                        value: '2',
-                        label: '不涉及'
-                    }
-                ],
-                isProblemValue: '',
-                // 贫困户类型
-                householdsTypeOptions: [
-                    {
-                        value: '0',
-                        label: '建档立卡'
-                    },
-                    {
-                        value: '1',
-                        label: '即时帮扶'
-                    }
-                ],
-                householdsTypeValue: '',
 
-
-
-                // 左侧列表
-                clickNode: {},
                 // 表格
                 tabPosition: 1,
                 //                list: null,
@@ -511,7 +463,6 @@
             // 获取地区数据
             fetchArea() {
                 this.allAreaTree = this.dealAreaData(this.allArea);
-                console.log(this.allAreaTree,'this.allAreaTree');
             },
 
             //将后台返回的树处理成前端组件需要的树
@@ -578,10 +529,9 @@
             // 查看详情
             showDetail(data) {
                 this.$store.dispatch('issueList/setHouseholdsData', data)
-                console.log(data,'data');
                 this.$router.push(
                     {
-                        name: 'IssueListPoorHouseholdsDetail',
+                        name: 'IssueListPoorVillageDetail',
                         query: {
                             id: data.id,
                             familyType: data.familyType,

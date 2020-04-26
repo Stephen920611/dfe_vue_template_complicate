@@ -5,44 +5,14 @@
                 <el-card class="box-card">
                     <div class="text item">
                         <!--建档立卡-->
-                        <template v-if="Number($route.query.familyType) === 2">
+                        <template >
                             <el-tabs v-model="tabValue" type="card" @tab-click="changeTab">
-                                <!--两不愁三保障-->
-                                <el-tab-pane label="两不愁三保障" name="first">
-                                    <build-step-a/>
-                                </el-tab-pane>
-                                <!--行业扶贫政策落实-->
-                                <el-tab-pane label="行业扶贫政策" name="second">
-                                    <build-step-b/>
-                                </el-tab-pane>
-                                <!--帮扶责任落实-->
-                                <el-tab-pane label="帮扶责任落实" name="third">
-                                    <build-step-c/>
-                                </el-tab-pane>
-                                <!--贫困户满意度-->
-                                <el-tab-pane label="贫困户满意度" name="fourth">
-                                    <build-step-d/>
+                                <!--扶贫情况-->
+                                <el-tab-pane label="扶贫情况" name="first">
+                                    <step-a/>
                                 </el-tab-pane>
                             </el-tabs>
                         </template>
-                        <!--即时帮扶-->
-                        <template v-else-if="Number($route.query.familyType) === 1">
-                            <el-tabs v-model="tabValue" type="card" @tab-click="changeTab">
-                                <!--两不愁三保障-->
-                                <el-tab-pane label="两不愁三保障" name="first">
-                                    <immediate-step-a/>
-                                </el-tab-pane>
-                                <!--行业扶贫政策落实-->
-                                <el-tab-pane label="行业扶贫政策" name="second">
-                                    <immediate-step-b/>
-                                </el-tab-pane>
-                                <!--帮扶责任落实-->
-                                <el-tab-pane label="帮扶责任落实" name="third">
-                                    <immediate-step-c/>
-                                </el-tab-pane>
-                            </el-tabs>
-                        </template>
-
                     </div>
                 </el-card>
 
@@ -56,30 +26,17 @@
     import waves from '@/directive/waves'
     import elDragDialog from '@/directive/el-drag-dialog'
     import Pagination from '@/components/Pagination'
-
-    import buildStepA from './bookBuilding/stepA.vue'
-    import buildStepB from './bookBuilding/stepB.vue'
-    import buildStepC from './bookBuilding/stepC.vue'
-    import buildStepD from './bookBuilding/stepD.vue'
-    import immediateStepA from './immediate/stepA.vue'
-    import immediateStepB from './immediate/stepB.vue'
-    import immediateStepC from './immediate/stepC.vue'
+    import stepA from './stepA.vue'
 
     import {fetchList, saveQuestion, deleteQuestion} from '@/api/issueList'
 
-    const typeOptions = ['两不愁三保障', '行业扶贫政策', '帮扶责任落实', '贫困户满意度']
+    const typeOptions = ['扶贫情况']
 
     export default {
         name: 'IssueListPoorHouseholdsDetail',
         components: {
             Pagination,
-            buildStepA,
-            buildStepB,
-            buildStepC,
-            buildStepD,
-            immediateStepA,
-            immediateStepB,
-            immediateStepC,
+            stepA
         },
         directives: {waves, elDragDialog},
         data() {
@@ -88,7 +45,7 @@
                 // 表格
                 tabValue: 'first',
                 textMap: {
-                    typeName: '两不愁三保 障',
+                    typeName: '扶贫情况',
                     update: '行业扶贫政策',
                     create: '帮扶责任落实',
                     create1: '贫困户满意度'
