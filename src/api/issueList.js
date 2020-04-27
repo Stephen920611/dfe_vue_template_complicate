@@ -13,6 +13,18 @@ export function fetchList(data) {
 }
 
 /**
+ * 区、镇、乡树
+ * @param data
+ */
+export function fetchAreaTree(data) {
+    return request({
+        url: '/area/group',
+        method: 'post',
+        params: data
+    })
+}
+
+/**
  * 保存
  * @param data
  */

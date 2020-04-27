@@ -97,7 +97,7 @@
                 verifyCodeBase64: 'base64',
                 loginForm: {
                     username: 'wangkai',
-                    password: '123456',
+                    password: 'fupin@123',
                     vertifyCode: ''
                 },
                 rules: {
@@ -143,7 +143,6 @@
             // 获取验证码
             getVerifyImage() {
                 getVerify().then(res => {
-                    console.log(res, 'res');
                     this.verifyCodeBase64 = res.data
                 })
             },
@@ -165,7 +164,6 @@
             // 登录
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
-                    console.log(this.loginForm,'this.loginForm');
                     if (valid) {
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
@@ -176,7 +174,7 @@
                             .catch((err) => {
                                 // 公共方法有，所以不需要加提示了
                                 //                                this.$message.error(err.msg)
-                                this.getVerifyImage();
+//                                this.getVerifyImage();
                                 this.loading = false
                             })
                     } else {

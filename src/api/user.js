@@ -33,7 +33,7 @@ export function logout() {
 export function getVerify(params) {
   return request({
     url: '/auth/getVertify',
-    method: 'post',
+    method: 'get',
     query: params
   })
 }

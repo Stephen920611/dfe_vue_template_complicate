@@ -90,9 +90,18 @@
                                 type="primary"
                                 icon="el-icon-refresh"
                                 @click="handleReset"
-                        >重置
+                        >
+                            重置
                         </el-button>
                         <div style="float:right">
+                            <el-select v-model="downloadHouseholdsTypeValue" class="filter-item" placeholder="贫困户类型">
+                                <el-option
+                                        v-for="item in householdsTypeOptions"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value"
+                                />
+                            </el-select>
                             <!-- 下载按钮 -->
                             <el-button
                                     class="filter-item"
@@ -100,7 +109,8 @@
                                     type="primary"
                                     icon="el-icon-download"
                                     @click="handleDownload"
-                            >Excel模板
+                            >
+                                Excel模板
                             </el-button>
                             <a ref="downExcelDo" :href="downLoadUrl"/>
                         </div>
@@ -177,15 +187,23 @@
     import elDragDialog from '@/directive/el-drag-dialog'
     import Pagination from '@/components/Pagination'
 
-    import {fetchList, saveQuestion, deleteQuestion} from '@/api/issueList'
+    import {fetchList, fetchAreaTree} from '@/api/issueList'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: 'IssueListPoorHouseholds',
+        computed: {
+            ...mapGetters([
+                'userInfo',
+            ])
+        },
         components: {Pagination},
         directives: {waves, elDragDialog},
         data() {
             return {
-                downLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/download',
+//                downLoadUrl: process.env.VUE_APP_BASE_API + '/excel/reform?' + (this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&') ) + 'userId=2&excelType=2',
+                downLoadUrl: '',
+//                downLoadUrl: `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`,
                 upLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/upload',
 //                // 县市区
 //                areaOptions: [],
@@ -278,7 +296,7 @@
                 // 贫困户类型
                 householdsTypeOptions: [
                     {
-                        value: '0',
+                        value: '2',
                         label: '建档立卡'
                     },
                     {
@@ -287,7 +305,7 @@
                     }
                 ],
                 householdsTypeValue: '',
-
+                downloadHouseholdsTypeValue: '1',        //下载的贫困户类型
 
 
                 // 左侧列表
@@ -505,19 +523,35 @@
         },
         created() {
             //            this.getList()
+            console.log(this.userInfo,'this.userInfo.');
+
+//            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.fetchArea()
+
         },
         methods: {
             // 获取地区数据
             fetchArea() {
-                this.allAreaTree = this.dealAreaData(this.allArea);
+                //family 为贫困户, village 为贫困村, project 为项目
+                let params = {
+                    areaName: this.userInfo.areaName,
+                    code: 'family'
+                };
+                let self = this;
+                fetchAreaTree(params).then(resp => {
+//                    self.allAreaTree = self.dealAreaData(self.allArea);
+                    self.allAreaTree = self.dealAreaData(resp.data);
+                }).catch(err => {
+//                    console.log(err,'err');
+//                    this.$message.error(err.msg)
+                });
             },
 
             //将后台返回的树处理成前端组件需要的树
-            dealAreaData (data) {
-                return data.map( val => {
+            dealAreaData(data) {
+                return data.map(val => {
                     let children = null;
-                    if(val.hasOwnProperty("children")){
+                    if (val.hasOwnProperty("children")) {
                         children = this.dealAreaData(val.children)
                     }
                     return {
