@@ -297,13 +297,13 @@
                 // 贫困户类型
                 householdsTypeOptions: [
                     {
+                        value: '1',
+                        label: '即时帮扶'
+                    },
+                    {
                         value: '2',
                         label: '建档立卡'
                     },
-                    {
-                        value: '1',
-                        label: '即时帮扶'
-                    }
                 ],
                 householdsTypeValue: '',
                 downloadHouseholdsTypeValue: '1',        //下载的贫困户类型
@@ -522,12 +522,16 @@
                 uploadLoading: false
             }
         },
+        watch: {
+            downloadHouseholdsTypeValue(newName, oldName) {
+                let userInfo = getStorage('userInfo');
+                this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName='+ userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${newName}`;
+            }
+        },
         created() {
-            //            this.getList()
             let userInfo = getStorage('userInfo');
             this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName='+ userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.fetchArea()
-
         },
         methods: {
             // 获取地区数据

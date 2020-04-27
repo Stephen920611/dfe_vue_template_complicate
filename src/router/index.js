@@ -297,7 +297,8 @@ export const asyncRoutes = [
         name: 'IssueList',
         meta: {
             title: 'issueList',
-            icon: 'list'
+            icon: 'list',
+            roles: ['zhenggai']
         },
         children: [
             {

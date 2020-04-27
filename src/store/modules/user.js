@@ -9,7 +9,7 @@ const state = {
     name: '',
     avatar: '',
     introduction: '',
-    // roles: ['ducha','editor','admin']
+    // roles: ['zhenggai','editor','admin']
     roles: []
 }
 
@@ -40,9 +40,10 @@ const actions = {
         const {username, password, vertifyCode} = userInfo
         return new Promise((resolve, reject) => {
             login({username: username.trim(), password: password, vertifyCode}).then(response => {
-                const {data} = response
+                const {data} = response;
                 commit('SET_TOKEN', data.token) // 登录成功后将token存储在cookie之中
                 commit('SET_USER_INFO', data.user) // 登录成功后将userInfo存起来
+                commit('SET_ROLES', (data.user.roleCode === 5 ? ['zhenggai'] : []) ) // 登录成功后将userInfo存起来
                 setStorage('userInfo',data.user);    //登录成功后将userInfo存在localStorage
                 setToken(data);
                 resolve(data)
