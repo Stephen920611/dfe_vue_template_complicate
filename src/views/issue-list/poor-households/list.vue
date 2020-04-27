@@ -112,7 +112,7 @@
                             >
                                 Excel模板
                             </el-button>
-                            <a ref="downExcelDo" :href="downLoadUrl"/>
+                            <a ref="downExcelDo" :href="downLoadUrl" target="_blank"/>
                         </div>
                     </div>
                     <!-- 表格开始 -->
@@ -189,6 +189,7 @@
 
     import {fetchList, fetchAreaTree} from '@/api/issueList'
     import {mapGetters} from 'vuex'
+    import {getStorage} from '@/utils/storage'
 
     export default {
         name: 'IssueListPoorHouseholds',
@@ -523,9 +524,8 @@
         },
         created() {
             //            this.getList()
-            console.log(this.userInfo,'this.userInfo.');
-
-//            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
+            let userInfo = getStorage('userInfo');
+            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName='+ userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.fetchArea()
 
         },

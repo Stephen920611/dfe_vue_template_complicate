@@ -1,6 +1,7 @@
 import {login, logout, getInfo} from '@/api/user'
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import router, {resetRouter} from '@/router'
+import {setStorage, removeStorage} from '@/utils/storage'
 
 const state = {
     token: getToken(),
@@ -42,8 +43,9 @@ const actions = {
                 const {data} = response
                 commit('SET_TOKEN', data.token) // 登录成功后将token存储在cookie之中
                 commit('SET_USER_INFO', data.user) // 登录成功后将userInfo存起来
-                setToken(data)
-                resolve()
+                setStorage('userInfo',data.user);    //登录成功后将userInfo存在localStorage
+                setToken(data);
+                resolve(data)
             }).catch(error => {
                 reject(error)
             })
@@ -94,6 +96,7 @@ const actions = {
                 commit('SET_TOKEN', '')
                 commit('SET_ROLES', [])
                 removeToken()
+                removeStorage('userInfo');
                 resetRouter()
                 
                 // reset visited views and cached views
