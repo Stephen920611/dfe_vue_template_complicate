@@ -50,11 +50,13 @@ const actions = {
     generateRoutes({commit}, roles) {
         return new Promise(resolve => {
             let accessedRoutes
-            if (roles.includes('admin')) {
-                accessedRoutes = asyncRoutes || []
-            } else {
-                accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-            }
+            // if (roles.includes('admin')) {
+            //     accessedRoutes = asyncRoutes || []
+            // } else {
+            //     accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+            // }
+            //TODO 严格按照权限来控制，之前是admin也能看到所有的
+            accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
             commit('SET_ROUTES', accessedRoutes)
             resolve(accessedRoutes)
         })
