@@ -2,7 +2,7 @@
         <div>
             <!--<common-subtitle title="贫困户满意度"></common-subtitle>-->
             <el-form>
-                <el-cell>
+                <div>
                     <!---------------------------1.对扶贫整体工作是否满意----------------------------->
                     <el-row>
                         <el-col :offset="0" :span="24">1.对扶贫整体工作是否满意</el-col>
@@ -45,7 +45,7 @@
                             />
                         </el-col>
                     </el-row>
-                </el-cell>
+                </div>
 
                 <!--<div style="margin: 1rem 1rem 1.5rem;">
                             <el-button round block type="info" native-type="submit">
@@ -57,6 +57,7 @@
 </template>
 <script>
     import Vue from 'vue'
+    import { fetchDPersonPropose } from '@/api/issueList'
     export default {
         components: {
         },
@@ -74,8 +75,52 @@
         mounted() {
 //            this.form.personId = this.poorId
 //            this.getInfo({personId: this.poorId})
+            this.getData();
         },
         methods: {
+
+            /**
+             *  编辑回显使用
+             * formData[Object]：是定义的回显参数
+             * formData[infoData]:带参数值的详情信息
+             *
+             */
+            editShowInfoFunc:(formData,infoData)=>{
+                let {keys, values, entries} = Object;
+                for(let key of keys(infoData)){
+                    if(formData.hasOwnProperty(key)){
+                        formData[key] = infoData[key]
+                    }
+                }
+            },
+
+            getData(){
+                let params = {
+                    personId: this.$route.query.hasOwnProperty('id') ? this.$route.query.id : '',
+                };
+                let self = this;
+                self.loading = true;
+                fetchDPersonPropose(params).then(resp => {
+                    self.loading = false;
+                    self.form = resp.data;
+
+                    //填写原因的项--数据查询todo
+                    resp.data.problemInfo.dPersonPropose.forEach(item=>{
+                        self.editShowInfoFunc(this.form,item);
+                    });
+                    //转其他的
+//                    self.editShowInfoFunc(this.form,resp.data);
+
+                }).catch(err => {
+                    self.loading = false;
+                    this.$message({
+                        message: err.msg,
+                        type: 'error'
+                    })
+//                    self.$message.error(err.msg)
+                });
+            },
+
 
         }
     }

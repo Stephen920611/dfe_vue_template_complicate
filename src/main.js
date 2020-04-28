@@ -12,6 +12,8 @@ import '@/styles/index.scss' // 全局 css
 import App from './App'
 import store from './store'
 import router from './router'
+import _ from 'lodash';
+Vue.prototype.$lodash = _;
 
 import i18n from './lang' // 国际化
 import './icons' // icon

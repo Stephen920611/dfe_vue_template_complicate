@@ -63,7 +63,7 @@
                             </el-col>
                             <el-col :span="4">
                                 <el-input
-                                        v-model="listQuery.content"
+                                        v-model="listQuery.personName"
                                         placeholder="请输入贫困户户主姓名"
                                         class="filter-item"
                                         style="width: 95%;"
@@ -158,7 +158,7 @@
                             max-height="500px"
                     >
                         <el-table-column label="序号" type="index" align="center" width="50">
-                            <template slot-scope="{row}">{{ row.idx }}</template>
+                            <!--<template slot-scope="{row}"></template>-->
                         </el-table-column>
                         <el-table-column label="县市区" header-align="center" align="center" min-width="80">
                             <template slot-scope="{row}">{{ row.areaName }}</template>
@@ -203,7 +203,7 @@
                             v-show="total>0"
                             :total="total"
                             :page.sync="listQuery.page"
-                            :limit.sync="listQuery.limit"
+                            :limit.sync="listQuery.size"
                             style="padding:0px !important"
                             @pagination="getList"
                             class="poor-households-pagination"
@@ -220,17 +220,11 @@
     import elDragDialog from '@/directive/el-drag-dialog'
     import Pagination from '@/components/Pagination'
 
-    import {fetchList, fetchAreaTree} from '@/api/issueList'
-    import {mapGetters} from 'vuex'
+    import {fetchList, fetchAreaTree, fetchTown, fetchVillage} from '@/api/issueList'
     import {getStorage} from '@/utils/storage'
 
     export default {
         name: 'IssueListPoorHouseholds',
-        computed: {
-            ...mapGetters([
-                'userInfo',
-            ])
-        },
         components: {Pagination},
         directives: {waves, elDragDialog},
         data() {
@@ -240,7 +234,68 @@
 //                downLoadUrl: `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`,
                 upLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/upload',
                 // 县市区
-                areaOptions: [],
+                areaOptions: [
+                    {
+                        value: '烟台市',
+                        label: '烟台市',
+                    },
+                    {
+                        value: '福山区',
+                        label: '福山区',
+                    },
+                    {
+                        value: '莱山区',
+                        label: '莱山区',
+                    },
+                    {
+                        value: '牟平区',
+                        label: '牟平区',
+                    },
+                    {
+                        value: '海阳市',
+                        label: '海阳市',
+                    },
+                    {
+                        value: '莱阳市',
+                        label: '莱阳市',
+                    },
+                    {
+                        value: '栖霞市',
+                        label: '栖霞市',
+                    },
+                    {
+                        value: '蓬莱市',
+                        label: '蓬莱市',
+                    },
+                    {
+                        value: '长岛县',
+                        label: '长岛县',
+                    },
+                    {
+                        value: '龙口市',
+                        label: '龙口市',
+                    },
+                    {
+                        value: '招远市',
+                        label: '招远市',
+                    },
+                    {
+                        value: '莱州市',
+                        label: '莱州市',
+                    },
+                    {
+                        value: '开发区',
+                        label: '开发区',
+                    },
+                    {
+                        value: '昆嵛区',
+                        label: '昆嵛区',
+                    },
+                    {
+                        value: '高新区',
+                        label: '高新区',
+                    },
+                ],
                 areaValue: '',
                 // 乡镇
                 townOptions: [],
@@ -326,7 +381,7 @@
                         label: '不涉及'
                     }
                 ],
-                isProblemValue: '',
+                isProblemValue: null,// null全部 0、没问题 1、有问题
                 // 贫困户类型
                 householdsTypeOptions: [
                     {
@@ -338,7 +393,7 @@
                         label: '建档立卡'
                     },
                 ],
-                householdsTypeValue: '',
+                householdsTypeValue: null, //null全部 1、即时帮扶 2、建档立卡
                 downloadHouseholdsTypeValue: '1',        //下载的贫困户类型
 
 
@@ -526,17 +581,19 @@
                     }
                 ],
                 total: 1,
-                listLoading: false,
+                listLoading: true,
                 listQuery: {
                     page: 1,
-                    limit: 20,
-                    content: '',
-                    code: '',
-                    type: 1
+                    size: 20,
+                    personName: '',
+                    atHome: null,
+                    isConfirm: null
+//                    code: '',
+//                    type: 1
                 },
                 // 编辑
                 temp: {
-                    content: '',
+                    personName: '',
                     answer: '',
                     options: [{value: 'A', text: ''}, {value: 'B', text: ''}],
                     difficulty: 0
@@ -549,43 +606,106 @@
                     create: '添加'
                 },
                 rules: {
-                    content: [{required: true, message: '必填', trigger: 'blur'}],
+                    personName: [{required: true, message: '必填', trigger: 'blur'}],
                     answer: [{required: true, message: '必填', trigger: 'blur'}]
                 },
-                uploadLoading: false
+                uploadLoading: false,
+                userInfo: {},//登录者信息
             }
         },
         watch: {
             downloadHouseholdsTypeValue(newName, oldName) {
                 let userInfo = getStorage('userInfo');
                 this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${newName}`;
+            },
+            areaValue(newName, oldName) {
+                let res = newName === '烟台市' ? '' : newName;
+                this.fetchTown(res);
+            },
+            townValue(newName, oldName) {
+                this.fetchVillage(newName);
             }
         },
         created() {
             let userInfo = getStorage('userInfo');
             this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
-            this.fetchArea()
+            this.userInfo = getStorage('userInfo');
+            this.areaOptions = getStorage('userInfo').areaName === '烟台市' ? this.areaOptions : [{
+                value: getStorage('userInfo').areaName,
+                label: getStorage('userInfo').areaName
+            }];
+            this.areaValue = getStorage('userInfo').areaName;
+//            this.fetchArea()
+            this.getList();
         },
         methods: {
             // 获取地区数据
             fetchArea() {
                 //family 为贫困户, village 为贫困村, project 为项目
                 let params = {
-                    areaName: this.userInfo.areaName,
-                    code: 'family'
+                    areaName: this.userInfo.areaName === '烟台市' ? '' : this.userInfo.areaName,
+//                    code: 'family'
                 };
                 let self = this;
-                fetchAreaTree(params).then(resp => {
+                fetchAreaTree({areaName: this.userInfo.areaName === '烟台市' ? '' : this.userInfo.areaName}).then(resp => {
 //                    self.allAreaTree = self.dealAreaData(self.allArea);
-                    self.allAreaTree = self.dealAreaData(resp.data);
+//                    self.areaOptions = self.dealAreaData(resp.data);
                 }).catch(err => {
 //                    console.log(err,'err');
 //                    this.$message.error(err.msg)
                 });
             },
 
+            //获取乡镇
+            fetchTown(areaName) {
+                //family 为贫困户, village 为贫困村, project 为项目
+                let params = {
+                    areaName: areaName,
+                    code: 'family'
+                };
+                let self = this;
+                fetchTown(params).then(resp => {
+                    let townArr = [];
+                    resp.data.map((item) => {
+                        let town = {
+                            value: item,
+                            label: item
+                        }
+                        townArr.push(town);
+                    })
+                    self.townOptions = townArr;
+                }).catch(err => {
+                    this.$message.error(err.msg)
+                });
+            },
+
+            //获取村
+            fetchVillage(townName) {
+                //family 为贫困户, village 为贫困村, project 为项目
+                let params = {
+                    areaName: this.areaValue,
+                    townName: townName,
+                    code: 'family'
+                };
+                let self = this;
+                fetchVillage(params).then(resp => {
+                    let villageArr = [];
+                    resp.data.map((item) => {
+                        let town = {
+                            value: item,
+                            label: item
+                        }
+                        villageArr.push(town);
+                    })
+
+                    self.villageOptions = villageArr;
+                }).catch(err => {
+                    this.$message.error(err.msg)
+                });
+            },
+
             //将后台返回的树处理成前端组件需要的树
-            dealAreaData(data) {
+            /*dealAreaData(data) {
                 return data.map(val => {
                     let children = null;
                     if (val.hasOwnProperty("children")) {
@@ -598,16 +718,25 @@
                         children
                     }
                 })
-            },
+            },*/
 
             // 获取数据
             getList() {
                 this.listLoading = true
-                this.listQuery.type = this.tabPosition
-                this.listQuery.fieldCode = this.clickNode.code
-                fetchList(this.listQuery).then(res => {
-                    this.list = res.data.list
-                    this.total = res.data.total
+//                this.listQuery.type = this.tabPosition
+//                this.listQuery.fieldCode = this.clickNode.code;
+                let params = {
+                    ...this.listQuery,
+                    areaName: this.areaValue === '烟台市' ? '' : this.areaValue,
+                    townName: this.townValue,
+                    villageName: this.villageValue,
+                    isProblem: this.isProblemValue,
+                    familyType: this.householdsTypeValue,
+                }
+                fetchList(params).then(res => {
+
+                    this.list = res.data.list;
+                    this.total = res.data.total;
                     setTimeout(() => {
                         this.listLoading = false
                     }, 1.5 * 1000)
@@ -634,14 +763,19 @@
 
             // 条件查询
             handleFilter() {
-                this.listQuery.page = 1
+                this.listQuery.page = 1;
                 this.getList()
             },
 
             // 重置查询
             handleReset() {
-                this.listQuery.content = ''
-                this.listQuery.code = ''
+                this.listQuery.personName = '';
+//                this.listQuery.code = ''
+                this.areaValue = getStorage('userInfo').areaName;
+                this.townValue = '';
+                this.villageValue = '';
+                this.isProblemValue = null;
+                this.householdsTypeValue = null;
                 this.getList()
             },
 
@@ -665,9 +799,11 @@
 
 <style lang="scss" scoped>
     .poor-households-pagination {
-        /deep/ .el-pagination {
-            display: flex;
-            justify-content: center;
-        }
+
+    /deep/ .el-pagination {
+        display: flex;
+        justify-content: center;
+    }
+
     }
 </style>

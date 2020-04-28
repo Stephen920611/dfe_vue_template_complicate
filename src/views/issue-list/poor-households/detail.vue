@@ -88,17 +88,19 @@
                 // 表格
                 tabValue: 'first',
                 textMap: {
-                    typeName: '两不愁三保 障',
+                    typeName: '两不愁三保障',
                     update: '行业扶贫政策',
                     create: '帮扶责任落实',
                     create1: '贫困户满意度'
-                }
+                },
+                personId:''
             }
         },
         created() {
             this.getData()
         },
         mounted() {
+            this.personId = this.$route.query
             console.log(this.$route.query,'ssssssssss');
         },
         methods: {
