@@ -16,7 +16,7 @@
                     <!--</el-col>-->
                     <!--</el-row>-->
                     <div class="filter-container">
-                        <el-cascader
+                        <!--<el-cascader
                                 style="min-width: 250px;"
                                 class="filter-item"
                                 v-model="areaValue"
@@ -26,94 +26,126 @@
                                 clearable
                                 placeholder="请选择县市区"
                         >
-                        </el-cascader>
-                        <!--<el-select v-model="areaValue" class="filter-item" placeholder="请选择县市区">
-                            <el-option
-                                    v-for="item in areaOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="townValue" class="filter-item" placeholder="请选择乡镇">
-                            <el-option
-                                    v-for="item in townOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="villageValue" class="filter-item" placeholder="请选择村">
-                            <el-option
-                                    v-for="item in villageOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>-->
-                        <el-input
-                                v-model="listQuery.content"
-                                placeholder="请输入贫困户户主姓名"
-                                style="width: 200px;"
-                                class="filter-item"
-                                @keyup.enter.native="handleFilter"
-                        />
-                        <el-select v-model="isProblemValue" class="filter-item" placeholder="请选择是否有问题">
-                            <el-option
-                                    v-for="item in isProblemOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="householdsTypeValue" class="filter-item" placeholder="贫困户类型">
-                            <el-option
-                                    v-for="item in householdsTypeOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-button
-                                v-waves
-                                class="filter-item"
-                                type="primary"
-                                icon="el-icon-search"
-                                style="margin-left: 10px;"
-                                @click="handleFilter"
-                        >
-                            搜索
-                        </el-button>
-                        <el-button
-                                class="filter-item"
-                                style="margin-left: 10px;"
-                                type="primary"
-                                icon="el-icon-refresh"
-                                @click="handleReset"
-                        >
-                            重置
-                        </el-button>
-                        <div style="float:right">
-                            <el-select v-model="downloadHouseholdsTypeValue" class="filter-item" placeholder="贫困户类型">
-                                <el-option
-                                        v-for="item in householdsTypeOptions"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value"
+                        </el-cascader>-->
+                        <el-row>
+                            <el-col :span="3">
+                                <el-select style="width: 95%;" v-model="areaValue" class="filter-item"
+                                           placeholder="请选择县市区">
+                                    <el-option
+                                            v-for="item in areaOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                            </el-col>
+                            <el-col :span="3">
+                                <el-select style="width: 95%;" v-model="townValue" class="filter-item"
+                                           placeholder="请选择乡镇">
+                                    <el-option
+                                            v-for="item in townOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                            </el-col>
+                            <el-col :span="3">
+                                <el-select style="width: 95%;" v-model="villageValue" class="filter-item"
+                                           placeholder="请选择村">
+                                    <el-option
+                                            v-for="item in villageOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-input
+                                        v-model="listQuery.content"
+                                        placeholder="请输入贫困户户主姓名"
+                                        class="filter-item"
+                                        style="width: 95%;"
+                                        @keyup.enter.native="handleFilter"
                                 />
-                            </el-select>
-                            <!-- 下载按钮 -->
-                            <el-button
-                                    class="filter-item"
-                                    style="margin-left: 10px;"
-                                    type="primary"
-                                    icon="el-icon-download"
-                                    @click="handleDownload"
-                            >
-                                Excel模板
-                            </el-button>
-                            <a ref="downExcelDo" :href="downLoadUrl" target="_blank"/>
-                        </div>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-select style="width: 95%;" v-model="isProblemValue" class="filter-item"
+                                           placeholder="请选择是否有问题">
+                                    <el-option
+                                            v-for="item in isProblemOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                            </el-col>
+                            <el-col :span="3">
+                                <el-select style="width: 95%;" v-model="householdsTypeValue" class="filter-item"
+                                           placeholder="贫困户类型">
+                                    <el-option
+                                            v-for="item in householdsTypeOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                            </el-col>
+                            <el-col :span="4" style="display: flex;justify-content: flex-end">
+                                <el-button
+                                        v-waves
+                                        class="filter-item"
+                                        type="primary"
+                                        icon="el-icon-search"
+                                        style="margin-left: 10px;"
+                                        @click="handleFilter"
+                                >
+                                    搜索
+                                </el-button>
+                                <el-button
+                                        class="filter-item"
+                                        style="margin-left: 10px;"
+                                        type="primary"
+                                        icon="el-icon-refresh"
+                                        @click="handleReset"
+                                >
+                                    重置
+                                </el-button>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="6" :offset="18" style="display: flex; justify-content: flex-end">
+                                <el-select v-model="downloadHouseholdsTypeValue" class="filter-item"
+                                           placeholder="贫困户类型">
+                                    <el-option
+                                            v-for="item in householdsTypeOptions"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    />
+                                </el-select>
+                                <!-- 下载按钮 -->
+                                <el-button
+                                        class="filter-item"
+                                        style="margin-left: 10px;"
+                                        type="primary"
+                                        icon="el-icon-download"
+                                        @click="handleDownload"
+                                >
+                                    Excel模板
+                                </el-button>
+                                <a ref="downExcelDo" :href="downLoadUrl" target="_blank"/>
+                            </el-col>
+                            <!--<el-col :span="3" >-->
+
+                            <!--</el-col>-->
+                        </el-row>
+
+                        <!--<div style="float:right">-->
+
+
+                        <!--</div>-->
                     </div>
                     <!-- 表格开始 -->
                     <el-table
@@ -123,7 +155,7 @@
                             fit
                             highlight-current-row
                             style="width: 100%;"
-                            max-height="550px"
+                            max-height="500px"
                     >
                         <el-table-column label="序号" type="index" align="center" width="50">
                             <template slot-scope="{row}">{{ row.idx }}</template>
@@ -174,6 +206,7 @@
                             :limit.sync="listQuery.limit"
                             style="padding:0px !important"
                             @pagination="getList"
+                            class="poor-households-pagination"
                     />
                 </div>
             </el-main>
@@ -206,15 +239,15 @@
                 downLoadUrl: '',
 //                downLoadUrl: `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName='+ this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`,
                 upLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/upload',
-//                // 县市区
-//                areaOptions: [],
-//                areaValue: '',
-//                // 乡镇
-//                townOptions: [],
-//                townValue: '',
-//                // 村
-//                villageOptions: [],
-//                villageValue: '',
+                // 县市区
+                areaOptions: [],
+                areaValue: '',
+                // 乡镇
+                townOptions: [],
+                townValue: '',
+                // 村
+                villageOptions: [],
+                villageValue: '',
                 //模拟假数据
                 allArea: [
                     {
@@ -277,7 +310,7 @@
                 //县乡村的树
                 allAreaTree: [],
                 //县乡村的树的值
-                areaValue: [],
+//                areaValue: [],
                 // 是否有问题
                 isProblemOptions: [
                     {
@@ -525,12 +558,12 @@
         watch: {
             downloadHouseholdsTypeValue(newName, oldName) {
                 let userInfo = getStorage('userInfo');
-                this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName='+ userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${newName}`;
+                this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${newName}`;
             }
         },
         created() {
             let userInfo = getStorage('userInfo');
-            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName='+ userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
+            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.fetchArea()
         },
         methods: {
@@ -630,6 +663,11 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .poor-households-pagination {
+        /deep/ .el-pagination {
+            display: flex;
+            justify-content: center;
+        }
+    }
 </style>
