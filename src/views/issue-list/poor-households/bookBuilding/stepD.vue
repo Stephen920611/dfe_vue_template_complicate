@@ -101,15 +101,18 @@
                 let self = this;
                 self.loading = true;
                 fetchDPersonPropose(params).then(resp => {
-                    self.loading = false;
-                    self.form = resp.data;
+                    if(resp.data) {
+                        self.loading = false;
+                        self.form = resp.data;
 
-                    //填写原因的项--数据查询todo
-                    resp.data.problemInfo.dPersonPropose.forEach(item=>{
-                        self.editShowInfoFunc(this.form,item);
-                    });
-                    //转其他的
+                        //填写原因的项--数据查询todo
+                        resp.data.problemInfo.dPersonPropose.forEach(item=>{
+                            self.editShowInfoFunc(this.form,item);
+                        });
+                        //转其他的
 //                    self.editShowInfoFunc(this.form,resp.data);
+                    }
+
 
                 }).catch(err => {
                     self.loading = false;

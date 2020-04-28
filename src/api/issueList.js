@@ -93,6 +93,19 @@ export function fetchDPersonPropose(data) {
     })
 }
 
+/**
+ * 即时帮扶 - 两不愁三保障
+ * @param data
+ */
+export function fetchJPersonSafeguard(data) {
+    return request({
+        url: '/jPersonSafeguard/get',
+        method: 'post',
+        data
+    })
+}
+
+
 
 
 /**

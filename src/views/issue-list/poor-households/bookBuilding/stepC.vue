@@ -59,7 +59,7 @@
                             <el-row class="margin-t-10 color-red font-size-14">（拍《帮扶责任卡》中帮扶记录照片）</el-row>
                             <el-row class="margin-t-15">
                                 <!--<el-uploader v-model="filePath.file_type1" multiple/>-->
-                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :span="4">
+                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :span="4" :key="image">
                                     <el-image
                                             width="80"
                                             height="80"
@@ -164,43 +164,46 @@
                 self.loading = true;
                 fetchDPersonResponsibility(params).then(resp => {
                     self.loading = false;
-                    self.form = resp.data;
+                    if(resp.data){
+                        self.form = resp.data;
+                        let {keys, values, entries} = Object;
+                        //获取返回值的上传图片
+                        //filePath的key
+                        let filePathKeys = this.$lodash.keys(this.filePath);
 
-                    let {keys, values, entries} = Object;
-                    //获取返回值的上传图片
-                    //filePath的key
-                    let filePathKeys = this.$lodash.keys(this.filePath);
+                        if (resp.data.hasOwnProperty("baseImgList")) {
+                            resp.data.baseImgList.forEach(item => {
+                                //filePath的key遍历一下
+                                filePathKeys.map( (val,idx) => {
+                                    let key = val.split("filePath");
+                                    //判断当前的key的后面的数字与baseImgList的type是否一样
+                                    if(item.fileType.toString() === key[1]){
+                                        //对应的照片放到里面
+                                        let arr = [];
+                                        item.imageList.forEach(ktem => {
+                                            let imgInfo = {
+                                                url:''
+                                            };
+                                            //新修改
+                                            imgInfo.url = ktem.filePath;
+                                            //这里因为是img，不是uploader,所以接收的形式不一样，如果是uploader,就要push(imgInfo)
+                                            arr.push( ktem.filePath)
+                                        });
+                                        this.filePath[val] = arr;
+                                    }
+                                });
+                            })
+                        }
 
-                    if (resp.data.hasOwnProperty("baseImgList")) {
-                        resp.data.baseImgList.forEach(item => {
-                            //filePath的key遍历一下
-                            filePathKeys.map( (val,idx) => {
-                                let key = val.split("filePath");
-                                //判断当前的key的后面的数字与baseImgList的type是否一样
-                                if(item.fileType.toString() === key[1]){
-                                    //对应的照片放到里面
-                                    let arr = [];
-                                    item.imageList.forEach(ktem => {
-                                        let imgInfo = {
-                                            url:''
-                                        };
-                                        //新修改
-                                        imgInfo.url = ktem.filePath;
-                                        //这里因为是img，不是uploader,所以接收的形式不一样，如果是uploader,就要push(imgInfo)
-                                        arr.push( ktem.filePath)
-                                    });
-                                    this.filePath[val] = arr;
-                                }
-                            });
-                        })
+                        //填写原因的项--数据查询todo
+                        resp.data.problemInfo.dPersonResponsibility.forEach(item=>{
+                            self.editShowInfoFunc(this.form,item);
+                        });
+                        //转其他的
+//                    self.editShowInfoFunc(this.form,resp.data);
+
                     }
 
-                    //填写原因的项--数据查询todo
-                    resp.data.problemInfo.dPersonResponsibility.forEach(item=>{
-                        self.editShowInfoFunc(this.form,item);
-                    });
-                    //转其他的
-//                    self.editShowInfoFunc(this.form,resp.data);
 
                 }).catch(err => {
                     self.loading = false;

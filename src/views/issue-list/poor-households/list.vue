@@ -630,11 +630,11 @@
             let userInfo = getStorage('userInfo');
             this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.userInfo = getStorage('userInfo');
-            this.areaOptions = getStorage('userInfo').areaName === '烟台市' ? this.areaOptions : [{
-                value: getStorage('userInfo').areaName,
-                label: getStorage('userInfo').areaName
+            this.areaOptions = this.userInfo.areaName === '烟台市' ? this.areaOptions : [{
+                value: this.userInfo.areaName,
+                label: this.userInfo.areaName
             }];
-            this.areaValue = getStorage('userInfo').areaName;
+            this.areaValue = this.userInfo.areaName;
 //            this.fetchArea()
             this.getList();
         },
@@ -722,7 +722,7 @@
 
             // 获取数据
             getList() {
-                this.listLoading = true
+                this.listLoading = true;
 //                this.listQuery.type = this.tabPosition
 //                this.listQuery.fieldCode = this.clickNode.code;
                 let params = {
@@ -734,14 +734,13 @@
                     familyType: this.householdsTypeValue,
                 }
                 fetchList(params).then(res => {
-
+                    this.listLoading = false;
                     this.list = res.data.list;
                     this.total = res.data.total;
                     setTimeout(() => {
                         this.listLoading = false
                     }, 1.5 * 1000)
                 })
-                this.listLoading = false
             },
 
             // tab键改变触发
