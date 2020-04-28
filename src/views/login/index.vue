@@ -168,6 +168,7 @@
                         this.loading = true
                         this.$store.dispatch('user/login', this.loginForm)
                             .then(resp => {
+                                console.log(this.redirect,'this.redirect');
                                 this.$router.push({path: this.redirect || '/', query: this.otherQuery}) // 登录成功之后重定向到首页
                                 this.loading = false
                             })

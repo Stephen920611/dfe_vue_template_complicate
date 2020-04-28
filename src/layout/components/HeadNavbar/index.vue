@@ -1,192 +1,196 @@
 <template>
-  <div :class="{'has-logo':showLogo}" class="head-nav-bar">
-    <logo v-if="showLogo" />
+    <div :class="{'has-logo':showLogo}" class="head-nav-bar">
+        <logo v-if="showLogo"/>
 
-    <!-- <div class="avatar-wrapper">
-                     <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-                     <i class="el-icon-caret-bottom"/>
-                 </div>-->
-    <div class="header-menu" :style="toggleMenuVisible ? null : 'transition: 2s;overflow:hidden'">
-      <el-menu
-        ref="subMenuList"
-        :default-active="activeMenu"
-        background-color="#304156"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-        mode="horizontal"
-        class="el-menu-demo"
-      >
-        <sidebar-item
-          v-for="route in permission_routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
-      </el-menu>
-    </div>
-    <div v-show="menuVisibleBtn" class="header-menu-visible" @click="toggleMenu()">
-      <!--<i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"></i>-->
-      <i
-        class="el-icon-arrow-up"
-        :style="toggleMenuVisible ? 'transform: rotate(0deg); transition: 0.4s': 'transform: rotate(-180deg); transition: 0.4s'"
-      />
-    </div>
-    <!--最初版本-箭头不会根据屏幕的变化而显示与隐藏-->
-    <!-- <div class="header-menu-visible" @click="toggleMenu()">
-                 <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
-             </div>-->
-    <div class="right-menu">
-      <!--<template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <lang-select class="right-menu-item hover-effect" />
-
-      </template>-->
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+        <!-- <div class="avatar-wrapper">
+                         <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+                         <i class="el-icon-caret-bottom"/>
+                     </div>-->
+        <div class="header-menu" :style="toggleMenuVisible ? null : 'transition: 2s;overflow:hidden'">
+            <el-menu
+                    ref="subMenuList"
+                    :default-active="activeMenu"
+                    background-color="#304156"
+                    text-color="#fff"
+                    active-text-color="#ffd04b"
+                    mode="horizontal"
+                    class="el-menu-demo"
+            >
+                <sidebar-item
+                        v-for="route in permission_routes"
+                        :key="route.path"
+                        :item="route"
+                        :base-path="route.path"
+                />
+            </el-menu>
         </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/profile/index" @click.native="updateSidebar">
-            <el-dropdown-item>
-              个人中心
-            </el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>
-              首页
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出登录</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <div v-show="menuVisibleBtn" class="header-menu-visible" @click="toggleMenu()">
+            <!--<i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"></i>-->
+            <i
+                    class="el-icon-arrow-up"
+                    :style="toggleMenuVisible ? 'transform: rotate(0deg); transition: 0.4s': 'transform: rotate(-180deg); transition: 0.4s'"
+            />
+        </div>
+        <!--最初版本-箭头不会根据屏幕的变化而显示与隐藏-->
+        <!-- <div class="header-menu-visible" @click="toggleMenu()">
+                     <i :class="toggleMenuVisible ? 'el-icon-arrow-up':'el-icon-arrow-down'"/>
+                 </div>-->
+        <div class="right-menu">
+            <!--<template v-if="device!=='mobile'">
+              <search id="header-search" class="right-menu-item" />
+
+              <error-log class="errLog-container right-menu-item hover-effect" />
+
+              <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
+              <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
+                <size-select id="size-select" class="right-menu-item hover-effect" />
+              </el-tooltip>
+
+              <lang-select class="right-menu-item hover-effect" />
+
+            </template>-->
+            <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+                <div class="avatar-wrapper">
+                    <!--<i class="el-icon-user" style="font-size: 40px; "></i>-->
+                    <!--<span style="font-size: 30px; line-height: 40px; height: 40px;">wangkai</span>-->
+                    <img :src="avatarImg" class="user-avatar">
+                    <i class="el-icon-caret-bottom"/>
+                </div>
+                <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                    <router-link to="/profile/index" @click.native="updateSidebar">
+                        <el-dropdown-item>
+                            个人中心
+                        </el-dropdown-item>
+                    </router-link>
+                    <router-link to="/">
+                        <el-dropdown-item>
+                            首页
+                        </el-dropdown-item>
+                    </router-link>
+                    <el-dropdown-item divided @click.native="logout">
+                        <span style="display:block;">退出登录</span>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
-import ErrorLog from '@/components/ErrorLog'
-import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
-import LangSelect from '@/components/LangSelect'
-import Search from '@/components/HeaderSearch'
+    import {mapGetters} from 'vuex'
+    import Logo from './Logo'
+    import SidebarItem from './SidebarItem'
+    import variables from '@/styles/variables.scss'
+    import Breadcrumb from '@/components/Breadcrumb'
+    import Hamburger from '@/components/Hamburger'
+    import ErrorLog from '@/components/ErrorLog'
+    import Screenfull from '@/components/Screenfull'
+    import SizeSelect from '@/components/SizeSelect'
+    import LangSelect from '@/components/LangSelect'
+    import Search from '@/components/HeaderSearch'
+    import avatarImg from '@/assets/image/avatar.png';
 
-export default {
-  components: {
-    SidebarItem,
-    Logo,
-    Breadcrumb,
-    Hamburger,
-    ErrorLog,
-    Screenfull,
-    SizeSelect,
-    LangSelect,
-    Search
-  },
-  data() {
-    return {
-      list: null,
-      listLoading: true
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'permission_routes',
-      'sidebar',
-      'device',
-      'avatar',
-      'toggleMenuVisible',
-      'menuVisibleBtn',
-      'resizeHandlerVisible'
-    ]),
-    activeMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      // 如果设置了路径，则侧边栏将突出显示您设置的路径
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      return path
-    },
-    showLogo() {
-      //                return this.$store.state.settings.sidebarLogo
-      return true
-    },
-    variables() {
-      return variables
-    }
-    /* isCollapse() {
-                return !this.sidebar.opened
-            }*/
-  },
-  watch: {
-    resizeHandlerVisible: {
-      handler(val, oldVal) {
-        this.resizeUpOrDownBtn()
-      }
-    }
-  },
-  mounted: function() {
-    const { dispatch } = this.$store
-    this.resizeUpOrDownBtn()
-  },
-  methods: {
-    // 更新侧边栏,个人中心时收起侧边栏
-    updateSidebar() {
-      const { dispatch } = this.$store
-      dispatch({
-        type: 'app/updateSidebar', // 调用action
-        sidebarData: null, // 侧边栏的数据
-        hasSidebar: false, // 是否显示侧边栏
-        sidebarParents: null// 点击的顶部标题的数据
-      })
-    },
-    // 是否显示多余菜单
-    toggleMenu() {
-      const { dispatch } = this.$store
-      dispatch({
-        type: 'app/toggleMenu',
-        toggleMenuVisible: !this.toggleMenuVisible
-      })
-    },
-    // 监听多余按钮的显示
-    resizeUpOrDownBtn() {
-      const { dispatch } = this.$store
-      // 如果大于60的高度，说明菜单栏不止一行，需要让箭头显示
-      dispatch({
-        type: 'app/toggleMenuBtn',
-        menuVisibleBtn: this.$refs.subMenuList.$el.offsetHeight > 60
-      })
-    },
+    export default {
+        components: {
+            SidebarItem,
+            Logo,
+            Breadcrumb,
+            Hamburger,
+            ErrorLog,
+            Screenfull,
+            SizeSelect,
+            LangSelect,
+            Search
+        },
+        data() {
+            return {
+                list: null,
+                listLoading: true,
+                avatarImg: avatarImg
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'permission_routes',
+                'sidebar',
+                'device',
+                'avatar',
+                'toggleMenuVisible',
+                'menuVisibleBtn',
+                'resizeHandlerVisible'
+            ]),
+            activeMenu() {
+                const route = this.$route
+                const {meta, path} = route
+                // 如果设置了路径，则侧边栏将突出显示您设置的路径
+                if (meta.activeMenu) {
+                    return meta.activeMenu
+                }
+                return path
+            },
+            showLogo() {
+                //                return this.$store.state.settings.sidebarLogo
+                return true
+            },
+            variables() {
+                return variables
+            }
+            /* isCollapse() {
+                        return !this.sidebar.opened
+                    }*/
+        },
+        watch: {
+            resizeHandlerVisible: {
+                handler(val, oldVal) {
+                    this.resizeUpOrDownBtn()
+                }
+            }
+        },
+        mounted: function () {
+            const {dispatch} = this.$store
+            this.resizeUpOrDownBtn()
+        },
+        methods: {
+            // 更新侧边栏,个人中心时收起侧边栏
+            updateSidebar() {
+                const {dispatch} = this.$store
+                dispatch({
+                    type: 'app/updateSidebar', // 调用action
+                    sidebarData: null, // 侧边栏的数据
+                    hasSidebar: false, // 是否显示侧边栏
+                    sidebarParents: null// 点击的顶部标题的数据
+                })
+            },
+            // 是否显示多余菜单
+            toggleMenu() {
+                const {dispatch} = this.$store
+                dispatch({
+                    type: 'app/toggleMenu',
+                    toggleMenuVisible: !this.toggleMenuVisible
+                })
+            },
+            // 监听多余按钮的显示
+            resizeUpOrDownBtn() {
+                const {dispatch} = this.$store
+                // 如果大于60的高度，说明菜单栏不止一行，需要让箭头显示
+                dispatch({
+                    type: 'app/toggleMenuBtn',
+                    menuVisibleBtn: this.$refs.subMenuList.$el.offsetHeight > 60
+                })
+            },
 
-    /**
+            /**
              * 用户登出
              * @returns {Promise.<void>}
              */
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$message.success('退出成功')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+            async logout() {
+                await this.$store.dispatch('user/logout')
+                this.$message.success('退出成功')
+                this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+            }
+        }
     }
-  }
-}
 </script>
 <style lang="scss" scoped type="text/scss">
     @import "~@/styles/mixin.scss";
@@ -195,6 +199,7 @@ export default {
     .el-menu--popup {
         padding: 0;
     }
+
     #app {
         & > > > .hideSidebar .main-container {
             margin-left: 0;
@@ -279,6 +284,7 @@ export default {
         }
 
     }
+
     .right-menu {
         padding-left: 20px;
         float: right;
@@ -318,8 +324,11 @@ export default {
             margin-right: 30px;
 
             .avatar-wrapper {
-                margin-top: 5px;
                 position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 55px;
 
                 .user-avatar {
                     cursor: pointer;

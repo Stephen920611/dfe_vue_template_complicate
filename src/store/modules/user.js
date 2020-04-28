@@ -1,7 +1,7 @@
 import {login, logout, getInfo} from '@/api/user'
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import router, {resetRouter} from '@/router'
-import {setStorage, removeStorage} from '@/utils/storage'
+import {setStorage, removeStorage, getStorage} from '@/utils/storage'
 
 const state = {
     token: getToken(),
@@ -9,7 +9,7 @@ const state = {
     name: '',
     avatar: '',
     introduction: '',
-    // roles: ['zhenggai','editor','admin']
+    // roles: ['zhenggai','visitor','admin']
     roles: []
 }
 
@@ -43,8 +43,11 @@ const actions = {
                 const {data} = response;
                 commit('SET_TOKEN', data.token) // 登录成功后将token存储在cookie之中
                 commit('SET_USER_INFO', data.user) // 登录成功后将userInfo存起来
-                commit('SET_ROLES', (data.user.roleCode === 5 ? ['zhenggai'] : []) ) // 登录成功后将userInfo存起来
-                setStorage('userInfo',data.user);    //登录成功后将userInfo存在localStorage
+                let userInfo = {
+                    roles: data.user.roleCode === 5 ? ['zhenggai'] : data.user.roleCode === 4 ? ['admin'] : ['visitor'],
+                    ...data.user
+                };
+                setStorage('userInfo', userInfo);    //登录成功后将userInfo存在localStorage
                 setToken(data);
                 resolve(data)
             }).catch(error => {
@@ -57,16 +60,17 @@ const actions = {
     getInfo({commit, state}) {
         return new Promise((resolve, reject) => {
             // getInfo(state.token).then(response => {
+            let userInfo = getStorage('userInfo');
             const response = {
-                code: 2000,
+                code: 1000,
                 data: {
-                    roles: ['admin', 'ducha'],
-                    introduction: 'I am a super administrator',
-                    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-                    name: 'Super Admin'
+                    roles: userInfo.roles,
+                    introduction: '',
+                    avatar: '',
+                    name: userInfo.username
                 }
-            }
-            const {data} = response
+            };
+            const {data} = response;
             
             if (!data) {
                 reject('Verification failed, please Login again.')

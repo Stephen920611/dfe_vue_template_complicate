@@ -23,7 +23,7 @@ import nestedRouter from './modules/nested'
  * redirect: noRedirect           如果设置noRedirect，则不会在面包屑中重定向
  * name:'router-name'             该名称由<keep-alive>使用（必须设置！！！）
  * meta : {
-    roles: ['admin','editor']    权限，控制页面角色（您可以设置多个角色）
+    roles: ['zhenggai','admin','visitor']    权限，控制页面角色（您可以设置多个角色）
     title: 'title'               名称，显示在侧边栏和面包屑中（推荐设置）
     icon: 'svg-name'             侧栏中或顶部导航栏的图标显示
     noCache: true                如果设置为true，将不缓存页面（默认为false）
