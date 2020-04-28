@@ -457,6 +457,9 @@
         },
         created() {
             //            this.getList()
+            this.userInfo = getStorage('userInfo');
+
+            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${userInfo.areaName === '烟台市' ? '' : ('areaName=' + userInfo.areaName + '&')}userId=${userInfo.id}&excelType=${this.downloadHouseholdsTypeValue}`;
             this.fetchArea()
         },
         methods: {
