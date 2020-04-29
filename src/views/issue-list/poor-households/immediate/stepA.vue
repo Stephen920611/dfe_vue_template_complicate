@@ -1,6 +1,6 @@
 <!--两不愁三保障和饮水安全-->
 <template>
-        <div>
+        <div v-loading="loading">
             <el-form ref="form">
                 <!--********************* a. 人均纯收入 *********************-->
                 <el-divider></el-divider>
@@ -20,11 +20,11 @@
                             <el-row class="margin-t-10 color-red font-size-14">（拍本人家中2019年度收入明细表）</el-row>
                             <el-row class="margin-t-15">
                                 <!--<el-uploader v-model="form.file_type1" multiple/>-->
-                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap">
+                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :key="image">
                                     <el-image
-                                            width="80"
-                                            height="80"
                                             :src="image"
+                                            class="img-content"
+                                            :preview-src-list="filePath.filePath1"
                                             @click.native="lookImg([image])"
                                     />
                                 </el-col>
@@ -255,10 +255,10 @@
                                     />
                                 </el-col>
                             </el-row>
-                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath2"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -448,10 +448,10 @@
                         <el-col :offset="2" :span="22">
                             <el-row class="margin-t-10 color-red font-size-14">（拍《扶贫特惠保险卡》照片）</el-row>
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type3" multiple/>-->
-                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath3"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -475,10 +475,10 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type4" multiple/>-->
-                            <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath4"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -493,10 +493,10 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type5" multiple/>-->
-                            <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath5"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -511,10 +511,10 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type6" multiple/>-->
-                            <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath6"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -529,10 +529,10 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!-- <el-uploader style="margin: 10px 0" v-model="form.file_type7" multiple/>-->
-                            <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath7"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -548,10 +548,10 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!-- <el-uploader style="margin: 10px 0" v-model="form.file_type8" multiple/>-->
-                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath8"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -707,10 +707,10 @@
                         <el-col :offset="2" :span="22">
                             <el-row class="margin-t-10 color-red font-size-14">（拍家用自来水照片）</el-row>
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type9" multiple/>-->
-                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap">
+                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath9"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -838,6 +838,8 @@
 </template>
 <script>
     import Vue from 'vue'
+    import { fetchJPersonSafeguard } from '@/api/issueList'
+
     export default {
         components: {
         },
@@ -906,14 +908,94 @@
                     personId: null
                 },
                 // 下拉刷新控制
-                pullLoading: false
+                pullLoading: false,
+                loading:true
             }
         },
         mounted() {
 //            this.form.personId = this.poorId
 //            this.getInfo({personId: this.form.personId})
+            this.getData();
         },
         methods: {
+            /**
+             *  编辑回显使用
+             * formData[Object]：是定义的回显参数
+             * formData[infoData]:带参数值的详情信息
+             *
+             */
+            editShowInfoFunc:(formData,infoData)=>{
+                let {keys, values, entries} = Object;
+                for(let key of keys(infoData)){
+                    if(formData.hasOwnProperty(key)){
+                        formData[key] = infoData[key]
+                    }
+                }
+            },
+
+            getData(){
+                let params = {
+                    personId: this.$route.query.hasOwnProperty('id') ? this.$route.query.id : '',
+                };
+                let self = this;
+                self.loading = true;
+                fetchJPersonSafeguard(params).then(resp => {
+                    self.loading = false;
+                    if(resp.data){
+                        self.form = resp.data;
+
+                        let {keys, values, entries} = Object;
+                        //获取返回值的上传图片
+                        //filePath的key
+                        let filePathKeys = this.$lodash.keys(this.filePath);
+
+                        if (resp.data.hasOwnProperty("baseImgList")) {
+                            resp.data.baseImgList.forEach(item => {
+                                //filePath的key遍历一下
+                                filePathKeys.map( (val,idx) => {
+                                    let key = val.split("filePath");
+                                    //判断当前的key的后面的数字与baseImgList的type是否一样
+                                    if(item.fileType.toString() === key[1]){
+                                        //对应的照片放到里面
+                                        let arr = [];
+                                        item.imageList.forEach(ktem => {
+                                            let imgInfo = {
+                                                url:''
+                                            };
+                                            //新修改
+                                            imgInfo.url = ktem.filePath;
+                                            //这里因为是img，不是uploader,所以接收的形式不一样，如果是uploader,就要push(imgInfo)
+                                            arr.push( ktem.filePath)
+                                        });
+                                        this.filePath[val] = arr;
+                                    }
+                                });
+                            })
+                        }
+
+                        //填写原因的项--数据查询todo
+                        resp.data.problemInfo.jPersonSafeguard.forEach(item=>{
+                            self.editShowInfoFunc(this.form,item);
+                        });
+                        //转其他的
+//                    self.editShowInfoFunc(this.form,resp.data);
+
+
+                    }
+
+
+                }).catch(err => {
+                    self.loading = false;
+                    this.$message({
+                        message: err.msg,
+                        type: 'error'
+                    })
+//                    self.$message.error(err.msg)
+                });
+            },
+
+
+
         }
     }
 </script>
@@ -933,5 +1015,9 @@
                 border-radius: 8px;
             }
         }
+    }
+    .img-content{
+        width: 100px;
+        height: 100px;
     }
 </style>

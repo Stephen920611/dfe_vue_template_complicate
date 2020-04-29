@@ -403,7 +403,7 @@
                 tabPosition: 1,
                 //                list: null,
                 list: [
-                    {
+                    /*{
                         'townName': '苏家店镇',
                         'familyType': 2, // 【1即时帮扶 2将档立卡】
                         'familyCont': 1, // 【户人数】
@@ -578,7 +578,7 @@
                         'areaName': '栖霞市',
                         'createTime': '2020-04-23 17:02:08',
                         'id': 45013
-                    }
+                    }*/
                 ],
                 total: 1,
                 listLoading: true,
@@ -740,7 +740,9 @@
                     setTimeout(() => {
                         this.listLoading = false
                     }, 1.5 * 1000)
-                })
+                }).catch(err => {
+                    this.listLoading = false
+                });
             },
 
             // tab键改变触发

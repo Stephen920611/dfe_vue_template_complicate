@@ -2,7 +2,7 @@
 <template>
         <div>
             <el-form ref="form">
-                <el-cell>
+                <div>
                     <el-row>
                         <el-col :offset="1" :span="23" class="margin-t-10">1. 贫困户对帮扶责任人的帮扶工作是否认可</el-col>
                     </el-row>
@@ -67,7 +67,7 @@
                             </el-col>
                         </el-col>
                     </el-row>
-                </el-cell>
+                </div>
                 <!--<div style="margin: 1rem 1rem 1.5rem;">
                             <el-button round block type="info" native-type="submit">
                                 保存

@@ -101,7 +101,7 @@
         },
         mounted() {
             this.personId = this.$route.query
-            console.log(this.$route.query,'ssssssssss');
+//            console.log(this.$route.query,'ssssssssss');
         },
         methods: {
             // 获取数据
