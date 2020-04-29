@@ -21,10 +21,10 @@
                         <el-row class="margin-t-10 color-red font-size-14">（拍本人家中2019年度收入明细表）</el-row>
                         <el-row class="margin-t-15">
                             <!--<van-uploader v-model="filePath.filePath1" :after-read="afterRead" multiple/>-->
-                            <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :span="4" :key="image">
+                            <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :span="2" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath1"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -242,10 +242,10 @@
                         <el-row class="margin-t-10 color-red font-size-14">（拍《签约服务手册》中体现慢性病签约服务的内容）</el-row>
                         <el-row class="margin-t-15">
                             <!--<van-uploader v-model="filePath.filePath2" multiple/>-->
-                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap" :span="4" :key="image">
+                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap" :span="2" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath2"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -454,10 +454,10 @@
                         <el-row class="margin-t-10 color-red font-size-14">（拍《扶贫特惠保险卡》照片）</el-row>
                         <el-row class="margin-t-15">
                             <!--<van-uploader v-model="filePath.filePath3" multiple/>-->
-                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap" :span="4" :key="image">
+                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap" :span="2" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath3"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -485,10 +485,10 @@
                 <el-row>
                     <el-col :offset="2" :span="22" class="margin-t-10">
                         <!--<van-uploader v-model="filePath.filePath4" multiple/>-->
-                        <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap" :span="4" :key="image">
+                        <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap" :span="2" :key="image">
                             <el-image
-                                    width="80"
-                                    height="80"
+                                    class="img-content"
+                                    :preview-src-list="filePath.filePath4"
                                     :src="image"
                                     @click.native="lookImg([image])"
                             />
@@ -503,10 +503,10 @@
                 <el-row>
                     <el-col :offset="2" :span="22" class="margin-t-10">
                         <!--<van-uploader v-model="filePath.filePath5" multiple/>-->
-                        <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap" :span="4" :key="image">
+                        <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap" :span="2" :key="image">
                             <el-image
-                                    width="80"
-                                    height="80"
+                                    class="img-content"
+                                    :preview-src-list="filePath.filePath5"
                                     :src="image"
                                     @click.native="lookImg([image])"
                             />
@@ -521,10 +521,10 @@
                 <el-row>
                     <el-col :offset="2" :span="22" class="margin-t-10">
                         <!--<van-uploader v-model="filePath.filePath6" multiple/>-->
-                        <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap" :span="4" :key="image">
+                        <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap" :span="2" :key="image">
                             <el-image
-                                    width="80"
-                                    height="80"
+                                    class="img-content"
+                                    :preview-src-list="filePath.filePath6"
                                     :src="image"
                                     @click.native="lookImg([image])"
                             />
@@ -539,10 +539,10 @@
                 <el-row>
                     <el-col :offset="2" :span="22" class="margin-t-10">
                         <!--<van-uploader v-model="filePath.filePath7" multiple/>-->
-                        <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap" :span="4" :key="image">
+                        <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap" :span="2" :key="image">
                             <el-image
-                                    width="80"
-                                    height="80"
+                                    class="img-content"
+                                    :preview-src-list="filePath.filePath7"
                                     :src="image"
                                     @click.native="lookImg([image])"
                             />
@@ -559,10 +559,10 @@
                         <el-row class="margin-t-10 color-red font-size-14">（拍房屋安全鉴定报告）</el-row>
                         <el-row class="margin-t-15">
                             <!--<van-uploader v-model="filePath.filePath8" multiple/>-->
-                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap" :span="4" :key="image">
+                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap" :span="2" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath8"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -728,10 +728,10 @@
                         <el-row class="margin-t-10 color-red font-size-14">（拍家用自来水照片）</el-row>
                         <el-row class="margin-t-15">
                             <!--<van-uploader v-model="filePath.filePath9" multiple/>-->
-                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap" :span="4" :key="image">
+                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap" :span="2" :key="image">
                                 <el-image
-                                        width="80"
-                                        height="80"
+                                        class="img-content"
+                                        :preview-src-list="filePath.filePath9"
                                         :src="image"
                                         @click.native="lookImg([image])"
                                 />
@@ -1044,8 +1044,9 @@
             }
         }
     }
-    .filePath-image{
-        width: 200px;
-        height: 200px;
+    .img-content{
+        width: 100px;
+        height: 100px;
+        margin-top: 10px;
     }
 </style>

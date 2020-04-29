@@ -20,7 +20,7 @@
                             <el-row class="margin-t-10 color-red font-size-14">（拍本人家中2019年度收入明细表）</el-row>
                             <el-row class="margin-t-15">
                                 <!--<el-uploader v-model="form.file_type1" multiple/>-->
-                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :key="image">
+                                <el-col v-for="image in filePath.filePath1" class="margin-r-15 img-wrap" :key="image" :span="2">
                                     <el-image
                                             :src="image"
                                             class="img-content"
@@ -255,7 +255,7 @@
                                     />
                                 </el-col>
                             </el-row>
-                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath2" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath2"
@@ -448,7 +448,7 @@
                         <el-col :offset="2" :span="22">
                             <el-row class="margin-t-10 color-red font-size-14">（拍《扶贫特惠保险卡》照片）</el-row>
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type3" multiple/>-->
-                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath3" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath3"
@@ -475,7 +475,7 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type4" multiple/>-->
-                            <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath4" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath4"
@@ -493,7 +493,7 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type5" multiple/>-->
-                            <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath5" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath5"
@@ -511,7 +511,7 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type6" multiple/>-->
-                            <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath6" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath6"
@@ -529,7 +529,7 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!-- <el-uploader style="margin: 10px 0" v-model="form.file_type7" multiple/>-->
-                            <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath7" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath7"
@@ -548,7 +548,7 @@
                     <el-row>
                         <el-col :offset="2" :span="22">
                             <!-- <el-uploader style="margin: 10px 0" v-model="form.file_type8" multiple/>-->
-                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath8" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath8"
@@ -707,7 +707,7 @@
                         <el-col :offset="2" :span="22">
                             <el-row class="margin-t-10 color-red font-size-14">（拍家用自来水照片）</el-row>
                             <!--<el-uploader style="margin: 10px 0" v-model="form.file_type9" multiple/>-->
-                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap" :key="image">
+                            <el-col v-for="image in filePath.filePath9" class="margin-r-15 img-wrap" :key="image" :span="2">
                                 <el-image
                                         class="img-content"
                                         :preview-src-list="filePath.filePath9"
@@ -1019,5 +1019,6 @@
     .img-content{
         width: 100px;
         height: 100px;
+        margin-top: 10px;
     }
 </style>
