@@ -17,40 +17,39 @@
                     <!--</el-row>-->
                     <div class="filter-container">
                         <el-cascader
+                                v-model="areaValue"
                                 style="min-width: 250px;"
                                 class="filter-item"
-                                v-model="areaValue"
                                 :options="allAreaTree"
                                 :props="{ expandTrigger: 'hover' }"
-                                @change="changeArea"
                                 clearable
                                 placeholder="请选择县市区"
-                        >
-                        </el-cascader>
+                                @change="changeArea"
+                        />
                         <!--<el-select v-model="areaValue" class="filter-item" placeholder="请选择县市区">
-                            <el-option
-                                    v-for="item in areaOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="townValue" class="filter-item" placeholder="请选择乡镇">
-                            <el-option
-                                    v-for="item in townOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>
-                        <el-select v-model="villageValue" class="filter-item" placeholder="请选择村">
-                            <el-option
-                                    v-for="item in villageOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            />
-                        </el-select>-->
+                                        <el-option
+                                                v-for="item in areaOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value"
+                                        />
+                                    </el-select>
+                                    <el-select v-model="townValue" class="filter-item" placeholder="请选择乡镇">
+                                        <el-option
+                                                v-for="item in townOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value"
+                                        />
+                                    </el-select>
+                                    <el-select v-model="villageValue" class="filter-item" placeholder="请选择村">
+                                        <el-option
+                                                v-for="item in villageOptions"
+                                                :key="item.value"
+                                                :label="item.label"
+                                                :value="item.value"
+                                        />
+                                    </el-select>-->
                         <el-input
                                 v-model="listQuery.content"
                                 placeholder="请输入贫困村名字"
@@ -86,7 +85,7 @@
                                     @click="handleDownload"
                             >Excel模板
                             </el-button>
-                            <a ref="downExcelDo" :href="downLoadUrl"/>
+                            <a ref="downExcelDo" :href="downLoadUrl" target="_blank"/>
                         </div>
                     </div>
                     <!-- 表格开始 -->
@@ -147,6 +146,7 @@
                             :page.sync="listQuery.page"
                             :limit.sync="listQuery.limit"
                             style="padding:0px !important"
+                            class="pagination"
                             @pagination="getList"
                     />
                 </div>
@@ -162,6 +162,7 @@
     import Pagination from '@/components/Pagination'
 
     import {fetchList, saveQuestion, deleteQuestion} from '@/api/issueList'
+    import {getStorage} from '@/utils/storage'
 
     export default {
         name: 'IssueListPoorVillage',
@@ -169,18 +170,20 @@
         directives: {waves, elDragDialog},
         data() {
             return {
-                downLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/download',
+                userInfo: {}, // 登录者信息
+                //                downLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/download',
+                downLoadUrl: '',
                 upLoadUrl: process.env.VUE_APP_BASE_API + '/excel/question/upload',
-//                // 县市区
-//                areaOptions: [],
-//                areaValue: '',
-//                // 乡镇
-//                townOptions: [],
-//                townValue: '',
-//                // 村
-//                villageOptions: [],
-//                villageValue: '',
-                //模拟假数据
+                //                // 县市区
+                //                areaOptions: [],
+                //                areaValue: '',
+                //                // 乡镇
+                //                townOptions: [],
+                //                townValue: '',
+                //                // 村
+                //                villageOptions: [],
+                //                villageValue: '',
+                // 模拟假数据
                 allArea: [
                     {
                         'code': 'area',
@@ -239,9 +242,9 @@
                         'text': '牟平区'
                     }
                 ],
-                //县乡村的树
+                // 县乡村的树
                 allAreaTree: [],
-                //县乡村的树的值
+                // 县乡村的树的值
                 areaValue: [],
 
                 // 表格
@@ -457,19 +460,21 @@
         },
         created() {
             //            this.getList()
+            this.userInfo = getStorage('userInfo')
+            this.downLoadUrl = `${process.env.VUE_APP_BASE_API}/excel/reform?${this.userInfo.areaName === '烟台市' ? '' : ('areaName=' + this.userInfo.areaName + '&')}userId=${this.userInfo.id}&excelType=3`
             this.fetchArea()
         },
         methods: {
             // 获取地区数据
             fetchArea() {
-                this.allAreaTree = this.dealAreaData(this.allArea);
+                this.allAreaTree = this.dealAreaData(this.allArea)
             },
 
-            //将后台返回的树处理成前端组件需要的树
-            dealAreaData (data) {
-                return data.map( val => {
-                    let children = null;
-                    if(val.hasOwnProperty("children")){
+            // 将后台返回的树处理成前端组件需要的树
+            dealAreaData(data) {
+                return data.map(val => {
+                    let children = null
+                    if (val.hasOwnProperty('children')) {
                         children = this.dealAreaData(val.children)
                     }
                     return {
@@ -503,9 +508,9 @@
                 this.getList()
             },
 
-            //改变县市区
+            // 改变县市区
             changeArea(value) {
-                this.areaValue = value;
+                this.areaValue = value
             },
 
             // 导出触发
@@ -534,7 +539,7 @@
                         name: 'IssueListPoorVillageDetail',
                         query: {
                             id: data.id,
-                            familyType: data.familyType,
+                            familyType: data.familyType
                         }
                     }
                 )
@@ -544,6 +549,11 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .pagination {
+        /deep/ .el-pagination {
+            display: flex;
+            justify-content: center;
+        }
+    }
 </style>
